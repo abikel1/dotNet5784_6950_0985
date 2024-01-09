@@ -27,8 +27,10 @@ public class WorkerImplementation : IWorker
     public Worker? Read(int id)
     {
         Worker? w=DataSource.Workers.FirstOrDefault(w => w.Id == id);
+        if(w is not null)
         return w;
- //       return DataSource.Workers.Find(item => item.Id == id) ?? throw new Exception($"Workers with ID={id} does not exist");
+        throw new Exception($"Workers with ID={id} does not exist");
+        //       return DataSource.Workers.Find(item => item.Id == id) ?? throw new Exception($"Workers with ID={id} does not exist");
     }
 
     public List<Worker?> ReadAll()
