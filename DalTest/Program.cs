@@ -17,7 +17,6 @@ internal class Program
         {
             Initialization.Do(s_dalWorker, s_dalTask, s_dalDependency);
             chooseEntities();
-
         }
         catch(Exception ex)
         {
@@ -66,11 +65,11 @@ internal class Program
                 case 2://print the worker with the id that we enter
                     Console.WriteLine("Enter id");
                     int idR = int.Parse(Console.ReadLine()!);
-                    DO.Worker workerR = s_dalWorker.Read(idR);
+                    DO.Worker? workerR = s_dalWorker!.Read(idR);
                     Console.WriteLine(workerR);
                     break;
                 case 3://Print all the workers
-                    List<DO.Worker?> listWorkers = s_dalWorker.ReadAll();
+                    List<DO.Worker?> listWorkers = s_dalWorker!.ReadAll();
                     foreach(DO.Worker? work in listWorkers)
                     {
                         if(work!=null)

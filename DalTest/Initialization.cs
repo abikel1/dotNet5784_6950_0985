@@ -12,17 +12,17 @@ public static class Initialization
     {
         string[] nameWorkers = { "Avital", "Ayala", "Chagai", "Maor", "Shlomo", "Hadar", "Yehuda", "Sheli", "Nachum", "Ariel"};
         string[] emailWorkers = { "avital@gmail.com","ayala@gmail.com","chagai@gmail.co.il","maor@gmail.co.il","shlomo@gmail.com","hadar@gmail.co.il","yehuda@gmail.com","sheli@gmail.co.il","nachum@gmail.com","ariel@gmail.co.il" };
-        int id=s_rand.Next(200000000, 400000000);
+       // int id=s_rand.Next(200000000, 400000000);
         for (int i = 0; i < nameWorkers.Length; i++)//we will go through the name database
         {
-            while (s_dalWorker!.Read(id) is not null)//it will continue to generate id until it reaches one that does not yet exist
-            {
-                id = s_rand.Next(200000000, 400000000);
-            }
+         //   while (s_dalWorker!.Read(id) is not null)//it will continue to generate id until it reaches one that does not yet exist
+         //   {
+               int id = s_rand.Next(200000000, 400000000);
+          //  }
             Rank rank = (Rank)s_rand.Next(0, 5);
             double price = s_rand.Next(0, 1000);
             Worker worker=new Worker(id, rank, price, nameWorkers[i], emailWorkers[i]);
-            s_dalWorker.Create(worker);
+            s_dalWorker!.Create(worker);
         }
     }
     private static void createTask()
@@ -128,7 +128,6 @@ public static class Initialization
             DateTime start = new DateTime(2024, 2, 9, 0, 0, 0);
             int rangestart = (start - DateTime.Today).Days;
             DateTime RanDay=start.AddDays(rand.Next(rangestart));
-
             DateTime createProject = RanDay;
             string name = nameTasks[i];
             string desciption = descriptionTasks[i];
