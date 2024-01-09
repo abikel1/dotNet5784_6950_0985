@@ -134,9 +134,10 @@ public static class Initialization
             string desciption = descriptionTasks[i];
             string? remark = remarksTasks[i];
             string product = productTasks[i];
-
-            Task task = new Task(0, difficult, 0, desciption, false, name, createProject, null, null, null, null, null, remark, product);
+            int timeTask=s_rand.Next(0,24);
+            Task task = new Task(0, difficult, 0, desciption, false, name, createProject, null, null, timeTask, null, null, remark, product);
             s_dalTask!.Create(task);
+
         }
     }
     private static void createDependency()
@@ -183,5 +184,14 @@ public static class Initialization
         s_dalDependency.Create(new Dependency(0, 6, 13));
         s_dalDependency.Create(new Dependency(0, 8, 2));
         s_dalDependency.Create(new Dependency(0, 8, 13));
+    }
+    public static void Do(IWorker? dalWorker, ITask? dalTask, IDependency? dalDependency)
+    {
+        s_dalWorker = dalWorker ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        createWorker();
+        createTask();
+        createDependency(); 
     }
 }
