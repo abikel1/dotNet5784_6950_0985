@@ -14,7 +14,6 @@ public class WorkerImplementation : IWorker
         DataSource.Workers.Add(item);
         return item.Id;
     }
-
     public void Delete(int id)
     {
         if (Read(id) is null)
@@ -27,10 +26,7 @@ public class WorkerImplementation : IWorker
     public Worker? Read(int id)
     {
         Worker? w=DataSource.Workers.FirstOrDefault(w => w.Id == id);
-        if(w is not null)
         return w;
-        throw new Exception($"Workers with ID={id} does not exist");
-        //       return DataSource.Workers.Find(item => item.Id == id) ?? throw new Exception($"Workers with ID={id} does not exist");
     }
 
     public List<Worker?> ReadAll()

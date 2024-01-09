@@ -23,7 +23,7 @@ public class TaskImplementation : ITask
 
     public Task? Read(int id)
     {
-        return DataSource.Tasks.Find(item => item.Id == id) ?? throw new Exception($"Tasks with ID={id} does not exist");
+        return DataSource.Tasks.Find(item => item.Id == id);
     }
 
     public List<Task> ReadAll()

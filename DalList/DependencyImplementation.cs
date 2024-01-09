@@ -23,7 +23,7 @@ public class DependencyImplementation : IDependency
 
     public Dependency? Read(int id)
     {
-        return DataSource.Dependencies.Find(item => item.Id == id) ?? throw new Exception($"Dependency with ID={id} does not exist");
+        return DataSource.Dependencies.Find(item => item.Id == id);
     }
 
     public List<Dependency> ReadAll()

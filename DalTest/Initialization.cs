@@ -1,24 +1,26 @@
 ﻿namespace DalTest;
+
+using Dal;
 using DalApi;
 using DO;
 public static class Initialization
 {
-    private static IWorker? s_dalWorker;
-    private static ITask? s_dalTask;
-    private static IDependency? s_dalDependency;
+    private static IWorker? s_dalWorker=new WorkerImplementation();
+    private static ITask? s_dalTask=new TaskImplementation();
+    private static IDependency? s_dalDependency=new DependencyImplementation();
     private static readonly Random s_rand = new();
 
     private static void createWorker()
     {
         string[] nameWorkers = { "Avital", "Ayala", "Chagai", "Maor", "Shlomo", "Hadar", "Yehuda", "Sheli", "Nachum", "Ariel"};
         string[] emailWorkers = { "avital@gmail.com","ayala@gmail.com","chagai@gmail.co.il","maor@gmail.co.il","shlomo@gmail.com","hadar@gmail.co.il","yehuda@gmail.com","sheli@gmail.co.il","nachum@gmail.com","ariel@gmail.co.il" };
-       // int id=s_rand.Next(200000000, 400000000);
+        int id=s_rand.Next(200000000, 400000000);
         for (int i = 0; i < nameWorkers.Length; i++)//we will go through the name database
         {
-         //   while (s_dalWorker!.Read(id) is not null)//it will continue to generate id until it reaches one that does not yet exist
-         //   {
-               int id = s_rand.Next(200000000, 400000000);
-          //  }
+           while (s_dalWorker!.Read(id) is not null)//it will continue to generate id until it reaches one that does not yet exist
+            {
+               id =  s_rand.Next(200000000, 400000000);
+             }
             Rank rank = (Rank)s_rand.Next(0, 5);
             double price = s_rand.Next(0, 1000);
             Worker worker=new Worker(id, rank, price, nameWorkers[i], emailWorkers[i]);

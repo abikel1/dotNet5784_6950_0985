@@ -66,6 +66,8 @@ internal class Program
                     Console.WriteLine("Enter id");
                     int idR = int.Parse(Console.ReadLine()!);
                     DO.Worker? workerR = s_dalWorker!.Read(idR);
+                    if (workerR is null)
+                      throw new Exception("Worker with ID={idR} does not exist");
                     Console.WriteLine(workerR);
                     break;
                 case 3://Print all the workers
@@ -79,7 +81,9 @@ internal class Program
                 case 4:
                     Console.WriteLine("Enter the id of the worker that you want to update");
                     int idU=int.Parse(Console.ReadLine()!);
-                    DO.Worker workerU = s_dalWorker.Read(idU);
+                    DO.Worker? workerU = s_dalWorker!.Read(idU);
+                    if (workerU is null)
+                        throw new Exception("Worker with ID={idU} does not exist");
                     Console.WriteLine(workerU);
                     DO.Worker w = updateWorker(workerU);
                     s_dalWorker!.Update(w);
@@ -87,7 +91,7 @@ internal class Program
                 case 5:
                     Console.WriteLine("Enter the id of the worker that you want to delete");
                     int idD = int.Parse(Console.ReadLine()!);
-                    s_dalWorker.Delete(idD);
+                    s_dalWorker!.Delete(idD);
                     break;
             }
         }
@@ -115,7 +119,9 @@ internal class Program
                 case 2://print the task with the id that we enter
                     Console.WriteLine("Enter id");
                     int idR = int.Parse(Console.ReadLine()!);
-                    DO.Task taskR = s_dalTask.Read(idR);
+                    DO.Task? taskR = s_dalTask!.Read(idR);
+                    if(taskR is null)
+                        throw new Exception("Task with ID={idR} does not exist");
                     Console.WriteLine(taskR);
                     break;
                 case 3://Print all the tasks
@@ -129,7 +135,9 @@ internal class Program
                 case 4://update the task
                     Console.WriteLine("Enter the id of the task that you want to update");
                     int idU = int.Parse(Console.ReadLine()!);
-                    DO.Task taskU = s_dalTask.Read(idU);
+                    DO.Task? taskU = s_dalTask!.Read(idU);
+                    if (taskU is null)
+                        throw new Exception("Task with ID={idU} does not exist");
                     Console.WriteLine(taskU);
                     DO.Task t = updateTask(taskU);
                     s_dalTask!.Update(t);
@@ -137,7 +145,7 @@ internal class Program
                 case 5://delete the task with the id that we enter
                     Console.WriteLine("Enter the id of the task that you want to delete");
                     int idD = int.Parse(Console.ReadLine()!);
-                    s_dalTask.Delete(idD);
+                    s_dalTask!.Delete(idD);
                     break;
             }
         }
@@ -164,11 +172,13 @@ internal class Program
                 case 2://print the dependency with the id that we enter
                     Console.WriteLine("Enter id");
                     int idR = int.Parse(Console.ReadLine()!);
-                    DO.Dependency dependencyR = s_dalDependency.Read(idR);
+                    DO.Dependency? dependencyR = s_dalDependency!.Read(idR);
+                    if (dependencyR is null)
+                        throw new Exception("Dependency with ID={idR} does not exist");
                     Console.WriteLine(dependencyR);
                     break;
                 case 3://Print all the tasks
-                    List<DO.Dependency?> listDependecies = s_dalDependency.ReadAll();
+                    List<DO.Dependency?> listDependecies = s_dalDependency!.ReadAll();
                     foreach (DO.Dependency? dependency1 in listDependecies)
                     {
                         if (dependency1 != null)
@@ -178,7 +188,9 @@ internal class Program
                 case 4://update the dependency
                     Console.WriteLine("Enter the id of the dependency that you want to update");
                     int idU = int.Parse(Console.ReadLine()!);
-                    DO.Dependency dependencyU = s_dalDependency.Read(idU);
+                    DO.Dependency? dependencyU = s_dalDependency!.Read(idU);
+                    if (dependencyU is null)
+                        throw new Exception("dependency with ID={idU} does not exist");
                     Console.WriteLine(dependencyU);
                     DO.Dependency d = updateDependency(dependencyU);
                     s_dalDependency!.Update(d);
@@ -186,7 +198,7 @@ internal class Program
                 case 5://delete the task with the id that we enter
                     Console.WriteLine("Enter the id of the dependency that you want to delete");
                     int idD = int.Parse(Console.ReadLine()!);
-                    s_dalDependency.Delete(idD);
+                    s_dalDependency!.Delete(idD);
                     break;
             }
         }
@@ -228,46 +240,47 @@ internal class Program
         Console.WriteLine("Enter the id task and the id task that depends on it");
         int idTask=int.Parse(Console.ReadLine()!);
         int idTaskD=int.Parse(Console.ReadLine()!);
-        DO.Task task = s_dalTask.Read(idTask);
-        DO.Task taskD = s_dalTask.Read(idTaskD);
+        DO.Task? task = s_dalTask!.Read(idTask);
+        DO.Task? taskD = s_dalTask.Read(idTaskD);
         DO.Dependency dependency = new DO.Dependency(0, idTask, idTaskD);
         return dependency;
     }
-    private static DO.Worker updateWorker(DO.Worker worker2) 
+    private static DO.Worker updateWorker(DO.Worker? worker2) 
     {
         Console.WriteLine("Enter name,Email,level between 0-4 and cost");
         string name = Console.ReadLine()!;
-        if (name == "") { name = worker2.Name!; }
+        if (name == "") { name = worker2!.Name!; }
         string Email = Console.ReadLine()!;
-        if (Email == "") { Email = worker2.Email!; }
+        if (Email == "") { Email = worker2!.Email!; }
         string level = Console.ReadLine()!;
         Rank rank;
-        if (level == "") { rank = worker2.RankWorker; }
+        if (level == "") { rank = worker2!.RankWorker; }
         else { rank = (Rank)(int.Parse(level)); }
         double cost1;
         string cost = Console.ReadLine()!;
-        if (cost == "") { cost1 = worker2.HourPrice; }
+        if (cost == "") { cost1 = worker2!.HourPrice; }
         else { cost1 = double.Parse(cost); }
-        Worker w = new Worker(worker2.Id, rank, cost1, name, Email);
+        Worker w = new Worker(worker2!.Id, rank, cost1, name, Email);
         return w;
     }
-    private static DO.Task updateTask(DO.Task task2)
+    private static DO.Task updateTask(DO.Task? task2)
     {
         Console.WriteLine("Enter name, id worker, difficulty between 0-4, taskDescreption, product, timeTask, remarks");
-        int id = task2.Id;
+        int id = task2!.Id;
         string name = Console.ReadLine()!;
         if (name == "")
             name = task2.Alias!;
-        int? workerId = int.Parse(Console.ReadLine()!);
-        if (workerId == 0) { workerId = task2.WorkerId; };
-
+        string idw = Console.ReadLine()!;
+        int? workerId;
+        if (idw == "") { workerId = task2.WorkerId; }
+        else workerId = int.Parse(idw);
         string difficult = Console.ReadLine()!;
         Rank rank;
         if (difficult == "") { rank = task2.Difficulty; }
         else { rank = (Rank)int.Parse(difficult); }
-        string taskDescription = Console.ReadLine()!;
+        string? taskDescription = Console.ReadLine()!;
         if (taskDescription == "") { taskDescription = task2.TaskDescription; }
-        string product = Console.ReadLine()!;
+        string? product = Console.ReadLine()!;
         if (product == "") { product = task2.Product; }
         string time = Console.ReadLine()!;
         int? timeTask;
@@ -275,13 +288,13 @@ internal class Program
             timeTask = task2.TimeTask;
         else
             timeTask=int.Parse(time);
-        string remarks = Console.ReadLine()!;
-        if (remarks == "") { remarks = task2.Remarks; }
-        string createTime = Console.ReadLine();
-        string beginWorkDateP = Console.ReadLine();
-        string beginWorkDate = Console.ReadLine();
-        string deadLine = Console.ReadLine();
-        string endWorkTime = Console.ReadLine();
+        string? remarks = Console.ReadLine()!;
+        if (remarks == "") { remarks = task2!.Remarks; }
+        //string? createTime = Console.ReadLine();
+        //string? beginWorkDateP = Console.ReadLine();
+        //string? beginWorkDate = Console.ReadLine();
+        //string? deadLine = Console.ReadLine();
+        //string? endWorkTime = Console.ReadLine();
         //DateTime? BeginWorkDateP = (beginWorkDateP == "") ? taskU.BeginWorkDateP : DateTime.Parse(beginWorkDateP);
         //DateTime? BeginWorkDate = (beginWorkDate == "") ? taskU.BeginWorkDate : DateTime.Parse(beginWorkDate);
         //DateTime? DeadLine = (deadLine == "") ? taskU.DeadLine : DateTime.Parse(deadLine);
@@ -289,12 +302,12 @@ internal class Program
         DO.Task t = new DO.Task(0, rank, workerId, taskDescription, false, name, task2.CreateTask, task2.BeginWork, task2.BeginTask, timeTask, task2.DeadLine, task2.EndWorkTime, remarks, product);
         return t;
     }
-    private static DO.Dependency updateDependency(DO.Dependency dependency2)
+    private static DO.Dependency updateDependency(DO.Dependency? dependency2)
     {
         Console.WriteLine("DependentTask and DependsOnTask");//Enter the id of the task and the task that dependes on it
         string id = Console.ReadLine()!;//input the id of the task
         string idD = Console.ReadLine()!;//input the id of the task that depends on the previous task
-        int id1 = dependency2.IdPreviousTask;//The current value that exists in the entity
+        int id1 = dependency2!.IdPreviousTask;//The current value that exists in the entity
         int id2 = dependency2.IdDependentTask;//The current value that exists in the entity
         //update task 1
         if (id != "")//The user want to change the id
