@@ -4,6 +4,8 @@ internal static class DataSource
 {
     internal static class Config
     {
+        public static DateTime? startProject { get; set; } = null;
+        public static DateTime? endProject { get; set; } = null;
         internal const int StartTaskId = 1;
         internal static int nextTaskId = StartTaskId;
         internal static int NextTaskId { get => nextTaskId++; }

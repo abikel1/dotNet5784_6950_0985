@@ -9,17 +9,11 @@
 /// <param name="HourPrice">The worker's price for one hour</param>
 public record Worker
 (
-
     int Id,
-
     Rank RankWorker,
-
-    float HourPrice,
-
+    double HourPrice,
     string? Name = null,
-
     string? Email = null
-
 )
 {
     public Worker() : this(0, 0, 0) { }//empty ctor

@@ -20,8 +20,8 @@
 public record Task
 (
     int Id,
-    int WorkerId,
     Rank Difficulty,
+    int? WorkerId=0,
     string? TaskDescription = null,
     bool MileStone = false,
     string? Alias = null,
