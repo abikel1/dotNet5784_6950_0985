@@ -16,6 +16,7 @@ internal class Program
         try
         {
             Initialization.Do(s_dalWorker, s_dalTask, s_dalDependency);
+            chooseEntities();
 
         }
         catch(Exception ex)
@@ -36,18 +37,18 @@ internal class Program
                 case 0:
                     break;
                 case 1:
-                    crudWorker();
+                    crudWorker("Worker");
                     break;
                 case 2:
-                    crudTask();
+                    crudTask("Task");
                     break;
                 case 3:
-                    crudDependency();
+                    crudDependency("Dependency");
                     break;
             }
         }
     }
-    private static void crudWorker()
+    private static void crudWorker(String entity)
     {
         Console.WriteLine("Choose the method that you want to do for the Worker");
         Console.WriteLine("Enter 0-Exit\n 1-Create\n 2-Read\n 3-ReadAll\n 4-update\n 5-Delete");
@@ -80,6 +81,7 @@ internal class Program
                     Console.WriteLine("Enter the id of the worker that you want to update");
                     int idU=int.Parse(Console.ReadLine()!);
                     DO.Worker workerU = s_dalWorker.Read(idU);
+                    Console.WriteLine(workerU);
                     DO.Worker w = updateWorker(workerU);
                     s_dalWorker!.Update(w);
                     break;
@@ -96,7 +98,7 @@ internal class Program
         }
 
     }
-    private static void crudTask()
+    private static void crudTask(String entity)
     {
         Console.WriteLine("Choose the method that you want to do for the Task");
         Console.WriteLine("Enter 0-Exit\n 1-Create\n 2-Read\n 3-ReadAll\n 4-update\n 5-Delete");
@@ -129,6 +131,7 @@ internal class Program
                     Console.WriteLine("Enter the id of the task that you want to update");
                     int idU = int.Parse(Console.ReadLine()!);
                     DO.Task taskU = s_dalTask.Read(idU);
+                    Console.WriteLine(taskU);
                     DO.Task t = updateTask(taskU);
                     s_dalTask!.Update(t);
                     break;
@@ -144,7 +147,7 @@ internal class Program
             Console.WriteLine(ex.Message);
         }
     }
-    private static void crudDependency()
+    private static void crudDependency(String entity)
     {
         Console.WriteLine("Choose the method that you want to do for the Task");
         Console.WriteLine("Enter 0-Exit\n 1-Create\n 2-Read\n 3-ReadAll\n 4-update\n 5-Delete");
@@ -177,13 +180,14 @@ internal class Program
                     Console.WriteLine("Enter the id of the dependency that you want to update");
                     int idU = int.Parse(Console.ReadLine()!);
                     DO.Dependency dependencyU = s_dalDependency.Read(idU);
+                    Console.WriteLine(dependencyU);
                     DO.Dependency d = updateDependency(dependencyU);
                     s_dalDependency!.Update(d);
                     break;
                 case 5://delete the task with the id that we enter
-                    Console.WriteLine("Enter the id of the task that you want to delete");
+                    Console.WriteLine("Enter the id of the dependency that you want to delete");
                     int idD = int.Parse(Console.ReadLine()!);
-                    s_dalTask.Delete(idD);
+                    s_dalDependency.Delete(idD);
                     break;
             }
         }
@@ -286,37 +290,21 @@ internal class Program
         DO.Task t = new DO.Task(0, rank, workerId, taskDescription, false, name, task2.CreateTask, task2.BeginWork, task2.BeginTask, timeTask, task2.DeadLine, task2.EndWorkTime, remarks, product);
         return t;
     }
-//    private static DO.Dependency updateDependency(DO.Dependency dependency2)
-//    {
-//        Console.WriteLine("DependentTask and DependsOnTask");
-//        string id = Console.ReadLine()!;
-//        int id1 = dependency2.IdPreviousTask;
-//        int id2 = dependency2.IdDependentTask;
-//        //update task 1
-//        if (id != "")
-//        {
-//            id1 = int.Parse(id);
-//            //check the task exist:
-//            DO.Task task1 = s_dalTask!.Read(id1);
-//            DateTime? deadline1 = task1.DeadLine;
-//            id = Console.ReadLine();
-//            //update task 2
-//            if (id != "")
-//            {
-//                id2 = int.Parse(id);
-//                //check the task exist
-//                DO.Task task2 = _s_dal.Task.Read(id2);
-//                if (task2 is null)
-//                {
-//                    throw new DalDoesNotExistException("task does not exist for dependency");
-//                }
+    private static DO.Dependency updateDependency(DO.Dependency dependency2)
+    {
+        Console.WriteLine("DependentTask and DependsOnTask");//Enter the id of the task and the task that dependes on it
+        string id = Console.ReadLine()!;//input the id of the task
+        string idD = Console.ReadLine()!;//input the id of the task that depends on the previous task
+        int id1 = dependency2.IdPreviousTask;//The current value that exists in the entity
+        int id2 = dependency2.IdDependentTask;//The current value that exists in the entity
+        //update task 1
+        if (id != "")//The user want to change the id
+            id1 = int.Parse(id);
+        //update task 2
+        if (idD != "")
+            id2 = int.Parse(idD);
 
-//            }
-
-//        }
-
-//        Dependency d = new Dependency(0, id1, id2);
-//        return dependency;
-//    }
-//}
+        Dependency d = new Dependency(0, id1, id2);
+        return d;
+    }
 }
