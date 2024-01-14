@@ -34,6 +34,11 @@ internal class DependencyImplementation : IDependency
             return DataSource.Dependencies.Where(filter);
     }
 
+    public List<Dependency> ReadAll()
+    {
+        throw new NotImplementedException();
+    }
+
     public void Update(Dependency item)
     {
         if (Read(item.Id) is null)
