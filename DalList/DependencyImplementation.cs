@@ -26,17 +26,17 @@ internal class DependencyImplementation : IDependency
         return DataSource.Dependencies.FirstOrDefault(item => item.Id == id);
     }
 
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter=null)
+    public Dependency? Read(Func<Dependency, bool> filter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
         if (filter == null)
             return DataSource.Dependencies.Select(item => item);
         else
             return DataSource.Dependencies.Where(filter);
-    }
-
-    public List<Dependency> ReadAll()
-    {
-        throw new NotImplementedException();
     }
 
     public void Update(Dependency item)

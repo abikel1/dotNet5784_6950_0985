@@ -26,6 +26,11 @@ internal class TaskImplementation : ITask
         return DataSource.Tasks.FirstOrDefault(item => item.Id == id);
     }
 
+    public Task? Read(Func<Task, bool> filter)
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter=null)
     {
         if (filter == null)

@@ -29,6 +29,11 @@ internal class WorkerImplementation : IWorker
         return w;
     }
 
+    public Worker? Read(Func<Worker, bool> filter)
+    {
+        throw new NotImplementedException();
+    }
+
     public IEnumerable<Worker?> ReadAll(Func<Worker, bool>? filter=null)
     {
         if (filter == null)
