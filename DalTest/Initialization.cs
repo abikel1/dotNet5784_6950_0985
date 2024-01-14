@@ -5,26 +5,26 @@ using DalApi;
 using DO;
 public static class Initialization
 {
-    private static IWorker? s_dalWorker=new WorkerImplementation();
-    private static ITask? s_dalTask=new TaskImplementation();
-    private static IDependency? s_dalDependency=new DependencyImplementation();
+    private static IDal? s_dal;
     private static readonly Random s_rand = new();
+    private const int MIN_ID = 200000000;
+    private const int MAX_ID = 400000000;
 
     private static void createWorker()
     {
         string[] nameWorkers = { "Avital", "Ayala", "Chagai", "Maor", "Shlomo", "Hadar", "Yehuda", "Sheli", "Nachum", "Ariel"};
         string[] emailWorkers = { "avital@gmail.com","ayala@gmail.com","chagai@gmail.co.il","maor@gmail.co.il","shlomo@gmail.com","hadar@gmail.co.il","yehuda@gmail.com","sheli@gmail.co.il","nachum@gmail.com","ariel@gmail.co.il" };
-        int id=s_rand.Next(200000000, 400000000);
+        int id=s_rand.Next(MIN_ID, MAX_ID);
         for (int i = 0; i < nameWorkers.Length; i++)//we will go through the name database
         {
-           while (s_dalWorker!.Read(id) is not null)//it will continue to generate id until it reaches one that does not yet exist
+           while (s_dal!.Worker.Read(id) is not null)//it will continue to generate id until it reaches one that does not yet exist
             {
-               id =  s_rand.Next(200000000, 400000000);
+               id =  s_rand.Next(MIN_ID, MAX_ID);
              }
             Rank rank = (Rank)s_rand.Next(0, 5);
             double price = s_rand.Next(0, 1000);
             Worker worker=new Worker(id, rank, price, nameWorkers[i], emailWorkers[i]);
-            s_dalWorker!.Create(worker);
+            s_dal!.Worker.Create(worker);
         }
     }
     private static void createTask()
@@ -137,60 +137,58 @@ public static class Initialization
             string product = productTasks[i];
             int timeTask=s_rand.Next(0,24);
             Task task = new Task(0, difficult, 0, desciption, false, name, createProject, null, null, timeTask, null, null, remark, product);
-            s_dalTask!.Create(task);
+            s_dal!.Task.Create(task);
 
         }
     }
     private static void createDependency()
     {
-        s_dalDependency!.Create(new Dependency(0, 4, 1));
-        s_dalDependency.Create(new Dependency(0, 19, 1));
-        s_dalDependency.Create(new Dependency(0, 20, 1));
-        s_dalDependency.Create(new Dependency(0, 8, 1));
-        s_dalDependency.Create(new Dependency(0, 6, 1));
-        s_dalDependency.Create(new Dependency(0, 7, 1));
-        s_dalDependency.Create(new Dependency(0, 14, 1));
-        s_dalDependency.Create(new Dependency(0, 18, 1));
-        s_dalDependency.Create(new Dependency(0, 17, 1));
-        s_dalDependency.Create(new Dependency(0, 14, 2));
-        s_dalDependency.Create(new Dependency(0, 8, 2));
-        s_dalDependency.Create(new Dependency(0, 1, 2));
-        s_dalDependency.Create(new Dependency(0, 9, 13));
-        s_dalDependency.Create(new Dependency(0, 1, 13));
-        s_dalDependency.Create(new Dependency(0, 9, 14));
-        s_dalDependency.Create(new Dependency(0, 10, 14));
-        s_dalDependency.Create(new Dependency(0, 11, 14));
-        s_dalDependency.Create(new Dependency(0, 12, 14));
-        s_dalDependency.Create(new Dependency(0, 5, 15));
-        s_dalDependency.Create(new Dependency(0, 3, 15));
-        s_dalDependency.Create(new Dependency(0, 2, 15));
-        s_dalDependency.Create(new Dependency(0, 15, 16));
-        s_dalDependency.Create(new Dependency(0, 5, 17));
-        s_dalDependency.Create(new Dependency(0, 3, 17));
-        s_dalDependency.Create(new Dependency(0, 20, 2));
-        s_dalDependency.Create(new Dependency(0, 20, 13));
-        s_dalDependency.Create(new Dependency(0, 4, 2));
-        s_dalDependency.Create(new Dependency(0, 4, 13));
-        s_dalDependency.Create(new Dependency(0, 19, 2));
-        s_dalDependency.Create(new Dependency(0, 19, 13));
-        s_dalDependency.Create(new Dependency(0, 17, 2));
-        s_dalDependency.Create(new Dependency(0, 17, 13));
-        s_dalDependency.Create(new Dependency(0, 18, 2));
-        s_dalDependency.Create(new Dependency(0, 18, 13));
-        s_dalDependency.Create(new Dependency(0, 14, 2));
-        s_dalDependency.Create(new Dependency(0, 14, 13));
-        s_dalDependency.Create(new Dependency(0, 7, 2));
-        s_dalDependency.Create(new Dependency(0, 7, 13));
-        s_dalDependency.Create(new Dependency(0, 6, 2));
-        s_dalDependency.Create(new Dependency(0, 6, 13));
-        s_dalDependency.Create(new Dependency(0, 8, 2));
-        s_dalDependency.Create(new Dependency(0, 8, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 4, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 19, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 20, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 8, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 6, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 7, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 14, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 18, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 17, 1));
+        s_dal!.Dependency.Create(new Dependency(0, 14, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 8, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 1, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 9, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 1, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 9, 14));
+        s_dal!.Dependency.Create(new Dependency(0, 10, 14));
+        s_dal!.Dependency.Create(new Dependency(0, 11, 14));
+        s_dal!.Dependency.Create(new Dependency(0, 12, 14));
+        s_dal!.Dependency.Create(new Dependency(0, 5, 15));
+        s_dal!.Dependency.Create(new Dependency(0, 3, 15));
+        s_dal!.Dependency.Create(new Dependency(0, 2, 15));
+        s_dal!.Dependency.Create(new Dependency(0, 15, 16));
+        s_dal!.Dependency.Create(new Dependency(0, 5, 17));
+        s_dal!.Dependency.Create(new Dependency(0, 3, 17));
+        s_dal!.Dependency.Create(new Dependency(0, 20, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 20, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 4, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 4, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 19, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 19, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 17, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 17, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 18, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 18, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 14, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 14, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 7, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 7, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 6, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 6, 13));
+        s_dal!.Dependency.Create(new Dependency(0, 8, 2));
+        s_dal!.Dependency.Create(new Dependency(0, 8, 13));
     }
-    public static void Do(IWorker? dalWorker, ITask? dalTask, IDependency? dalDependency)
+    public static void Do(IDal dal)
     {
-        s_dalWorker = dalWorker ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
         createWorker();
         createTask();
         createDependency(); 

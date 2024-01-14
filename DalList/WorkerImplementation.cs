@@ -2,7 +2,7 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
-public class WorkerImplementation : IWorker
+internal class WorkerImplementation : IWorker
 {
     public int Create(Worker item)
     {
@@ -29,9 +29,12 @@ public class WorkerImplementation : IWorker
         return w;
     }
 
-    public List<Worker?> ReadAll()
+    public IEnumerable<Worker?> ReadAll(Func<Worker, bool>? filter=null)
     {
-        return new List<Worker?>(DataSource.Workers);
+        if (filter == null)
+            return DataSource.Workers.Select(item => item);
+        else
+            return DataSource.Workers.Where(filter);
     }
 
     public void Update(Worker item)

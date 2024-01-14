@@ -5,17 +5,14 @@ using DO;
 using System.Threading.Tasks;
 
 namespace DalTest;
-
 internal class Program
 {
-    private static IWorker? s_dalWorker = new WorkerImplementation(); //stage 1
-    private static ITask? s_dalTask = new TaskImplementation(); //stage 1
-    private static IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
+    private static readonly IDal s_dal = new Dal.DalList();
     static void Main(string[] args)
     {
         try
         {
-            Initialization.Do(s_dalWorker, s_dalTask, s_dalDependency);
+            Initialization.Do(s_dal);
             chooseEntities();
         }
         catch(Exception ex)
@@ -60,18 +57,18 @@ internal class Program
                     break;
                 case 1://create worker
                     DO.Worker worker = createWorker();
-                    s_dalWorker!.Create(worker);
+                    s_dal!.Worker.Create(worker);
                     break;
                 case 2://print the worker with the id that we enter
                     Console.WriteLine("Enter id");
                     int idR = int.Parse(Console.ReadLine()!);
-                    DO.Worker? workerR = s_dalWorker!.Read(idR);
+                    DO.Worker? workerR = s_dal!.Worker.Read(idR);
                     if (workerR is null)
                       throw new Exception($"Worker with ID={idR} does not exist");
                     Console.WriteLine(workerR);
                     break;
                 case 3://Print all the workers
-                    List<DO.Worker?> listWorkers = s_dalWorker!.ReadAll();
+                    IEnumerable<DO.Worker?> listWorkers = s_dal!.Worker.ReadAll();
                     foreach(DO.Worker? work in listWorkers)
                     {
                         if(work!=null)
@@ -81,17 +78,17 @@ internal class Program
                 case 4:
                     Console.WriteLine("Enter the id of the worker that you want to update");
                     int idU=int.Parse(Console.ReadLine()!);
-                    DO.Worker? workerU = s_dalWorker!.Read(idU);
+                    DO.Worker? workerU = s_dal!.Worker.Read(idU);
                     if (workerU is null)
                         throw new Exception($"Worker with ID={idU} does not exist");
                     Console.WriteLine(workerU);
                     DO.Worker w = updateWorker(workerU);
-                    s_dalWorker!.Update(w);
+                    s_dal!.Worker.Update(w);
                     break;
                 case 5:
                     Console.WriteLine("Enter the id of the worker that you want to delete");
                     int idD = int.Parse(Console.ReadLine()!);
-                    s_dalWorker!.Delete(idD);
+                    s_dal!.Worker.Delete(idD);
                     break;
             }
         }
@@ -114,18 +111,18 @@ internal class Program
                     break;
                 case 1://create task
                     DO.Task task = createTask();
-                    s_dalTask!.Create(task);
+                    s_dal!.Task.Create(task);
                     break;
                 case 2://print the task with the id that we enter
                     Console.WriteLine("Enter id");
                     int idR = int.Parse(Console.ReadLine()!);
-                    DO.Task? taskR = s_dalTask!.Read(idR);
+                    DO.Task? taskR = s_dal!.Task.Read(idR);
                     if(taskR is null)
                         throw new Exception($"Task with ID={idR} does not exist");
                     Console.WriteLine(taskR);
                     break;
                 case 3://Print all the tasks
-                    List<DO.Task?> listTasks = s_dalTask.ReadAll();
+                    IEnumerable<DO.Task?> listTasks = s_dal!.Task.ReadAll();
                     foreach (DO.Task? task1 in listTasks)
                     {
                         if (task1 != null)
@@ -135,17 +132,17 @@ internal class Program
                 case 4://update the task
                     Console.WriteLine("Enter the id of the task that you want to update");
                     int idU = int.Parse(Console.ReadLine()!);
-                    DO.Task? taskU = s_dalTask!.Read(idU);
+                    DO.Task? taskU = s_dal!.Task.Read(idU);
                     if (taskU is null)
                         throw new Exception($"Task with ID={idU} does not exist");
                     Console.WriteLine(taskU);
                     DO.Task t = updateTask(taskU);
-                    s_dalTask!.Update(t);
+                    s_dal!.Task.Update(t);
                     break;
                 case 5://delete the task with the id that we enter
                     Console.WriteLine("Enter the id of the task that you want to delete");
                     int idD = int.Parse(Console.ReadLine()!);
-                    s_dalTask!.Delete(idD);
+                    s_dal!.Task.Delete(idD);
                     break;
             }
         }
@@ -167,18 +164,18 @@ internal class Program
                     break;
                 case 1://create task
                     DO.Dependency dependency=createDependency();
-                    s_dalDependency!.Create(dependency);
+                    s_dal!.Dependency!.Create(dependency);
                     break;
                 case 2://print the dependency with the id that we enter
                     Console.WriteLine("Enter id");
                     int idR = int.Parse(Console.ReadLine()!);
-                    DO.Dependency? dependencyR = s_dalDependency!.Read(idR);
+                    DO.Dependency? dependencyR = s_dal!.Dependency.Read(idR);
                     if (dependencyR is null)
                         throw new Exception($"Dependency with ID={idR} does not exist");
                     Console.WriteLine(dependencyR);
                     break;
                 case 3://Print all the tasks
-                    List<DO.Dependency?> listDependecies = s_dalDependency!.ReadAll();
+                    IEnumerable<DO.Dependency?> listDependecies = s_dal!.Dependency.ReadAll();
                     foreach (DO.Dependency? dependency1 in listDependecies)
                     {
                         if (dependency1 != null)
@@ -188,17 +185,17 @@ internal class Program
                 case 4://update the dependency
                     Console.WriteLine("Enter the id of the dependency that you want to update");
                     int idU = int.Parse(Console.ReadLine()!);
-                    DO.Dependency? dependencyU = s_dalDependency!.Read(idU);
+                    DO.Dependency? dependencyU = s_dal!.Dependency.Read(idU);
                     if (dependencyU is null)
                         throw new Exception($"dependency with ID={idU} does not exist");
                     Console.WriteLine(dependencyU);
                     DO.Dependency d = updateDependency(dependencyU);
-                    s_dalDependency!.Update(d);
+                    s_dal!.Dependency!.Update(d);
                     break;
                 case 5://delete the task with the id that we enter
                     Console.WriteLine("Enter the id of the dependency that you want to delete");
                     int idD = int.Parse(Console.ReadLine()!);
-                    s_dalDependency!.Delete(idD);
+                    s_dal!.Dependency!.Delete(idD);
                     break;
             }
         }
@@ -240,8 +237,8 @@ internal class Program
         Console.WriteLine("Enter the id task and the id task that depends on it");
         int idTask=int.Parse(Console.ReadLine()!);
         int idTaskD=int.Parse(Console.ReadLine()!);
-        DO.Task? task = s_dalTask!.Read(idTask);
-        DO.Task? taskD = s_dalTask.Read(idTaskD);
+        DO.Task? task = s_dal!.Task.Read(idTask);
+        DO.Task? taskD = s_dal.Task.Read(idTaskD);
         DO.Dependency dependency = new DO.Dependency(0, idTask, idTaskD);
         return dependency;
     }
