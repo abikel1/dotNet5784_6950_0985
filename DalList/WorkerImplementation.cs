@@ -8,7 +8,8 @@ internal class WorkerImplementation : IWorker
     {
         if (Read(item.Id) is not null)
         {
-            throw new Exception($"Worker with ID={item.Id} already exists");
+            throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
+
         }
 
         DataSource.Workers.Add(item);
@@ -18,7 +19,7 @@ internal class WorkerImplementation : IWorker
     {
         if (Read(id) is null)
         {
-            throw new Exception($"Worker with ID={id} is not exists");
+            throw new DalDoesNotExistException($"Worker with ID={id} is not exists");
         }
         DataSource.Workers.Remove(Read(id)!);
     }
@@ -31,7 +32,7 @@ internal class WorkerImplementation : IWorker
 
     public Worker? Read(Func<Worker, bool> filter)
     {
-        throw new NotImplementedException();
+        return DataSource.Workers.FirstOrDefault(filter);
     }
 
     public IEnumerable<Worker?> ReadAll(Func<Worker, bool>? filter=null)
@@ -46,7 +47,7 @@ internal class WorkerImplementation : IWorker
     {
         if (Read(item.Id) is null)
         {
-            throw new Exception($"Worker with ID={item.Id} is not exists");
+            throw new DalDoesNotExistException($"Worker with ID={item.Id} is not exists");
         }
         Delete(item.Id);
         DataSource.Workers.Add(item);

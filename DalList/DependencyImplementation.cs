@@ -2,6 +2,8 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Linq;
+
 internal class DependencyImplementation : IDependency
 {
     public int Create(Dependency item)
@@ -16,7 +18,7 @@ internal class DependencyImplementation : IDependency
     {
         if (Read(id) is null)
         {
-            throw new Exception($"Dependency with ID={id} is not exists");
+            throw new DalDoesNotExistException($"Dependency with ID={id} is not exists");
         }
         DataSource.Dependencies.Remove(Read(id)!);
     }
@@ -28,7 +30,7 @@ internal class DependencyImplementation : IDependency
 
     public Dependency? Read(Func<Dependency, bool> filter)
     {
-        throw new NotImplementedException();
+        return DataSource.Dependencies.FirstOrDefault(filter);
     }
 
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
@@ -43,7 +45,7 @@ internal class DependencyImplementation : IDependency
     {
         if (Read(item.Id) is null)
         {
-            throw new Exception($"Dependency with ID={item.Id} is not exists");
+            throw new DalDoesNotExistException($"Dependency with ID={item.Id} is not exists");
         }
         Delete(item.Id);
         DataSource.Dependencies.Add(item);

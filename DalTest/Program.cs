@@ -64,7 +64,7 @@ internal class Program
                     int idR = int.Parse(Console.ReadLine()!);
                     DO.Worker? workerR = s_dal!.Worker.Read(idR);
                     if (workerR is null)
-                      throw new Exception($"Worker with ID={idR} does not exist");
+                      throw new DalDoesNotExistException($"Worker with ID={idR} does not exist");
                     Console.WriteLine(workerR);
                     break;
                 case 3://Print all the workers
@@ -80,7 +80,7 @@ internal class Program
                     int idU=int.Parse(Console.ReadLine()!);
                     DO.Worker? workerU = s_dal!.Worker.Read(idU);
                     if (workerU is null)
-                        throw new Exception($"Worker with ID={idU} does not exist");
+                        throw new DalDoesNotExistException($"Worker with ID={idU} does not exist");
                     Console.WriteLine(workerU);
                     DO.Worker w = updateWorker(workerU);
                     s_dal!.Worker.Update(w);
@@ -118,7 +118,7 @@ internal class Program
                     int idR = int.Parse(Console.ReadLine()!);
                     DO.Task? taskR = s_dal!.Task.Read(idR);
                     if(taskR is null)
-                        throw new Exception($"Task with ID={idR} does not exist");
+                        throw new DalDoesNotExistException($"Task with ID={idR} does not exist");
                     Console.WriteLine(taskR);
                     break;
                 case 3://Print all the tasks
@@ -134,7 +134,7 @@ internal class Program
                     int idU = int.Parse(Console.ReadLine()!);
                     DO.Task? taskU = s_dal!.Task.Read(idU);
                     if (taskU is null)
-                        throw new Exception($"Task with ID={idU} does not exist");
+                        throw new DalDoesNotExistException($"Task with ID={idU} does not exist");
                     Console.WriteLine(taskU);
                     DO.Task t = updateTask(taskU);
                     s_dal!.Task.Update(t);
@@ -171,7 +171,7 @@ internal class Program
                     int idR = int.Parse(Console.ReadLine()!);
                     DO.Dependency? dependencyR = s_dal!.Dependency.Read(idR);
                     if (dependencyR is null)
-                        throw new Exception($"Dependency with ID={idR} does not exist");
+                        throw new DalDoesNotExistException($"Dependency with ID={idR} does not exist");
                     Console.WriteLine(dependencyR);
                     break;
                 case 3://Print all the tasks
@@ -187,7 +187,7 @@ internal class Program
                     int idU = int.Parse(Console.ReadLine()!);
                     DO.Dependency? dependencyU = s_dal!.Dependency.Read(idU);
                     if (dependencyU is null)
-                        throw new Exception($"dependency with ID={idU} does not exist");
+                        throw new DalDoesNotExistException($"dependency with ID={idU} does not exist");
                     Console.WriteLine(dependencyU);
                     DO.Dependency d = updateDependency(dependencyU);
                     s_dal!.Dependency!.Update(d);

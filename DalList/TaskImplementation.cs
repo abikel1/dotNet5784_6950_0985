@@ -2,6 +2,8 @@
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Linq;
+
 internal class TaskImplementation : ITask
 {
     public int Create(Task item)
@@ -16,7 +18,7 @@ internal class TaskImplementation : ITask
     {
       if(Read(id) is null) 
         {
-            throw new Exception($"Task with ID={id} is not exists");
+            throw new DalDoesNotExistException($"Task with ID={id} is not exists");
         }
         DataSource.Tasks.Remove(Read(id)!);
     }
@@ -28,7 +30,7 @@ internal class TaskImplementation : ITask
 
     public Task? Read(Func<Task, bool> filter)
     {
-        throw new NotImplementedException();
+        return DataSource.Tasks.FirstOrDefault(filter);
     }
 
     public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter=null)
@@ -43,7 +45,7 @@ internal class TaskImplementation : ITask
     {
         if (Read(item.Id) is null)
         {
-            throw new Exception($"Task with ID={item.Id} is not exists");
+            throw new DalDoesNotExistException($"Task with ID={item.Id} is not exists");
         }
         Delete(item.Id);
         DataSource.Tasks.Add(item);
