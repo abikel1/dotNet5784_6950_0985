@@ -1,72 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>392593305</Id>
-    <RankWorker>Expert</RankWorker>
-    <HourPrice>561</HourPrice>
+    <Id>364418468</Id>
+    <RankWorker>Advanced</RankWorker>
+    <HourPrice>577</HourPrice>
     <Name>Avital</Name>
     <Email>avital@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>201499772</Id>
-    <RankWorker>AdvancedBeginner</RankWorker>
-    <HourPrice>375</HourPrice>
+    <Id>233986534</Id>
+    <RankWorker>Intermediate</RankWorker>
+    <HourPrice>13</HourPrice>
     <Name>Ayala</Name>
     <Email>ayala@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>326968655</Id>
+    <Id>351512219</Id>
     <RankWorker>Beginner</RankWorker>
-    <HourPrice>650</HourPrice>
+    <HourPrice>381</HourPrice>
     <Name>Chagai</Name>
     <Email>chagai@gmail.co.il</Email>
   </Worker>
   <Worker>
-    <Id>323285006</Id>
-    <RankWorker>AdvancedBeginner</RankWorker>
-    <HourPrice>742</HourPrice>
+    <Id>370423086</Id>
+    <RankWorker>Expert</RankWorker>
+    <HourPrice>540</HourPrice>
     <Name>Maor</Name>
     <Email>maor@gmail.co.il</Email>
   </Worker>
   <Worker>
-    <Id>393223944</Id>
-    <RankWorker>AdvancedBeginner</RankWorker>
-    <HourPrice>712</HourPrice>
+    <Id>346964349</Id>
+    <RankWorker>Beginner</RankWorker>
+    <HourPrice>317</HourPrice>
     <Name>Shlomo</Name>
     <Email>shlomo@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>234527226</Id>
-    <RankWorker>AdvancedBeginner</RankWorker>
-    <HourPrice>522</HourPrice>
+    <Id>337844322</Id>
+    <RankWorker>Advanced</RankWorker>
+    <HourPrice>786</HourPrice>
     <Name>Hadar</Name>
     <Email>hadar@gmail.co.il</Email>
   </Worker>
   <Worker>
-    <Id>389760093</Id>
+    <Id>243745306</Id>
     <RankWorker>AdvancedBeginner</RankWorker>
-    <HourPrice>933</HourPrice>
+    <HourPrice>375</HourPrice>
     <Name>Yehuda</Name>
     <Email>yehuda@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>299478332</Id>
-    <RankWorker>Beginner</RankWorker>
-    <HourPrice>370</HourPrice>
+    <Id>291771468</Id>
+    <RankWorker>Intermediate</RankWorker>
+    <HourPrice>205</HourPrice>
     <Name>Sheli</Name>
     <Email>sheli@gmail.co.il</Email>
   </Worker>
   <Worker>
-    <Id>324320091</Id>
-    <RankWorker>Intermediate</RankWorker>
-    <HourPrice>872</HourPrice>
+    <Id>245176204</Id>
+    <RankWorker>AdvancedBeginner</RankWorker>
+    <HourPrice>879</HourPrice>
     <Name>Nachum</Name>
     <Email>nachum@gmail.com</Email>
   </Worker>
   <Worker>
-    <Id>210712481</Id>
-    <RankWorker>Intermediate</RankWorker>
-    <HourPrice>835</HourPrice>
+    <Id>298818794</Id>
+    <RankWorker>Beginner</RankWorker>
+    <HourPrice>231</HourPrice>
     <Name>Ariel</Name>
     <Email>ariel@gmail.co.il</Email>
   </Worker>

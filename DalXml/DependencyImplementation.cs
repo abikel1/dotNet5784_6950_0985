@@ -65,6 +65,19 @@ internal class DependencyImplementation:IDependency
             return XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().Select(d => GetDependency(d));
         else
             return XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().Select(d => GetDependency(d)).Where(filter!);
+        //XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        //if (filter != null)
+        //{
+        //    return (from d in depRoot.Elements()
+        //            let dep = GetDependency(d)
+        //            where filter(dep)
+        //            select (DO.Dependency?)dep);
+        //}
+        //else
+        //{
+        //    return (from d in depRoot.Elements()
+        //            select GetDependency(d));
+        //}
     }
 
     public void Update(Dependency item)
