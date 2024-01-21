@@ -19,11 +19,11 @@ internal class DependencyImplementation:IDependency
     public int Create(Dependency item)
     {
         int id = Config.NextDependencyId;
-        Dependency dependency = item with { Id = id };
+        Dependency dependency = item with { Id = Config.NextDependencyId };
         XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
         depRoot.Add(dependency);
         XMLTools.SaveListToXMLElement(depRoot, s_dependencys_xml);
-        return id;
+        return dependency.Id;
     }
 
     public void Delete(int id)
@@ -61,11 +61,10 @@ internal class DependencyImplementation:IDependency
 
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
-        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
         if (filter == null)
-            return depRoot.Elements().Select(d => GetDependency(d));
+            return XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().Select(d => GetDependency(d));
         else
-            return depRoot.Elements().Select(d => GetDependency(d)).Where(filter);
+            return XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().Select(d => GetDependency(d)).Where(filter!);
     }
 
     public void Update(Dependency item)
