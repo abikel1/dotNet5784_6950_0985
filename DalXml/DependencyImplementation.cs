@@ -1,38 +1,86 @@
 ﻿namespace Dal;
 using DalApi;
 using DO;
+using System.Xml.Linq;
+using System.Xml.Resolvers;
 
 internal class DependencyImplementation:IDependency
 {
     readonly string s_dependencys_xml = "dependencys";
-
+    static Dependency GetDependency(XElement dep)
+    {
+        return new Dependency()
+        {
+            Id = int.TryParse((string?)dep.Element("Id"), out var id) ? id : throw new FormatException("can't convert id"),
+            IdDependentTask = int.TryParse((string?)dep.Element("IdDependentTask"), out var iddependenttask) ? iddependenttask : throw new FormatException("can't convert id dependent task"),
+            IdPreviousTask = int.TryParse((string?)dep.Element("IdPreviousTask"), out var idprevioustask) ? id : throw new FormatException("can't convert id previous task"),
+        };
+    }
     public int Create(Dependency item)
     {
-        throw new NotImplementedException();
+        int id = Config.NextDependencyId;
+        Dependency dependency = item with { Id = id };
+        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        depRoot.Add(dependency);
+        XMLTools.SaveListToXMLElement(depRoot, s_dependencys_xml);
+        return id;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        XElement? depElem = depRoot.Elements().FirstOrDefault(dep => (int?)dep.Element("ID") == id);
+        if(depElem!=null)
+        {
+            depElem.Remove();
+            XMLTools.SaveListToXMLElement(depRoot, s_dependencys_xml);
+        }
     }
 
     public Dependency? Read(int id)
     {
-        throw new NotImplementedException();
+        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        XElement? depElem = depRoot.Elements().FirstOrDefault(dep => (int?)dep.Element("ID") == id);
+        if (depElem != null) 
+        {
+            return GetDependency(depElem);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public Dependency? Read(Func<Dependency, bool> filter)
     {
-        throw new NotImplementedException();
+        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        return  depRoot.Elements().Select(d=>GetDependency(d)).FirstOrDefault(filter);
+//        XElement? depElem = depRoot.Elements().FirstOrDefault(filter);
+ //       return depElem;
     }
 
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        if (filter == null)
+            return depRoot.Elements().Select(d => GetDependency(d));
+        else
+            return depRoot.Elements().Select(d => GetDependency(d)).Where(filter);
     }
 
     public void Update(Dependency item)
     {
-        throw new NotImplementedException();
+        if (Read(item.Id) is null)
+        {
+            throw new DalDoesNotExistException($"Dependency with ID={item.Id} is not exists");
+        }
+        Delete(item.Id);
+        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        depRoot.Add(item);
+        XMLTools.SaveListToXMLElement(depRoot, s_dependencys_xml);
+    }
+    public void clear()
+    {
+        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
     }
 }

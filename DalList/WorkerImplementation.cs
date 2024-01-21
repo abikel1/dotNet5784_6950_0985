@@ -52,4 +52,8 @@ internal class WorkerImplementation : IWorker
         Delete(item.Id);
         DataSource.Workers.Add(item);
     }
+    public void clear()
+    {
+        DataSource.Workers.Clear();
+    }
 }

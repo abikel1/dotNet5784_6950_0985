@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 namespace DalTest;
 internal class Program
 {
-    private static readonly IDal s_dal = new Dal.DalList();
+    //   private static readonly IDal s_dal = new Dal.DalList();//stage 2
+    static readonly IDal s_dal = new Dal.DalXml();
     static void Main(string[] args)
     {
         try
         {
-            Initialization.Do(s_dal);
+ //           Initialization.Do(s_dal);//stage 2
             chooseEntities();
         }
         catch(Exception ex)
@@ -26,7 +27,7 @@ internal class Program
         while(entity!=0)
         {
             Console.WriteLine("Choose the entity that you want to check");
-            Console.WriteLine("Enter 1-Worker\n 2-Task\n 3-Dependency\n 0-Exit");
+            Console.WriteLine("Enter 1-Worker\n 2-Task\n 3-Dependency\n 4-data initialization\n 0-Exit");
             entity=int.Parse(Console.ReadLine()!);
             switch(entity)
             {
@@ -41,6 +42,18 @@ internal class Program
                 case 3:
                     crudDependency("Dependency");
                     break;
+                case 4:
+                    Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
+                    string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+                    if (ans == "Y") //stage 3
+                    {
+                        s_dal!.Worker.clear();
+                        s_dal!.Task.clear();
+//                        s_dal!.Dependency.clear();
+                        Initialization.Do(s_dal); //stage 2
+                    }
+                    break;
+
             }
         }
     }
