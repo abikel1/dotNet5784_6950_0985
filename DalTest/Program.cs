@@ -2,6 +2,7 @@
 using DalApi;
 using DalTest;
 using DO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace DalTest;
@@ -13,7 +14,7 @@ internal class Program
     {
         try
         {
- //           Initialization.Do(s_dal);//stage 2
+            //           Initialization.Do(s_dal);//stage 2
             chooseEntities();
         }
         catch(Exception ex)
@@ -49,11 +50,10 @@ internal class Program
                     {
                         s_dal!.Worker.clear();
                         s_dal!.Task.clear();
- //                       s_dal!.Dependency.clear();
+                        s_dal!.Dependency.clear();
                         Initialization.Do(s_dal); //stage 2
                     }
                     break;
-
             }
         }
     }
@@ -326,7 +326,7 @@ internal class Program
         if (idD != "")
             id2 = int.Parse(idD);
 
-        Dependency d = new Dependency(0, id1, id2);
+        Dependency d = new Dependency(dependency2.Id, id1, id2);
         return d;
     }
 }
