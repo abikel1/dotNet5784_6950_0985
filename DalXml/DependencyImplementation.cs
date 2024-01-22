@@ -93,6 +93,8 @@ internal class DependencyImplementation:IDependency
     }
     public void clear()
     {
-        XElement? depRoot = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        List<DO.Dependency> dependencys = XMLTools.LoadListFromXMLSerializer<DO.Dependency>(s_dependencys_xml);
+        dependencys.Clear();
+        XMLTools.SaveListToXMLSerializer<DO.Dependency>(dependencys, s_dependencys_xml);
     }
 }
