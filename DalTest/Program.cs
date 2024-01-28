@@ -62,7 +62,8 @@ internal class Program
     {
         Console.WriteLine("Choose the method that you want to do for the Worker");
         Console.WriteLine("Enter 0-Exit\n 1-Create\n 2-Read\n 3-ReadAll\n 4-update\n 5-Delete");
-        int choise=int.Parse(Console.ReadLine()!);
+
+        int.TryParse(Console.ReadLine(), out int choise);
         try
         {
             switch (choise)
@@ -75,7 +76,7 @@ internal class Program
                     break;
                 case 2://print the worker with the id that we enter
                     Console.WriteLine("Enter id");
-                    int idR = int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idR);
                     DO.Worker? workerR = s_dal!.Worker.Read(idR);
                     if (workerR is null)
                       throw new DalDoesNotExistException($"Worker with ID={idR} does not exist");
@@ -91,7 +92,7 @@ internal class Program
                     break;
                 case 4:
                     Console.WriteLine("Enter the id of the worker that you want to update");
-                    int idU=int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idU);
                     DO.Worker? workerU = s_dal!.Worker.Read(idU);
                     if (workerU is null)
                         throw new DalDoesNotExistException($"Worker with ID={idU} does not exist");
@@ -101,7 +102,7 @@ internal class Program
                     break;
                 case 5:
                     Console.WriteLine("Enter the id of the worker that you want to delete");
-                    int idD = int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idD);
                     s_dal!.Worker.Delete(idD);
                     break;
             }
@@ -116,7 +117,7 @@ internal class Program
     {
         Console.WriteLine("Choose the method that you want to do for the Task");
         Console.WriteLine("Enter 0-Exit\n 1-Create\n 2-Read\n 3-ReadAll\n 4-update\n 5-Delete");
-        int choise = int.Parse(Console.ReadLine()!);
+        int.TryParse(Console.ReadLine(), out int choise);
         try
         {
             switch (choise)
@@ -129,7 +130,7 @@ internal class Program
                     break;
                 case 2://print the task with the id that we enter
                     Console.WriteLine("Enter id");
-                    int idR = int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idR);
                     DO.Task? taskR = s_dal!.Task.Read(idR);
                     if(taskR is null)
                         throw new DalDoesNotExistException($"Task with ID={idR} does not exist");
@@ -145,7 +146,7 @@ internal class Program
                     break;
                 case 4://update the task
                     Console.WriteLine("Enter the id of the task that you want to update");
-                    int idU = int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idU);
                     DO.Task? taskU = s_dal!.Task.Read(idU);
                     if (taskU is null)
                         throw new DalDoesNotExistException($"Task with ID={idU} does not exist");
@@ -155,7 +156,7 @@ internal class Program
                     break;
                 case 5://delete the task with the id that we enter
                     Console.WriteLine("Enter the id of the task that you want to delete");
-                    int idD = int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idD);
                     s_dal!.Task.Delete(idD);
                     break;
             }
@@ -169,7 +170,7 @@ internal class Program
     {
         Console.WriteLine("Choose the method that you want to do for the Task");
         Console.WriteLine("Enter 0-Exit\n 1-Create\n 2-Read\n 3-ReadAll\n 4-update\n 5-Delete");
-        int choise = int.Parse(Console.ReadLine()!);
+        int.TryParse(Console.ReadLine(), out int choise);
         try
         {
             switch (choise)
@@ -182,7 +183,7 @@ internal class Program
                     break;
                 case 2://print the dependency with the id that we enter
                     Console.WriteLine("Enter id");
-                    int idR = int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idR);
                     DO.Dependency? dependencyR = s_dal!.Dependency.Read(idR);
                     if (dependencyR is null)
                         throw new DalDoesNotExistException($"Dependency with ID={idR} does not exist");
@@ -198,7 +199,7 @@ internal class Program
                     break;
                 case 4://update the dependency
                     Console.WriteLine("Enter the id of the dependency that you want to update");
-                    int idU = int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idU);
                     DO.Dependency? dependencyU = s_dal!.Dependency.Read(idU);
                     if (dependencyU is null)
                         throw new DalDoesNotExistException($"dependency with ID={idU} does not exist");
@@ -208,7 +209,7 @@ internal class Program
                     break;
                 case 5://delete the task with the id that we enter
                     Console.WriteLine("Enter the id of the dependency that you want to delete");
-                    int idD = int.Parse(Console.ReadLine()!);
+                    int.TryParse(Console.ReadLine(), out int idD);
                     s_dal!.Dependency!.Delete(idD);
                     break;
             }
@@ -221,12 +222,12 @@ internal class Program
     private static DO.Worker createWorker() 
     {
         Console.WriteLine("enter id, name,Email,level between 0-4 and cost");
-        int id = int.Parse(Console.ReadLine()!);
+        int.TryParse(Console.ReadLine(), out int id);
         string name = Console.ReadLine()!;
         string email = Console.ReadLine()!;
-        int level = int.Parse(Console.ReadLine()!);
+        int.TryParse(Console.ReadLine(),out int level);
         Rank rank = (Rank)level;
-        double cost = double.Parse(Console.ReadLine()!);
+        double.TryParse(Console.ReadLine(),out double cost);
         Worker e = new Worker(id, rank, cost, name, email);
         return e;
     }
@@ -234,10 +235,10 @@ internal class Program
     {
         Console.WriteLine("Enter name, difficulty between 0-4, taskDescreption, product, timeTask, remarks");
         String name = Console.ReadLine()!;
-        int difficulty = int.Parse(Console.ReadLine()!);
+        int.TryParse(Console.ReadLine(), out int difficulty);
         String taskDescreption = Console.ReadLine()!;
         String product = Console.ReadLine()!;
-        int timeTask = int.Parse(Console.ReadLine()!);
+        int.TryParse(Console.ReadLine(), out int timeTask);
         String? remarks = Console.ReadLine()!;
         if (remarks == "")
             remarks = null;
@@ -249,8 +250,8 @@ internal class Program
     private static DO.Dependency createDependency()
     {
         Console.WriteLine("Enter the id task and the id task that depends on it");
-        int idTask=int.Parse(Console.ReadLine()!);
-        int idTaskD=int.Parse(Console.ReadLine()!);
+        int.TryParse(Console.ReadLine(), out int idTask);
+        int.TryParse(Console.ReadLine(), out int idTaskD);
         DO.Task? task = s_dal!.Task.Read(idTask);
         DO.Task? taskD = s_dal.Task.Read(idTaskD);
         DO.Dependency dependency = new DO.Dependency(0, idTask, idTaskD);

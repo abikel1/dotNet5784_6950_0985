@@ -7,7 +7,6 @@ internal class WorkerImplementation : IWorker
     private DalApi.IDal _dal=DalApi.Factory.Get;
     public void AddWorker(BO.Worker worker)
     {
-        if()
         throw new NotImplementedException();
     }
 
