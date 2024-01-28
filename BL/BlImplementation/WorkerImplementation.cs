@@ -1,18 +1,17 @@
 ﻿
 namespace BlImplementation;
 using BlApi;
-using BO;
-using System;
-using System.Collections.Generic;
 
 internal class WorkerImplementation : IWorker
 {
-    public void AddWorker(Worker worker)
+    private DalApi.IDal _dal=DalApi.Factory.Get;
+    public void AddWorker(BO.Worker worker)
     {
+        if()
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Worker> ReadWorkers(Func<Worker, bool>? filter = null)
+    public IEnumerable<BO.Worker> ReadWorkers(Func<BO.Worker, bool>? filter = null)
     {
         throw new NotImplementedException();
     }
@@ -22,12 +21,12 @@ internal class WorkerImplementation : IWorker
         throw new NotImplementedException();
     }
 
-    public void UpdateWorker(Worker worker)
+    public void UpdateWorker(BO.Worker worker)
     {
         throw new NotImplementedException();
     }
 
-    public Worker WorkerDetails(int id)
+    public BO.Worker WorkerDetails(int id)
     {
         throw new NotImplementedException();
     }
