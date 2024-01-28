@@ -1,5 +1,5 @@
 ﻿namespace BlImplementation;
 using BlApi;
-internal class WorkerImplementation:IWorker
+internal class WorkerImplementation
 {
 }
