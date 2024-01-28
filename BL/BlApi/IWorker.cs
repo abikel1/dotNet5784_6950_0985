@@ -1,7 +1,4 @@
-﻿
-
-namespace BlApi;
-
+﻿namespace BlApi;
 public interface IWorker
 {
     /// <summary>

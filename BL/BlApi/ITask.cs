@@ -1,7 +1,4 @@
-﻿
-
-namespace BlApi;
-
+﻿namespace BlApi;
 public interface ITask
 {
     /// <summary>
