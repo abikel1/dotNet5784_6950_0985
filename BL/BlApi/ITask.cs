@@ -12,7 +12,7 @@ public interface ITask
     /// </summary>
     /// <param name="id">the id of the task that I want his details </param>
     /// <returns>task object</returns>
-    public BO.Task TaskDetails(int id);
+    public BO.Task Read(int id);
     /// <summary>
     /// add new Task with the details that the function got
     /// </summary>
@@ -33,6 +33,5 @@ public interface ITask
     /// </summary>
     /// <param name="id">the id of the task that I want to update</param>
     /// <param name="date">the date that I want to update</param>
-    public void UpdateBeginTask(int id, DateTime date);
 
 }

@@ -33,6 +33,7 @@ public class Task
     public DateTime? BeginTask { get; set; }
     public int? TimeTask {  get; set; }
     public DateTime? DeadLine {  get; set; }
+    public DateTime? EndWorkTime { get; set; }
     public string? Remarks {  get; set; }
     public string? Product {  get; set; }
 }

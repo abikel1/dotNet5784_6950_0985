@@ -2,6 +2,7 @@
 namespace BlImplementation;
 using BlApi;
 using BO;
+using System.Xml.Linq;
 
 internal class WorkerImplementation : IWorker
 {
@@ -27,7 +28,23 @@ internal class WorkerImplementation : IWorker
 
     public IEnumerable<BO.Worker> ReadWorkers(Func<BO.Worker, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        IEnumerable<DO.Worker?> workers = _dal.Worker.ReadAll();
+        IEnumerable<DO.Task?> tasks=_dal.Task.ReadAll();
+        return (from worker in workers
+                let task = tasks.FirstOrDefault(x => x!.WorkerId == worker.Id)
+                select new BO.Worker()
+                {
+                    Id = worker.Id,
+                    Name = worker.Name,
+                    HourPrice = worker.HourPrice,
+                    RankWorker = (BO.Rank)worker.RankWorker,
+                    Email = worker.Email,
+                    CurrentTask = new BO.WorkerOnTask
+                    {
+                        Id = worker.Id,
+                        Name = worker.Name,
+                    }
+                });
     }
 
     public void RemoveWorker(int id)
@@ -35,30 +52,34 @@ internal class WorkerImplementation : IWorker
         try
         {
             BO.Worker worker = Read(id);
-            if (worker.CurrentTask != null)
+            bool x=_dal.Task.ReadAll(x=> x.WorkerId==id).Where(x=> x!.BeginTask is not null ).Any();
+            if (x)
                 throw new BO.BlCantRemoveObject("Cant remove worker that in the middle of a task");
             _dal.Worker.Delete(id);
         }
-        catch (BO.BlDoesNotExistException e) 
+        catch (Exception e) 
         {
-            throw e;
+            throw new BO.BlDoesNotExistException(e.Message);
         }
     }
 
     public void UpdateWorker(BO.Worker worker)
     {
+        DO.Worker? oldworker = _dal.Worker.Read(worker.Id);
         if (worker.Id <= 0)
             throw new BO.BlInValidInputException("Invalid ID of worker");
         if (worker.Name == "")
             throw new BO.BlInValidInputException("Invalid name of worker");
         if (worker.HourPrice <= 0)
             throw new BO.BlInValidInputException("Invalid price of worker");
+        if ((DO.Rank)worker.RankWorker > oldworker!.RankWorker)
+            throw new BO.BlInValidInputException("Invalid rank of worker");
         try
         {
             DO.Worker newWorker = new DO.Worker(worker.Id, (DO.Rank)((int)worker.RankWorker), worker.HourPrice, worker.Name, worker.Email);
             _dal.Worker.Update(newWorker);
             DO.Task? task=_dal.Task.Read(worker.CurrentTask!.Id);
-            DO.Task newTask = new DO.Task(task.Id, task.Difficulty, worker.Id, task.TaskDescription, task.MileStone, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
+            DO.Task newTask = new DO.Task(task!.Id, task.Difficulty, worker.Id, task.TaskDescription, task.MileStone, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
             _dal.Task.Update(newTask);
         }
         catch (DO.DalAlreadyExistsException d)
@@ -87,5 +108,8 @@ internal class WorkerImplementation : IWorker
     }
     public WorkerOnTask GetCurrentTaskOfWorker(int id)
     {
+        DO.Task? task = _dal.Task.ReadAll(x => x.WorkerId == id).Where(x => x!.BeginTask != null&&x.EndWorkTime is null).FirstOrDefault();
+
+        return new WorkerOnTask(task!.Id, task.Alias);
     }
 }
