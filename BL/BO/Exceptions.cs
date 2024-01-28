@@ -15,9 +15,21 @@ public class BlDeletionImpossible : Exception
 {
     public BlDeletionImpossible(string? message) : base(message) { }
 }
+//[Serializable]
+//public class BlXMLFileLoadCreateException : Exception
+//{
+//    public BlXMLFileLoadCreateException(string? message) : base(message) { }
+//}
+
 [Serializable]
-public class BlXMLFileLoadCreateException : Exception
+public class BlInValidInputException : Exception
 {
-    public BlXMLFileLoadCreateException(string? message) : base(message) { }
+    public BlInValidInputException(string? message) : base(message) { }
+}
+
+[Serializable]
+public class BlCantRemoveObject : Exception
+{
+    public BlCantRemoveObject(string? message) : base(message) { }
 }
 

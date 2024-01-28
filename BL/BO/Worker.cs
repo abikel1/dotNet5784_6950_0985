@@ -18,6 +18,5 @@ public class Worker
    public double HourPrice { get; set; }
    public string? Name {  get; set; }
    public string? Email {  get; set; }
-   public int? IdTask { get; set; }
-   public string? AliasTask { get; set;}
+   public WorkerOnTask? CurrentTask { get; set; }
 }

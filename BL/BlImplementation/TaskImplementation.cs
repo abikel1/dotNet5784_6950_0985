@@ -9,7 +9,11 @@ internal class TaskImplementation : ITask
     private DalApi.IDal _dal = DalApi.Factory.Get;
     public void AddTask(BO.Task task)
     {
-        throw new NotImplementedException();
+        if (task.Id <= 0)
+            throw new BO.BlInValidInputException("Invalid ID of task");
+        if (task.Alias == "")
+            throw new BO.BlInValidInputException("Invalid alisa of task");
+
     }
 
     public IEnumerable<BO.Task> ReadTasks(Func<BO.Task, bool>? filter = null)

@@ -1,4 +1,6 @@
-﻿namespace BlApi;
+﻿using BO;
+
+namespace BlApi;
 public interface IWorker
 {
     /// <summary>
@@ -12,7 +14,7 @@ public interface IWorker
     /// </summary>
     /// <param name="id">the id of the worker that I want his details</param>
     /// <returns>worker object</returns>
-    public BO.Worker WorkerDetails(int id);
+    public BO.Worker Read(int id);
     /// <summary>
     /// add new worker with the details that the function got
     /// </summary>
@@ -29,4 +31,5 @@ public interface IWorker
     /// <param name="worker">the worker that I want to update</param>
     public void UpdateWorker(BO.Worker worker);
 
+    public WorkerOnTask GetCurrentTaskOfWorker(int id);
 }
