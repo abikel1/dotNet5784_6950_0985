@@ -2,5 +2,4 @@
 using BlApi;
 internal class WorkerImplementation:IWorker
 {
-
 }
