@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 namespace DalTest;
 internal class Program
 {
-    //   private static readonly IDal s_dal = new Dal.DalList();//stage 2
-    static readonly IDal s_dal = new Dal.DalXml();
+    private static readonly IDal s_dal = Factory.Get;//stage 4
+      //private static readonly IDal s_dal = new Dal.DalList();//stage 2
+    //static readonly IDal s_dal = new Dal.DalXml();
     static void Main(string[] args)
     {
         try
@@ -51,7 +52,7 @@ internal class Program
                         s_dal!.Worker.clear();
                         s_dal!.Task.clear();
                         s_dal!.Dependency.clear();
-                        Initialization.Do(s_dal); //stage 2
+                        Initialization.Do(); //stage 4
                     }
                     break;
             }
