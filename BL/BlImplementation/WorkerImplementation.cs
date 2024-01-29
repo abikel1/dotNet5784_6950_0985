@@ -26,7 +26,7 @@ internal class WorkerImplementation : IWorker
         } 
     }
 
-    public IEnumerable<BO.Worker> ReadWorkers(Func<BO.Worker, bool>? filter = null)
+    public IEnumerable<BO.Worker> ReadWorkers(Func<BO.Worker, bool>? filter = null)//להוסיף filter
     {
         IEnumerable<DO.Worker?> workers = _dal.Worker.ReadAll();
         IEnumerable<DO.Task?> tasks=_dal.Task.ReadAll();
@@ -93,7 +93,7 @@ internal class WorkerImplementation : IWorker
         DO.Worker? worker = _dal.Worker.Read(id);
         if (worker == null)
         {
-            throw new BO.BlDoesNotExistException($"Worker with ID={worker!.Id} is not exists");
+            throw new BO.BlDoesNotExistException($"Worker with ID={worker!.Id} dosent exist");
         }
         WorkerOnTask workerOnTask = GetCurrentTaskOfWorker(id);
         return new BO.Worker()
@@ -106,10 +106,14 @@ internal class WorkerImplementation : IWorker
             CurrentTask = workerOnTask
         };
     }
-    public WorkerOnTask GetCurrentTaskOfWorker(int id)
+    private BO.WorkerOnTask GetCurrentTaskOfWorker(int id)
     {
         DO.Task? task = _dal.Task.ReadAll(x => x.WorkerId == id).Where(x => x!.BeginTask != null&&x.EndWorkTime is null).FirstOrDefault();
 
-        return new WorkerOnTask(task!.Id, task.Alias);
+        return new BO.WorkerOnTask()
+        {
+            Id = task!.Id,
+            Name = task.Alias
+        };
     }
 }

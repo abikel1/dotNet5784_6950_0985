@@ -30,6 +30,4 @@ public interface IWorker
     /// </summary>
     /// <param name="worker">the worker that I want to update</param>
     public void UpdateWorker(BO.Worker worker);
-
-    public WorkerOnTask GetCurrentTaskOfWorker(int id);
 }
