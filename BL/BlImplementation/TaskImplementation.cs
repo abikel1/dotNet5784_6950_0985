@@ -63,7 +63,7 @@ internal class TaskImplementation : ITask
         DO.Task? task=_dal.Task.Read(id);
         if(task == null) 
         {
-            throw new BO.BlDoesNotExistException($"Task with ID={task!.Id} dosent exist");
+            throw new BO.BlDoesNotExistException($"Task with ID={id} dosent exist");
         }
         bool dependency = _dal.Dependency.ReadAll().Where(x=>x!.IdDependentTask==task.Id).Any();
         if(dependency)
@@ -85,7 +85,7 @@ internal class TaskImplementation : ITask
         DO.Task? task=_dal.Task.Read(id);
         if (task==null)
         {
-            throw new BO.BlDoesNotExistException($"Task with ID={task!.Id} dosent exist");
+            throw new BO.BlDoesNotExistException($"Task with ID={id} dosent exist");
         }
         IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll();
         IEnumerable<DO.Worker?> workers = _dal.Worker.ReadAll();
@@ -143,9 +143,17 @@ internal class TaskImplementation : ITask
     }
     private BO.Status CalculateStatus(DO.Task task)
     {
-        return task.BeginWork is null? BO.Status.Unscheduled :
-               task.BeginTask is null ? BO.Status.Scheduled :
-               task.
+        var dateTimeNow=DateTime.Now;
+        return task switch
+        {
+            DO.Task t when t.WorkerId is null => BO.Status.Unscheduled,
+            DO.Task t when t.BeginTask > dateTimeNow => BO.Status.Scheduled,
+            DO.Task t when t.EndWorkTime > dateTimeNow => BO.Status.OnTrack,
+            _ => BO.Status.Done,
+        };
+        //return task.BeginWork is null? BO.Status.Unscheduled :
+        //       task.BeginTask is null ? BO.Status.Scheduled :
+        //       task.
 
     }
 }

@@ -35,5 +35,6 @@ public class Task
     public DateTime? DeadLine {  get; set; }
     public DateTime? EndWorkTime { get; set; }
     public string? Remarks {  get; set; }
-    public string? Product {  get; set; }
+    public string? Product { get; set; }
+    public override string ToString() => this.ToStringProperty();
 }

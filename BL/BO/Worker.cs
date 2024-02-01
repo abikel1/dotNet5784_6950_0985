@@ -19,4 +19,5 @@ public class Worker
    public string? Name {  get; set; }
    public string? Email {  get; set; }
    public WorkerOnTask? CurrentTask { get; set; }
+   public override string ToString() => this.ToStringProperty();
 }

@@ -11,7 +11,6 @@ internal class WorkerImplementation : IWorker
             throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
 
         }
-
         DataSource.Workers.Add(item);
         return item.Id;
     }

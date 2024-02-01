@@ -78,9 +78,12 @@ internal class WorkerImplementation : IWorker
         {
             DO.Worker newWorker = new DO.Worker(worker.Id, (DO.Rank)((int)worker.RankWorker), worker.HourPrice, worker.Name, worker.Email);
             _dal.Worker.Update(newWorker);
-            DO.Task? task=_dal.Task.Read(worker.CurrentTask!.Id);
-            DO.Task newTask = new DO.Task(task!.Id, task.Difficulty, worker.Id, task.TaskDescription, task.MileStone, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
-            _dal.Task.Update(newTask);
+            if(worker.CurrentTask != null)
+            {
+                DO.Task? task = _dal.Task.Read(worker.CurrentTask!.Id);
+                DO.Task newTask = new DO.Task(task!.Id, task.Difficulty, worker.Id, task.TaskDescription, task.MileStone, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
+                _dal.Task.Update(newTask);
+            }
         }
         catch (DO.DalAlreadyExistsException d)
         {
@@ -93,9 +96,9 @@ internal class WorkerImplementation : IWorker
         DO.Worker? worker = _dal.Worker.Read(id);
         if (worker == null)
         {
-            throw new BO.BlDoesNotExistException($"Worker with ID={worker!.Id} dosent exist");
+            throw new BO.BlDoesNotExistException($"Worker with ID={id} dosent exist");
         }
-        WorkerOnTask workerOnTask = GetCurrentTaskOfWorker(id);
+        WorkerOnTask? workerOnTask = GetCurrentTaskOfWorker(id);
         return new BO.Worker()
         {
             Id = worker.Id,
@@ -106,10 +109,11 @@ internal class WorkerImplementation : IWorker
             CurrentTask = workerOnTask
         };
     }
-    private BO.WorkerOnTask GetCurrentTaskOfWorker(int id)
+    private BO.WorkerOnTask? GetCurrentTaskOfWorker(int id)
     {
         DO.Task? task = _dal.Task.ReadAll(x => x.WorkerId == id).Where(x => x!.BeginTask != null&&x.EndWorkTime is null).FirstOrDefault();
-
+        if (task == null)
+            return null;
         return new BO.WorkerOnTask()
         {
             Id = task!.Id,
