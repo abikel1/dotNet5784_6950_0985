@@ -109,7 +109,7 @@ internal class WorkerImplementation : IWorker
             CurrentTask = workerOnTask
         };
     }
-    private BO.WorkerOnTask? GetCurrentTaskOfWorker(int id)
+    private BO.WorkerOnTask? GetCurrentTaskOfWorker(int id)//function that return the current task of the worker with is that she got
     {
         DO.Task? task = _dal.Task.ReadAll(x => x.WorkerId == id).Where(x => x!.BeginTask != null&&x.EndWorkTime is null).FirstOrDefault();
         if (task == null)
