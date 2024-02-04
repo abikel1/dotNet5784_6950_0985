@@ -16,13 +16,13 @@ internal class Bl : IBl
 
     public void autoSchedule()
     {
-        var tasks = BlApi.Factory.Get().Task;
-        IEnumerable<BO.Task> tasksWithoutPrevios=tasks.ReadTasks().Where(x=>x.DependencyTasks==null);
-        IEnumerable<BO.Task> tasksWithPrevios=tasks.ReadTasks().Where(x=>x.DependencyTasks!=null);
-        var x = from t in tasksWithoutPrevios
-                select t.BeginTask = IBl.ProjectStartDate;
-        var y =from t in tasksWithPrevios
-               from ta in t.DependencyTasks
+        //var tasks = BlApi.Factory.Get().Task;
+        //IEnumerable<BO.Task> tasksWithoutPrevios=tasks.ReadTasks().Where(x=>x.DependencyTasks==null);
+        //IEnumerable<BO.Task> tasksWithPrevios=tasks.ReadTasks().Where(x=>x.DependencyTasks!=null);
+        //var x = from t in tasksWithoutPrevios
+        //        select t.BeginTask = IBl.ProjectStartDate;
+ //       var y =from t in tasksWithPrevios
+   //            from ta in t.DependencyTasks
 
     }
 

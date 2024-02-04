@@ -6,7 +6,7 @@ public interface ITask
     /// </summary>
     /// <param name="filter">function according to what will be filtered</param>
     /// <returns>list of the tasks</returns>
-    public IEnumerable<BO.Task> ReadTasks(Func<BO.Task, bool>? filter = null);
+    public IEnumerable<BO.TaskInList> ReadTasks(Func<BO.Task, bool>? filter = null);
     /// <summary>
     /// return the details of the Task with the id that the function got
     /// </summary>

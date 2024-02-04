@@ -129,8 +129,8 @@ internal class Program
                     Console.WriteLine(taskR);
                     break;
                 case 3://Print all the tasks
-                    IEnumerable<BO.Task?> listTasks = s_bl!.Task.ReadTasks();
-                    foreach (BO.Task? task1 in listTasks)
+                    IEnumerable<BO.TaskInList?> listTasks = s_bl!.Task.ReadTasks();
+                    foreach (BO.TaskInList? task1 in listTasks)
                     {
                         if (task1 != null)
                             Console.WriteLine(task1);

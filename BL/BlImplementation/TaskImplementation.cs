@@ -22,44 +22,57 @@ internal class TaskImplementation : ITask
         _dal.Task.Create(new DO.Task(task.Id, (DO.Rank)task.Difficulty, task.WorkerId, task.TaskDescription, false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
     }
 
-    public IEnumerable<BO.Task> ReadTasks(Func<BO.Task, bool>? filter = null)
+    public IEnumerable<BO.TaskInList> ReadTasks(Func<BO.TaskInList, bool>? filter = null)
     {
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
-        //IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll();
-        IEnumerable<DO.Worker?> workers = _dal.Worker.ReadAll();
-        return from task in tasks
-               //let depend = dependencies.Where(x => x!.IdDependentTask == task.Id)
-               let worker = workers.First(x => x!.Id == task.WorkerId)
-               let status = CalculateStatus(task)
-               select new BO.Task()
-               {
-                   Id = task.Id,
-                   Alias = task.Alias,
-                   TaskDescription = task.TaskDescription,
-                   Difficulty = (BO.Rank)task.Difficulty,
-                   StatusTask = status,
-                   WorkerId = task.WorkerId,
-                   WorkerName = worker.Name,
-                   TimeTask = task.TimeTask,
-                   CreateTask = task.CreateTask,
-                   BeginTask = task.BeginTask,
-                   BeginWork = task.BeginWork,
-                   DeadLine = task.DeadLine,
-                   EndWorkTime = task.EndWorkTime,
-                   Remarks = task.Remarks,
-                   Product = task.Product,
-                   DependencyTasks = getPriviousTask(task).ToList()//לבדוק אם מחזיר רשימה של משימות קודמות או של תלויות
-                   //DependencyTasks = (from d in depend
-                   //                   select new BO.TaskInList()
-                   //                   {
-                   //                       Id = task.Id,
-                   //                       Alias = task.Alias,
-                   //                       Description = task.TaskDescription,
-                   //                       StatusTask = status
-                   //                   }).ToList()
-               };
+        if (filter==null)
+        {
+            return from task in tasks
+                   select new BO.TaskInList()
+                   {
+                       Id = task.Id,
+                       Alias = task.Alias,
+                       Description = task.TaskDescription,
+                       StatusTask = CalculateStatus(task)
+                   };
+        }
+        else
+        {
+            return (from task in tasks
+                    let botask = new BO.TaskInList()
+                    {
+                        Id = task.Id,
+                        Alias = task.Alias,
+                        Description = task.TaskDescription,
+                        StatusTask = CalculateStatus(task)
+                    }
+                    where filter(botask)
+                    select botask);
+        }
+        //IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+        //IEnumerable<DO.Worker?> workers = _dal.Worker.ReadAll();
+        //return from task in tasks
+        //       let worker = workers.First(x => x!.Id == task.WorkerId)
+        //       select new BO.Task()
+        //       {
+        //           Id = task.Id,
+        //           Alias = task.Alias,
+        //           TaskDescription = task.TaskDescription,
+        //           Difficulty = (BO.Rank)task.Difficulty,
+        //           StatusTask = CalculateStatus(task),
+        //           WorkerId = task.WorkerId,
+        //           WorkerName = worker.Name,
+        //           TimeTask = task.TimeTask,
+        //           CreateTask = task.CreateTask,
+        //           BeginTask = task.BeginTask,
+        //           BeginWork = task.BeginWork,
+        //           DeadLine = task.DeadLine,
+        //           EndWorkTime = task.EndWorkTime,
+        //           Remarks = task.Remarks,
+        //           Product = task.Product,
+        //           DependencyTasks = getPriviousTask(task).ToList()
+        //       };
     }
-
     public void RemoveTask(int id)
     {
         DO.Task? task=_dal.Task.Read(id);
@@ -90,36 +103,29 @@ internal class TaskImplementation : ITask
             throw new BO.BlDoesNotExistException($"Task with ID={id} dosent exist");
         }
         //IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll();
-        IEnumerable<DO.Worker?> workers = _dal.Worker.ReadAll();
+        //IEnumerable<DO.Worker?> workers = _dal.Worker.ReadAll();
         //var depend = dependencies.Where(x => x!.IdDependentTask == task!.Id);
-        var worker = workers.First(x => x!.Id == task!.WorkerId);
-        var status = CalculateStatus(task!);
+        //var worker = workers.First(x => x!.Id == task!.WorkerId);
+        //var status = CalculateStatus(task!);
         return new BO.Task()
         {
             Id = task.Id,
             Alias = task.Alias,
             TaskDescription = task.TaskDescription,
             Difficulty = (BO.Rank)task.Difficulty,
-            StatusTask = status,
+            StatusTask = CalculateStatus(task!),
             WorkerId = task.WorkerId,
-            WorkerName = worker!.Name,
+            WorkerName = _dal.Worker.ReadAll().FirstOrDefault(x => x.Id == task!.WorkerId)!.Name,
             TimeTask = task.TimeTask,
-            CreateTask = task.CreateTask,
-            BeginTask = task.BeginTask,
-            BeginWork = task.BeginWork,
-            DeadLine = task.DeadLine,
-            EndWorkTime = task.EndWorkTime,
+            CreateTask = task!.CreateTask,
+            BeginTask = task!.BeginTask,
+            BeginWork = task!.BeginWork,
+            DeadLine = task!.DeadLine,
+            EndWorkTime = task!.EndWorkTime,
             Remarks = task.Remarks,
             Product = task.Product,
-            DependencyTasks = getPriviousTask(task).ToList()//לבדוק אם מחזיר רשימה של משימות קודמות או של תלויות
-            //DependencyTasks = (from d in depend
-            //                   select new BO.TaskInList()
-            //                          {
-            //                              Id = task.Id,
-            //                              Alias = task.Alias,
-            //                              Description = task.TaskDescription,
-            //                              StatusTask = status
-            //                          }).ToList()
+            DependencyTasks = getPriviousTask(task).ToList()
+
        };
     }
 
