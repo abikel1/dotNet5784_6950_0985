@@ -78,7 +78,7 @@ internal class DependencyImplementation:IDependency
                 select (DO.Dependency?)dep).FirstOrDefault();
     }
 
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null)
     {
         var dependencys = XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements();
         if (filter == null)

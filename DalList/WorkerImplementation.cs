@@ -34,7 +34,7 @@ internal class WorkerImplementation : IWorker
         return DataSource.Workers.FirstOrDefault(filter);
     }
 
-    public IEnumerable<Worker?> ReadAll(Func<Worker, bool>? filter=null)
+    public IEnumerable<Worker> ReadAll(Func<Worker, bool>? filter=null)
     {
         if (filter == null)
             return DataSource.Workers.Select(item => item);

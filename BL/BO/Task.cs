@@ -6,7 +6,7 @@ namespace BO;
 /// <param name="Id">id of task</param>
 /// <param name="Difficulty">the difficulty of task</param>
 /// <param name="StatusTask">the status of the task</param>
-/// <param name="DependencyTasks">the task that dependency on the current task</param>
+/// <param name="DependencyTasks">the tasks that dependency on the current task</param>
 /// <param name="WorkerId">the id of the worker performing the task </param>
 /// <param name="WorkerName">the name of the worker performing the task </param>
 /// <param name="TaskDescription">the description of task</param>

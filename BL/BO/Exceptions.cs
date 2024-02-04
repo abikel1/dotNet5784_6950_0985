@@ -32,4 +32,14 @@ public class BlCantRemoveObject : Exception
 {
     public BlCantRemoveObject(string? message) : base(message) { }
 }
+[Serializable]
+public class BLcantUpdateTask:Exception
+{
+    public BLcantUpdateTask(string? message) : base(message) { }
+}
+[Serializable]
+public class BlcantAssignWorker:Exception
+{
+    public BlcantAssignWorker(string? message) : base(message) { }
+}
 

@@ -22,7 +22,7 @@ internal class WorkerImplementation : IWorker
         }
         catch(DO.DalAlreadyExistsException d) 
         {
-            throw new BO.BlAlreadyExistsException($"Worker with ID={worker.Id} already exists");
+            throw new BO.BlAlreadyExistsException(d.Message);
         } 
     }
 
@@ -57,13 +57,13 @@ internal class WorkerImplementation : IWorker
                 throw new BO.BlCantRemoveObject("Cant remove worker that in the middle of a task");
             _dal.Worker.Delete(id);
         }
-        catch (Exception e) 
+        catch (DO.DalDoesNotExistException e) 
         {
             throw new BO.BlDoesNotExistException(e.Message);
         }
     }
 
-    public void UpdateWorker(BO.Worker worker)
+    public void UpdateWorker(BO.Worker worker)//לבדוק אם אפשר לעדכן משימה מוקצית
     {
         DO.Worker? oldworker = _dal.Worker.Read(worker.Id);
         if (worker.Id <= 0)
@@ -87,7 +87,7 @@ internal class WorkerImplementation : IWorker
         }
         catch (DO.DalAlreadyExistsException d)
         {
-            throw new BO.BlAlreadyExistsException($"Worker with ID={worker.Id} dosent exist");
+            throw new BO.BlAlreadyExistsException(d.Message);
         }
     }
 

@@ -39,7 +39,7 @@ internal class TaskImplementation:ITask
         return tasks.FirstOrDefault(filter);
     }
 
-    public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null)
+    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null)
     {
         List<DO.Task> tasks = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
         if (filter == null)
