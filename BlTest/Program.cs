@@ -195,7 +195,6 @@ internal class Program
         {
             Id = 0,
             Difficulty = (BO.Rank)rank,
-            WorkerId = 0,//לבדוק
             TaskDescription = taskDescreption,
             Alias = name,
             CreateTask = createTask,
@@ -208,7 +207,7 @@ internal class Program
             Product=product,
             StatusTask=0,
             DependencyTasks=null,
-            WorkerName=null
+       
         };
         return task;
     }
@@ -233,7 +232,7 @@ internal class Program
             Id = worker2!.Id,
             Name = name,
             Email = email,
-            RankWorker = (BO.Rank)rank,
+            RankWorker = rank,
             HourPrice=cost1,
             CurrentTask = null
         };
@@ -248,7 +247,7 @@ internal class Program
             name = task2.Alias!;
         string idw = Console.ReadLine()!;
         int? workerId;
-        if (idw == "") { workerId = task2.WorkerId; }
+        if (idw == "") { workerId = task2.Worker.Id; }
         else workerId = int.Parse(idw);
         string difficult = Console.ReadLine()!;
         BO.Rank rank;
@@ -278,8 +277,13 @@ internal class Program
         BO.Task? task = new BO.Task()
         {
             Id = 0,
-            Difficulty = (BO.Rank)rank,
-            WorkerId = 0,//לבדוק
+            Difficulty = rank,
+            Worker = new BO.WorkerOnTask
+            {
+                Id = id,
+                Name = name
+            },
+       
             TaskDescription = taskDescription,
             Alias = name,
             CreateTask = task2.CreateTask,
@@ -292,7 +296,7 @@ internal class Program
             Product = product,
             StatusTask = 0,
             DependencyTasks = null,
-            WorkerName = null
+            
         };
         return task;
     }

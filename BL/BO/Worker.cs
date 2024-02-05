@@ -18,6 +18,6 @@ public class Worker
    public double HourPrice { get; set; }
    public string? Name {  get; set; }
    public string? Email {  get; set; }
-   public WorkerOnTask? CurrentTask { get; set; }
+   public TaskOnWorker? CurrentTask { get; set; }
    public override string ToString() => this.ToStringProperty();
 }

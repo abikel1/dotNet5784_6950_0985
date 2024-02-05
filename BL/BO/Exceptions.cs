@@ -38,8 +38,8 @@ public class BLcantUpdateTask:Exception
     public BLcantUpdateTask(string? message) : base(message) { }
 }
 [Serializable]
-public class BlcantAssignWorker:Exception
+public class BlCantAssignWorker:Exception
 {
-    public BlcantAssignWorker(string? message) : base(message) { }
+    public BlCantAssignWorker(string? message) : base(message) { }
 }
 

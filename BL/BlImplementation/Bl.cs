@@ -12,7 +12,7 @@ internal class Bl : IBl
 
     public IWorkerOnTask WorkerOnTask => new WorkerOnTaskImplementation();
 
-    public ITaskInList taskInList => new TaskInListImplementation();
+    //public ITaskInList taskInList => new TaskInListImplementation();
 
     public void autoSchedule()
     {

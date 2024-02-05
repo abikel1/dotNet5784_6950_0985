@@ -24,8 +24,7 @@ public class Task
     public Rank Difficulty {  get; set; }
     public Status StatusTask { get; set; }
     public List<TaskInList>? DependencyTasks { get; set; }
-    public int? WorkerId {  get; set; }
-    public string? WorkerName { get; set; }
+    public WorkerOnTask? Worker { get; set; }
     public string? TaskDescription { get; set; }
     public string? Alias { get; set; }
     public DateTime? CreateTask { get; set; }
