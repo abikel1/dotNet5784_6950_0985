@@ -4,12 +4,29 @@ public static class Tools
 {
     public static string ToStringProperty<T>(this T obj)
     {
-        var properties=typeof(T).GetProperties();
-        string result=$"{typeof(T).Name} properties: \n";
-        foreach(var property in properties)
+        string result = $"{typeof(T).Name} properties: \n";
+        var properties = typeof(T).GetProperties();
+        foreach (var property in properties)
         {
-            result += $"{property.Name}: {property.GetValue(obj)}\n";
+            var value = property.GetValue(obj);
+
+            // בדיקה האם הערך אינו null
+            if (value != null)
+            {
+                if (value is IEnumerable<object> && !(value is string))
+                {
+                    var enumerable = value as IEnumerable<object>;
+                    foreach (var item in enumerable)
+                    {
+                        result += ToStringProperty(item);
+                    }
+                }
+                else
+                {
+                    result += $"{property.Name}: {value}\n";
+                }
+            }
         }
-        return result ;
+        return result;
     }
 }

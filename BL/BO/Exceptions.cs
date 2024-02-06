@@ -42,4 +42,9 @@ public class BlCantAssignWorker:Exception
 {
     public BlCantAssignWorker(string? message) : base(message) { }
 }
+[Serializable]
+public class BlcanotUpdateStartdate:Exception
+{
+    public BlcanotUpdateStartdate(string? message) : base(message) { }
+}
 

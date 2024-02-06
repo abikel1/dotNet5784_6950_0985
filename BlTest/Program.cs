@@ -11,7 +11,6 @@ internal class Program
     {
         try
         {
-            BlApi.Factory.Get().autoSchedule();
             chooseEntities();
         }
         catch (Exception ex)
@@ -242,7 +241,7 @@ internal class Program
     }
     private static BO.Task updateTask(BO.Task? task2)
     {
-        Console.WriteLine("Enter name, id worker, difficulty between 0-4, taskDescreption, product, timeTask, remarks");
+        Console.WriteLine("Enter name, id worker, difficulty between 0-4, taskDescreption, product, timeTask, remarks,begin work task");
         int id = task2!.Id;
         string name = Console.ReadLine()!;
         if (name == "")
@@ -270,42 +269,31 @@ internal class Program
             timeTask = int.Parse(time);
         string? remarks = Console.ReadLine()!;
         if (remarks == "") { remarks = task2!.Remarks; }
-        //BO.WorkerOnTask w;
-        //if (BlApi.Factory.Get().GetStatusProject() != BO.StatusProject.Planning)
-        //{
-        //    BO.WorkerOnTask w1 = new BO.WorkerOnTask()
-        //    {
-        //        Id = id,
-        //        Name = name
-        //    };
-        //}
-        //string? createTime = Console.ReadLine();
-        //string? beginWorkDateP = Console.ReadLine();
-        //string? beginWorkDate = Console.ReadLine();
-        //string? deadLine = Console.ReadLine();
-        //string? endWorkTime = Console.ReadLine();
-        //DateTime? BeginWorkDateP = (beginWorkDateP == "") ? taskU.BeginWorkDateP : DateTime.Parse(beginWorkDateP);
-        //DateTime? BeginWorkDate = (beginWorkDate == "") ? taskU.BeginWorkDate : DateTime.Parse(beginWorkDate);
-        //DateTime? DeadLine = (deadLine == "") ? taskU.DeadLine : DateTime.Parse(deadLine);
-        //DateTime? EndWorkTime = (endWorkTime == "") ? taskU.EndWorkTime : DateTime.Parse(endWorkTime);
+        string? beginWork = Console.ReadLine();
+        DateTime? BeginWorkDate=null;
+        if (beginWork != "")
+        {
+            BeginWorkDate = DateTime.Parse(beginWork!);
+            s_bl.Task.UpdateDtartDates(id, BeginWorkDate);
+        }
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
             BO.Task? task = new BO.Task()
             {
-                Id = 0,
+                Id = id,
                 Difficulty = rank,
                 TaskDescription = taskDescription,
                 Alias = name,
                 CreateTask = task2.CreateTask,
-                BeginTask = null,
-                BeginWork = null,
+                BeginTask = s_bl.Task.Read(id).BeginTask,
+                BeginWork = s_bl.Task.Read(id).BeginWork,
                 TimeTask = timeTask,
-                DeadLine = null,
-                EndWorkTime = null,
+                DeadLine = s_bl.Task.Read(id).DeadLine,
+                EndWorkTime = s_bl.Task.Read(id).EndWorkTime,
                 Remarks = remarks,
                 Product = product,
                 StatusTask = 0,
-                DependencyTasks = null,
+                DependencyTasks = s_bl.Task.Read(id).DependencyTasks,
             };
             return task;
         }
@@ -313,7 +301,7 @@ internal class Program
         {
             BO.Task? task = new BO.Task()
             {
-                Id = 0,
+                Id = id,
                 Difficulty = rank,
                 Worker = new BO.WorkerOnTask
                 {
@@ -323,15 +311,15 @@ internal class Program
                 TaskDescription = taskDescription,
                 Alias = name,
                 CreateTask = task2.CreateTask,
-                BeginTask = null,
-                BeginWork = null,
+                BeginTask = s_bl.Task.Read(id).BeginTask,
+                BeginWork = s_bl.Task.Read(id).BeginWork,
                 TimeTask = timeTask,
-                DeadLine = null,
-                EndWorkTime = null,
+                DeadLine = s_bl.Task.Read(id).DeadLine,
+                EndWorkTime = s_bl.Task.Read(id).EndWorkTime,
                 Remarks = remarks,
                 Product = product,
                 StatusTask = 0,
-                DependencyTasks = null,
+                DependencyTasks = s_bl.Task.Read(id).DependencyTasks,
             };
             return task;
         }

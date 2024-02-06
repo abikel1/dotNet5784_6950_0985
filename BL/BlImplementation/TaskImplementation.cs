@@ -122,19 +122,19 @@ internal class TaskImplementation : ITask
     }
     private IEnumerable<BO.TaskInList> getPriviousTask(DO.Task task)
     {
-        return from DO.Dependency depend in _dal.Dependency.ReadAll(x => x.IdDependentTask == task.Id)
-               select new BO.TaskInList
-               {
-                   Id = depend.IdPreviousTask,
-                   Alias = _dal.Task.Read(depend.IdPreviousTask)!.Alias,
-                   Description = _dal.Task.Read(depend.IdPreviousTask)!.TaskDescription,
-                   StatusTask = CalculateStatus(_dal.Task.Read(depend.IdPreviousTask)!)
-               };
+            return from DO.Dependency depend in _dal.Dependency.ReadAll(x => x.IdDependentTask == task.Id)
+                   select new BO.TaskInList
+                   {
+                       Id = depend.IdPreviousTask,
+                       Alias = _dal.Task.Read(depend.IdPreviousTask)!.Alias,
+                       Description = _dal.Task.Read(depend.IdPreviousTask)!.TaskDescription,
+                       StatusTask = CalculateStatus(_dal.Task.Read(depend.IdPreviousTask)!)
+                   };
     }
     private void CheckTaskForWorker(BO.Task task)
     {
         DO.Task oldTask = _dal.Task.Read(task.Id)!;
-            if (oldTask != null && oldTask.WorkerId != task.Worker!.Id)
+            if (oldTask != null && task.Worker!=null && oldTask.WorkerId != task.Worker!.Id)
                 throw new BO.BlCantAssignWorker("the task is already assigned to an worker");
         if (getPriviousTask(oldTask!).Where(x => x.StatusTask != BO.Status.Done).Any())
             throw new BO.BlCantAssignWorker("cant assign worker for this task");
@@ -211,5 +211,38 @@ internal class TaskImplementation : ITask
             DO.Task t when t.EndWorkTime > dateTimeNow => BO.Status.OnTrack,
             _ => BO.Status.Done,
         };
+    }
+    public void UpdateDtartDates(int id, DateTime? startDate)
+    {
+        DO.Task? dotask = _dal.Task.Read(id);
+        if(dotask==null)
+            throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
+        IEnumerable<TaskInList> previousTasks = getPriviousTask(dotask);
+        if ((previousTasks == null) && (startDate < IBl.ProjectStartDate))
+            throw new BO.BlcanotUpdateStartdate("cant update start date because the start date is before the planning date of starting the project");
+        else
+        {
+            var result = from p in previousTasks
+                         let t = _dal.Task.Read(p.Id)
+                         where t != null && t.BeginWork == null
+                         select p;
+            if (result != null)
+                throw new BO.BlcanotUpdateStartdate("cant update the start date of the task because the task depent on tasks that dont have start date ");
+            var result2 = from p in previousTasks
+                          let t = _dal.Task.Read(p.Id)
+                          where (t != null) && (startDate < t.EndWorkTime)
+                          select p;
+            if (result2 != null)
+                throw new BO.BlcanotUpdateStartdate("cant update start date because the task depent on tasks that finish after the satart date");
+        }
+        try
+        {
+            DO.Task updateTask = dotask with { BeginTask = startDate };
+            _dal.Task.Update(updateTask);
+        }
+        catch(DO.DalDoesNotExistException)
+        {
+            throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
+        }
     }
 }
