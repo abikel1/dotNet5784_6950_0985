@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
-    <Id>0</Id>
-    <Difficulty>Beginner</Difficulty>
-    <WorkerId>0</WorkerId>
-    <TaskDescription> Select the desired country or city to visit</TaskDescription>
-    <MileStone>false</MileStone>
-    <Alias>Choose Destination</Alias>
-    <CreateTask>2024-02-13T00:00:00</CreateTask>
-    <BeginWork xsi:nil="true" />
-    <BeginTask xsi:nil="true" />
-    <TimeTask>23</TimeTask>
-    <DeadLine xsi:nil="true" />
-    <EndWorkTime xsi:nil="true" />
-    <Remarks>Consider factors like interests, budget, travel time, and visa requirements</Remarks>
-    <Product>Chosen destination</Product>
-  </Task>
-  <Task>
     <Id>1</Id>
     <Difficulty>Beginner</Difficulty>
     <WorkerId>0</WorkerId>
@@ -2789,5 +2773,21 @@
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Offline maps and travel information</Product>
+  </Task>
+  <Task>
+    <Id>0</Id>
+    <Difficulty>Advanced</Difficulty>
+    <WorkerId xsi:nil="true" />
+    <TaskDescription>vmfvkkfv</TaskDescription>
+    <MileStone>false</MileStone>
+    <Alias>chaya</Alias>
+    <CreateTask>2024-02-05T16:37:21.8504782+02:00</CreateTask>
+    <BeginWork xsi:nil="true" />
+    <BeginTask xsi:nil="true" />
+    <TimeTask>3</TimeTask>
+    <DeadLine xsi:nil="true" />
+    <EndWorkTime xsi:nil="true" />
+    <Remarks>fnv j nfj</Remarks>
+    <Product>dncjcvd</Product>
   </Task>
 </ArrayOfTask>

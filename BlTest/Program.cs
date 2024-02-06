@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BlApi;
+using DalApi;
 using DalTest;
 using DO;
 
@@ -10,6 +11,7 @@ internal class Program
     {
         try
         {
+            BlApi.Factory.Get().autoSchedule();
             chooseEntities();
         }
         catch (Exception ex)
@@ -246,8 +248,11 @@ internal class Program
         if (name == "")
             name = task2.Alias!;
         string idw = Console.ReadLine()!;
-        int? workerId;
-        if (idw == "") { workerId = task2.Worker.Id; }
+        int workerId=0;
+        if (idw == "")
+        {
+            if (task2.Worker != null) workerId = task2.Worker.Id;
+        }
         else workerId = int.Parse(idw);
         string difficult = Console.ReadLine()!;
         BO.Rank rank;
@@ -265,6 +270,15 @@ internal class Program
             timeTask = int.Parse(time);
         string? remarks = Console.ReadLine()!;
         if (remarks == "") { remarks = task2!.Remarks; }
+        //BO.WorkerOnTask w;
+        //if (BlApi.Factory.Get().GetStatusProject() != BO.StatusProject.Planning)
+        //{
+        //    BO.WorkerOnTask w1 = new BO.WorkerOnTask()
+        //    {
+        //        Id = id,
+        //        Name = name
+        //    };
+        //}
         //string? createTime = Console.ReadLine();
         //string? beginWorkDateP = Console.ReadLine();
         //string? beginWorkDate = Console.ReadLine();
@@ -274,30 +288,52 @@ internal class Program
         //DateTime? BeginWorkDate = (beginWorkDate == "") ? taskU.BeginWorkDate : DateTime.Parse(beginWorkDate);
         //DateTime? DeadLine = (deadLine == "") ? taskU.DeadLine : DateTime.Parse(deadLine);
         //DateTime? EndWorkTime = (endWorkTime == "") ? taskU.EndWorkTime : DateTime.Parse(endWorkTime);
-        BO.Task? task = new BO.Task()
+        if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
-            Id = 0,
-            Difficulty = rank,
-            Worker = new BO.WorkerOnTask
+            BO.Task? task = new BO.Task()
             {
-                Id = id,
-                Name = name
-            },
-       
-            TaskDescription = taskDescription,
-            Alias = name,
-            CreateTask = task2.CreateTask,
-            BeginTask = null,
-            BeginWork = null,
-            TimeTask = timeTask,
-            DeadLine = null,
-            EndWorkTime = null,
-            Remarks = remarks,
-            Product = product,
-            StatusTask = 0,
-            DependencyTasks = null,
-            
-        };
-        return task;
+                Id = 0,
+                Difficulty = rank,
+                TaskDescription = taskDescription,
+                Alias = name,
+                CreateTask = task2.CreateTask,
+                BeginTask = null,
+                BeginWork = null,
+                TimeTask = timeTask,
+                DeadLine = null,
+                EndWorkTime = null,
+                Remarks = remarks,
+                Product = product,
+                StatusTask = 0,
+                DependencyTasks = null,
+            };
+            return task;
+        }
+        else
+        {
+            BO.Task? task = new BO.Task()
+            {
+                Id = 0,
+                Difficulty = rank,
+                Worker = new BO.WorkerOnTask
+                {
+                    Id = workerId,
+                    Name = s_bl.Worker.Read(workerId).Name
+                },
+                TaskDescription = taskDescription,
+                Alias = name,
+                CreateTask = task2.CreateTask,
+                BeginTask = null,
+                BeginWork = null,
+                TimeTask = timeTask,
+                DeadLine = null,
+                EndWorkTime = null,
+                Remarks = remarks,
+                Product = product,
+                StatusTask = 0,
+                DependencyTasks = null,
+            };
+            return task;
+        }
     }
 }

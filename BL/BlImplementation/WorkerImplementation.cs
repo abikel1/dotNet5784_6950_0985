@@ -86,17 +86,14 @@ internal class WorkerImplementation : IWorker
     public void UpdateWorker(BO.Worker worker)//לבדוק אם אפשר לעדכן משימה מוקצית
     {
         DO.Worker? oldworker = _dal.Worker.Read(worker.Id);
-        if (worker.Id <= 0)//If the Id is not correct
-            throw new BO.BlInValidInputException("Invalid ID of worker");
         if (worker.Name == "")//If the name is not correct
             throw new BO.BlInValidInputException("Invalid name of worker");
         if (worker.HourPrice <= 0)//If the hourPrice is not correct
             throw new BO.BlInValidInputException("Invalid price of worker");
-        if ((DO.Rank)worker.RankWorker > oldworker!.RankWorker)//If the hourPrice is not correct
+        if ((DO.Rank)worker.RankWorker > oldworker!.RankWorker)//If the rank of worker is not correct
             throw new BO.BlInValidInputException("Invalid rank of worker");
         if (!new EmailAddressAttribute().IsValid(worker.Email))//If the email is not correct
             throw new BO.BlInValidInputException("Invalid email of worker");
-        //_dal.Task.ReadAll(x=>x.Id == worker.Id)
         try
         {
             DO.Worker newWorker = new DO.Worker(worker.Id, (DO.Rank)((int)worker.RankWorker), worker.HourPrice, worker.Name, worker.Email);

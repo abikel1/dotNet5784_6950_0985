@@ -8,8 +8,6 @@ internal class TaskImplementation : ITask
     private DalApi.IDal _dal = DalApi.Factory.Get;
     public void AddTask(BO.Task task)
     {
-        if (task.Id <= 0)
-            throw new BO.BlInValidInputException("Invalid ID of task");
         if (task.Alias == "")
             throw new BO.BlInValidInputException("Invalid alisa of task");
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
@@ -23,18 +21,21 @@ internal class TaskImplementation : ITask
         {
             throw new BO.BLcantUpdateTask("You cant add a task during execution");
         }
-        var x=from t in task.DependencyTasks
-              select new DO.Dependency 
-              { 
-                  Id = 0,
-                  IdDependentTask=task.Id,
-                  IdPreviousTask=t.Id,
-              };
-        var y =from t in x 
-               select _dal.Dependency.Create(t);
-        DO.Task newTask=(new DO.Task(task.Id, (DO.Rank)task.Difficulty, 0, task.TaskDescription, false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
+        DO.Task newTask = (new DO.Task(task.Id, (DO.Rank)task.Difficulty, 0, task.TaskDescription, false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
         task.StatusTask = CalculateStatus(newTask);
         task.DependencyTasks = getPriviousTask(newTask).ToList();
+        if (task.DependencyTasks!=null)
+        {
+            var x = from t in task.DependencyTasks
+                    select new DO.Dependency
+                    {
+                        Id = 0,
+                        IdDependentTask = task.Id,
+                        IdPreviousTask = t.Id,
+                    };
+            var y = from t in x
+                    select _dal.Dependency.Create(t);
+        }
         _dal.Task.Create(newTask);
     }
 
@@ -67,7 +68,7 @@ internal class TaskImplementation : ITask
         }
         try
         {
-            _dal.Worker.Delete(id);
+            _dal.Task.Delete(id);
         }
         catch (DO.DalDoesNotExistException ex)
         {
@@ -133,15 +134,18 @@ internal class TaskImplementation : ITask
     private void CheckTaskForWorker(BO.Task task)
     {
         DO.Task oldTask = _dal.Task.Read(task.Id)!;
-        if (oldTask != null && oldTask.WorkerId != task.Id)
-            throw new BO.BlCantAssignWorker("the task is already assigned to an worker");
+            if (oldTask != null && oldTask.WorkerId != task.Worker!.Id)
+                throw new BO.BlCantAssignWorker("the task is already assigned to an worker");
         if (getPriviousTask(oldTask!).Where(x => x.StatusTask != BO.Status.Done).Any())
             throw new BO.BlCantAssignWorker("cant assign worker for this task");
-        if (task.Worker!.Id is int idWorker)
+        if(task.Worker !=null)
         {
-            DO.Worker worker = _dal.Worker.Read(idWorker)!;
-            if (task.Difficulty > (BO.Rank)((int)worker.RankWorker))
-                throw new BlCantAssignWorker("the worker cant do this task");
+            if (task.Worker!.Id is int idWorker)
+            {
+                DO.Worker worker = _dal.Worker.Read(idWorker)!;
+                if (task.Difficulty > (BO.Rank)((int)worker.RankWorker))
+                    throw new BlCantAssignWorker("the worker cant do this task");
+            }
         }
     }
 
@@ -168,10 +172,19 @@ internal class TaskImplementation : ITask
 
         if (task.Worker is not null && _dal.Worker.Read(x => x.Id == task.Worker.Id) == null)
             throw new BO.BlDoesNotExistException($"Worker with ID={task.Worker.Id} dosent exist");
-
-        DO.Task newTask = new DO.Task(task.Id, (DO.Rank)task.Difficulty, task.Worker.Id, task.TaskDescription,
+        DO.Task newTask;
+        if (task.Worker is null)
+        {
+            newTask = new DO.Task(task.Id, (DO.Rank)task.Difficulty,null, task.TaskDescription,
             false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask,
             task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
+        }
+        else
+        {
+           newTask = new DO.Task(task.Id, (DO.Rank)task.Difficulty, null, task.TaskDescription,
+           false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask,
+           task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
+        }
 
         task.StatusTask = CalculateStatus(newTask);
         task.DependencyTasks = getPriviousTask(newTask).ToList();
