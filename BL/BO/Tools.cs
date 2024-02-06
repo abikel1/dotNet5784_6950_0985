@@ -10,13 +10,13 @@ public static class Tools
         {
             var value = property.GetValue(obj);
 
-            // בדיקה האם הערך אינו null
+
             if (value != null)
             {
                 if (value is IEnumerable<object> && !(value is string))
                 {
                     var enumerable = value as IEnumerable<object>;
-                    foreach (var item in enumerable)
+                    foreach (var item in enumerable!)
                     {
                         result += ToStringProperty(item);
                     }
