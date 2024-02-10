@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using System.Xml.Linq;
 
 namespace BlImplementation;
 
@@ -13,30 +14,29 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
             if (task.Worker != null)
-                throw new BO.BLcantUpdateTask("Cant update worker on task in the planning level");
+                throw new BO.BlplanningStatus("Cant update worker on task in the planning level");
             if (task.BeginWork != null)
-                throw new BO.BLcantUpdateTask("Cant update planning startDate of task in the planning level");
+                throw new BO.BlplanningStatus("Cant update planning startDate of task in the planning level");
         }
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Execution)
         {
-            throw new BO.BLcantUpdateTask("You cant add a task during execution");
+            throw new BO.BlexecutionStatus("You cant add a task during execution");
         }
         DO.Task newTask = (new DO.Task(task.Id, (DO.Rank)task.Difficulty, 0, task.TaskDescription, false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
         task.StatusTask = CalculateStatus(newTask);
-        task.DependencyTasks = getPriviousTask(newTask).ToList();
+        int id=_dal.Task.Create(newTask);
         if (task.DependencyTasks!=null)
         {
-            var x = from t in task.DependencyTasks
-                    select new DO.Dependency
+            var x = from BO.TaskInList t in task.DependencyTasks
+                    select new DO.Dependency()
                     {
                         Id = 0,
-                        IdDependentTask = task.Id,
+                        IdDependentTask = id,
                         IdPreviousTask = t.Id,
                     };
-            var y = from t in x
-                    select _dal.Dependency.Create(t);
+            var y = (from t in x
+                    select _dal.Dependency.Create(t)).ToList();
         }
-        _dal.Task.Create(newTask);
     }
 
     public IEnumerable<BO.TaskInList> ReadTasks(Func<BO.TaskInList, bool>? filter = null)
@@ -105,7 +105,7 @@ internal class TaskImplementation : ITask
             EndWorkTime = task!.EndWorkTime,
             Remarks = task.Remarks,
             Product = task.Product,
-            DependencyTasks = getPriviousTask(task).ToList()
+            DependencyTasks = getPriviousTask(task)
         };
     }
 
@@ -117,19 +117,21 @@ internal class TaskImplementation : ITask
                      select t;
         if (result.Count() > 0)
             throw new BO.BLcantUpdateTask("this date cant be update");
-        if (getPriviousTask(task) == null && IBl.ProjectStartDate == null && date <= IBl.ProjectStartDate)
+        if (getPriviousTask(task) == null && BlApi.Factory.Get().GetStartProjectDate() == null && date <= BlApi.Factory.Get().GetStartProjectDate())
             throw new BO.BLcantUpdateTask("this date cant be update");
     }
     private IEnumerable<BO.TaskInList> getPriviousTask(DO.Task task)
     {
-            return from DO.Dependency depend in _dal.Dependency.ReadAll(x => x.IdDependentTask == task.Id)
+           var result= from DO.Dependency depend in _dal.Dependency.ReadAll(x => x.IdDependentTask == task.Id)
+                   let deptask= _dal.Task.Read(depend.IdPreviousTask)!
                    select new BO.TaskInList
                    {
                        Id = depend.IdPreviousTask,
-                       Alias = _dal.Task.Read(depend.IdPreviousTask)!.Alias,
-                       Description = _dal.Task.Read(depend.IdPreviousTask)!.TaskDescription,
+                       Alias = deptask.Alias,
+                       Description = deptask.TaskDescription,
                        StatusTask = CalculateStatus(_dal.Task.Read(depend.IdPreviousTask)!)
                    };
+        return result;
     }
     private void CheckTaskForWorker(BO.Task task)
     {
@@ -157,17 +159,17 @@ internal class TaskImplementation : ITask
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
             if (task.Worker != null)
-                throw new BO.BLcantUpdateTask("Cant update worker on task in the planning level");
+                throw new BO.BlplanningStatus("Cant update worker on task in the planning level");
             if (task.BeginWork != null)
-                throw new BO.BLcantUpdateTask("Cant update planning startDate of task in the planning level");
+                throw new BO.BlplanningStatus("Cant update planning startDate of task in the planning level");
         }
 
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Execution)
         {
             if (task.TimeTask != null)
-                throw new BO.BLcantUpdateTask("Cant update during time of task in the planning level");
+                throw new BO.BlexecutionStatus("Cant update during time of task in the excution level");
             if (task.BeginTask != null)
-                throw new BO.BLcantUpdateTask("Cant update startDate of task in the planning level");
+                throw new BO.BlexecutionStatus("Cant update startDate of task in the excution level");
         }
 
         if (task.Worker is not null && _dal.Worker.Read(x => x.Id == task.Worker.Id) == null)
@@ -212,13 +214,13 @@ internal class TaskImplementation : ITask
             _ => BO.Status.Done,
         };
     }
-    public void UpdateDtartDates(int id, DateTime? startDate)
+    public void UpdateStartDates(int id, DateTime? startDate)
     {
         DO.Task? dotask = _dal.Task.Read(id);
         if(dotask==null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
         IEnumerable<TaskInList> previousTasks = getPriviousTask(dotask);
-        if ((previousTasks == null) && (startDate < IBl.ProjectStartDate))
+        if ((previousTasks == null) && (startDate < BlApi.Factory.Get().GetStartProjectDate()))
             throw new BO.BlcanotUpdateStartdate("cant update start date because the start date is before the planning date of starting the project");
         else
         {
@@ -244,5 +246,10 @@ internal class TaskImplementation : ITask
         {
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
         }
+    }
+    public void clear()
+    {
+        _dal.Dependency.clear();
+        _dal.Task.clear();
     }
 }

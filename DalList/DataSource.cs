@@ -4,12 +4,12 @@ internal static class DataSource
 {
     internal static class Config
     {
-        public static DateTime? startProject { get; set; } = null;
-        public static DateTime? endProject { get; set; } = null;
-        internal const int StartTaskId = 1;
+        internal static DateTime? startProject = null;
+        internal static DateTime? endProject = null;
+        internal const int StartTaskId = 0;
         internal static int nextTaskId = StartTaskId;
         internal static int NextTaskId { get => nextTaskId++; }
-        internal const int StartDependencyId = 1;
+        internal const int StartDependencyId = 0;
         internal static int nextDependencyId = StartDependencyId;
         internal static int NextDependencyId { get => nextDependencyId++; }
     }

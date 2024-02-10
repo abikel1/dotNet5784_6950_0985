@@ -23,7 +23,7 @@ public class Task
     public int Id {  get; init; }
     public Rank Difficulty {  get; set; }
     public Status StatusTask { get; set; }
-    public List<TaskInList>? DependencyTasks { get; set; }
+    public IEnumerable<TaskInList>? DependencyTasks { get; set; }
     public WorkerOnTask? Worker { get; set; }
     public string? TaskDescription { get; set; }
     public string? Alias { get; set; }

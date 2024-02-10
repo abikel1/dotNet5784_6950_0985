@@ -4,6 +4,7 @@ using BlApi;
 using BO;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 internal class WorkerImplementation : IWorker
@@ -20,7 +21,7 @@ internal class WorkerImplementation : IWorker
         if(!new EmailAddressAttribute().IsValid(worker.Email))//If the email is not correct
             throw new BO.BlInValidInputException("Invalid email of worker");
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning && worker.CurrentTask!=null)
-            throw new BO.BLcantUpdateTask("You cant assign a task to an engineer during the planning project stage");
+            throw new BO.BlplanningStatus("You cant assign a task to an engineer during the planning project stage");
         try
         {
             DO.Worker newWorker = new DO.Worker(worker.Id,(DO.Rank)((int)worker.RankWorker),worker.HourPrice,worker.Name,worker.Email);//Building a worker with the data of the worker that the function got
@@ -36,7 +37,7 @@ internal class WorkerImplementation : IWorker
     {
         IEnumerable<DO.Worker?> workers = _dal.Worker.ReadAll();
         IEnumerable<DO.Task?> tasks=_dal.Task.ReadAll();
-        return from worker in workers
+        var result= from worker in workers
                let task = tasks.FirstOrDefault(x => x!.WorkerId == worker.Id)
                let w = new BO.Worker()
                {
@@ -53,6 +54,8 @@ internal class WorkerImplementation : IWorker
                }
                where filter is null ? true : filter(w)
                select w;
+        var orederWorkers = result.OrderBy(x => x.Name);//order the list of the workers by their name
+        return orederWorkers;
     }
 
     public void RemoveWorker(int id)
@@ -105,9 +108,9 @@ internal class WorkerImplementation : IWorker
                 _dal.Task.Update(newTask);
             }
         }
-        catch (DO.DalAlreadyExistsException d)
+        catch (DO.DalDoesNotExistException d)
         {
-            throw new BO.BlAlreadyExistsException(d.Message);
+            throw new BO.BlDoesNotExistException(d.Message);
         }
     }
 
@@ -139,5 +142,27 @@ internal class WorkerImplementation : IWorker
             Id = task!.Id,
             Name = task.Alias
         };
+    }
+    public void clear()
+    {
+        _dal.Worker.clear();
+    }
+
+    public IEnumerable<BO.Worker> RankGroups(int rank)
+    {
+        var groupWorker = _dal.Worker.ReadAll().GroupBy(w => (int)w.RankWorker);
+        var groupw = groupWorker.FirstOrDefault(g => g.Key == rank);
+        if (groupw == null)
+            throw new BO.BlDoesNotExistException("there is no such a worker");
+        return from DO.Worker doworker in groupw
+               select new BO.Worker()
+               {
+                   Id = doworker.Id,
+                   Name = doworker.Name,
+                   HourPrice = doworker.HourPrice,
+                   Email = doworker.Email,
+                   RankWorker = (BO.Rank)doworker.RankWorker,
+                   CurrentTask = GetCurrentTaskOfWorker(doworker.Id)
+               };
     }
 }

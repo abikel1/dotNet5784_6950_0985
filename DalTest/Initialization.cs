@@ -127,7 +127,7 @@ public static class Initialization
             else 
                 difficult=(DO.Rank)2;
             Random rand = new Random(DateTime.Now.Millisecond);
-            DateTime start = new DateTime(2024, 2, 9, 0, 0, 0);
+            DateTime start = new DateTime(2025, 2, 9, 0, 0, 0);
             int rangestart = (start - DateTime.Today).Days;
             DateTime RanDay=start.AddDays(rand.Next(rangestart));
             DateTime createProject = RanDay;

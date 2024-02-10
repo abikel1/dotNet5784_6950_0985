@@ -24,6 +24,15 @@ internal class Program
         int entity = 1;
         while (entity != 0)
         {
+            if (BlApi.Factory.Get().GetStartProjectDate() == null)
+            {
+                Console.WriteLine("enter the day, month and year of the start date of the project");
+                int.TryParse(Console.ReadLine(), out int day);
+                int.TryParse(Console.ReadLine(), out int month);
+                int.TryParse(Console.ReadLine(), out int year);
+                DateTime date = new DateTime(year, month, day);
+                BlApi.Factory.Get().SetStartProjectDate(date);
+            }
             Console.WriteLine("Choose the entity that you want to check");
             Console.WriteLine("Enter 1-Worker\n 2-Task\n  3-data initialization\n 0-Exit");
             entity = int.Parse(Console.ReadLine()!);
@@ -42,8 +51,8 @@ internal class Program
                     string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
                     if (ans == "Y") //stage 3
                     {
-                        //s_bl!.Worker.clear();
-                        //s_bl!.Task.clear();
+                        s_bl!.Worker.clear();
+                        s_bl!.Task.clear();
                         //s_bl!.Dependency.clear();
                         Initialization.Do(); //stage 4
                     }
@@ -191,11 +200,36 @@ internal class Program
         if (remarks == "")
             remarks = null;
         DateTime createTask = DateTime.Now;
-        Rank rank = (Rank)difficulty;
+        BO.Rank rank = (BO.Rank)difficulty;
+        List<BO.TaskInList> tasks = new List<BO.TaskInList>();
+        Console.WriteLine("do you have previous tasks of this task Y/N");
+         char answer =char.Parse(Console.ReadLine()!);
+        if(answer=='Y')
+        {
+            Console.WriteLine("How many previous tasks do you have?");
+            int.TryParse(Console.ReadLine(),out int number);
+            Console.WriteLine("enter all the previous tasks of this task");
+            BO.Task previostask;
+            BO.TaskInList taskInList;
+            for (int i = 0; i < number; i++)
+            {
+                int.TryParse(Console.ReadLine(), out int previousid);
+                previostask = s_bl.Task.Read(previousid);
+                taskInList = new BO.TaskInList()
+                {
+                    Id = previousid,
+                    Alias = previostask.Alias,
+                    Description = previostask.TaskDescription,
+                    StatusTask = previostask.StatusTask,
+                };
+                tasks.Add(taskInList);
+            }
+        }
+          
         BO.Task? task = new BO.Task()
         {
             Id = 0,
-            Difficulty = (BO.Rank)rank,
+            Difficulty = rank,
             TaskDescription = taskDescreption,
             Alias = name,
             CreateTask = createTask,
@@ -207,7 +241,7 @@ internal class Program
             Remarks=remarks,
             Product=product,
             StatusTask=0,
-            DependencyTasks=null,
+            DependencyTasks=tasks,
        
         };
         return task;
@@ -274,7 +308,7 @@ internal class Program
         if (beginWork != "")
         {
             BeginWorkDate = DateTime.Parse(beginWork!);
-            s_bl.Task.UpdateDtartDates(id, BeginWorkDate);
+            s_bl.Task.UpdateStartDates(id, BeginWorkDate);
         }
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
