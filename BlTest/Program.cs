@@ -274,7 +274,7 @@ internal class Program
         if (beginWork != "")
         {
             BeginWorkDate = DateTime.Parse(beginWork!);
-            s_bl.Task.UpdateDtartDates(id, BeginWorkDate);
+            s_bl.Task.UpdateStartDates(id, BeginWorkDate);
         }
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
