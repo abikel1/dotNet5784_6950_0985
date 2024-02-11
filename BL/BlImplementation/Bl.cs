@@ -13,36 +13,40 @@ internal class Bl : IBl
     public ITask Task => new TaskImplementation();
 
     public IWorkerOnTask WorkerOnTask => new WorkerOnTaskImplementation();
-    public void autoSchedule()
-    {
-        var tasks = BlApi.Factory.Get().Task;
-        var tasks1 = tasks.ReadTasks();
-        foreach( var t in tasks1)
-        {
-            BO.Task task = tasks.Read(t.Id);
-            if(task.DependencyTasks is null)
-            {
-                task.BeginWork= IBl.ProjectStartDate;
-            }
-            else
-            {
-                DateTime? max = DateTime.Now;
-                foreach(var dlist in task.DependencyTasks)
-                {
-                    if(tasks.Read(dlist.Id).DeadLine>max)
-                    {
-                        max = tasks.Read(dlist.Id).DeadLine;
-                    }
-                }
-                task.BeginWork = max;
-            }
-            tasks.UpdateTask(task);
-        }
-    }
+    //public void autoSchedule()
+    //{
+    //    var tasks = BlApi.Factory.Get().Task;
+    //    var tasks1 = tasks.ReadTasks();
+    //    foreach( var t in tasks1)
+    //    {
+    //        BO.Task task = tasks.Read(t.Id);
+    //        if(task.DependencyTasks is null)
+    //        {
+    //            task.BeginWork= IBl.ProjectStartDate;
+    //        }
+    //        else
+    //        {
+    //            DateTime? max = DateTime.Now;
+    //            foreach(var dlist in task.DependencyTasks)
+    //            {
+    //                if(tasks.Read(dlist.Id).DeadLine>max)
+    //                {
+    //                    max = tasks.Read(dlist.Id).DeadLine;
+    //                }
+    //            }
+    //            task.BeginWork = max;
+    //        }
+    //        tasks.UpdateTask(task);
+    //    }
+    //}
+
+    public DateTime? GetEndProjectDate()=>_dal.GetEndProjectDate();
+
+    public DateTime? GetStartProjectDate()=>_dal.GetStartProjectDate();
 
     public StatusProject GetStatusProject ()
     {
-        if (IBl.ProjectStartDate == null)
+        if (BlApi.Factory.Get().GetStartProjectDate() == null)
             return StatusProject.Planning;
         else
         {
@@ -52,4 +56,8 @@ internal class Bl : IBl
         }
         return StatusProject.Execution;
     }
+
+    public void SetEndProjectDate(DateTime? endDate)=>_dal.SetEndProjectDate(endDate);
+
+    public void SetStartProjectDate(DateTime? startDate)=>_dal.SetStartProjectDate(startDate);
 }

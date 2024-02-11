@@ -1,32 +1,56 @@
-﻿namespace BO;
+﻿using System.Text;
+
+namespace BO;
 
 public static class Tools
 {
     public static string ToStringProperty<T>(this T obj)
     {
-        string result = $"{typeof(T).Name} properties: \n";
-        var properties = typeof(T).GetProperties();
-        foreach (var property in properties)
+        var properties = typeof(T).GetProperties();//get the type
+        StringBuilder resultBuilder = new StringBuilder();//build empty string
+        resultBuilder.Append($"{typeof(T).Name} properties:\n");//add the title to the list
+
+        foreach (var prop in properties)
         {
-            var value = property.GetValue(obj);
-
-
-            if (value != null)
+            object propValue = prop.GetValue(obj);//get the value of the prop
+            if (propValue is IEnumerable<object> collectionValue)//if the prop is a IEnumerable
             {
-                if (value is IEnumerable<object> && !(value is string))
-                {
-                    var enumerable = value as IEnumerable<object>;
-                    foreach (var item in enumerable!)
-                    {
-                        result += ToStringProperty(item);
-                    }
-                }
-                else
-                {
-                    result += $"{property.Name}: {value}\n";
-                }
+                // Handle collection property
+                resultBuilder.Append($"{prop.Name}: [{string.Join(", ", collectionValue)}]\n");//add all the list to the string
+            }
+            else
+            {
+                // Handle non-collection property
+                resultBuilder.Append($"{prop.Name}: {propValue}\n");//add the reguler props
             }
         }
-        return result;
+
+        return resultBuilder.ToString();//return the string
     }
+
+    //public static string ToStringProperty<T>(this T obj)
+    //{
+    //    string result = $"{typeof(T).Name} properties: \n";
+    //    var properties = typeof(T).GetProperties();
+    //    foreach (var property in properties)
+    //    {
+    //        var value = property.GetValue(obj);
+    //        //if (value != null)
+    //        //{
+    //            if (value is IEnumerable<object>/* && !(value is string)*/)
+    //            {
+    //                var enumerable = value as IEnumerable<object>;
+    //                foreach (var item in enumerable!)
+    //                {
+    //                    result += ToStringProperty(item);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                result += $"{property.Name}: {value}\n";
+    //            }
+    //        //}
+    //    }
+    //    return result;
+    //}
 }

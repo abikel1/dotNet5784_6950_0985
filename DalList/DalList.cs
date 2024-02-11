@@ -1,5 +1,7 @@
 ﻿namespace Dal;
 using DalApi;
+using System;
+
 sealed internal class DalList : IDal
 {
     public static IDal Instance { get; } = new DalList();
@@ -9,4 +11,12 @@ sealed internal class DalList : IDal
     public ITask Task => new TaskImplementation();
 
     public IDependency Dependency => new DependencyImplementation();
+
+    public DateTime? GetStartProjectDate() { return DataSource.Config.startProject; }
+
+    public void SetStartProjectDate(DateTime? startDate) => DataSource.Config.startProject=startDate;
+
+    public DateTime? GetEndProjectDate() { return DataSource.Config.endProject; }
+
+    public void SetEndProjectDate(DateTime? endDate) => DataSource.Config.startProject = endDate;
 }

@@ -116,6 +116,10 @@ internal class DependencyImplementation:IDependency
         List<DO.Dependency> dependencys = XMLTools.LoadListFromXMLSerializer<DO.Dependency>(s_dependencys_xml);
         dependencys.Clear();
         XMLTools.SaveListToXMLSerializer<DO.Dependency>(dependencys, s_dependencys_xml);
-        XMLTools.SaveListToXMLElement(new XElement("config", new XElement("NextTaskId", 0), new XElement("NextDependencyId", 0)), s_dataconfig_xml);
+        //XMLTools.SaveListToXMLElement(new XElement("config", new XElement("NextTaskId", 0), new XElement("NextDependencyId", 0)), s_dataconfig_xml);
+        //var root = XMLTools.LoadListFromXMLElement("config");
+        //root.Element("NextTaskId")!.Value = 0.ToString();
+        //root.Element("NextDependencyId")!.Value = 0.ToString();
+        Config.NextDependencyId = 1;
     }
 }

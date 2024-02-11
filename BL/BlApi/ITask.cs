@@ -34,4 +34,5 @@ public interface ITask
     /// <param name="id">the id of the task that I want to update</param>
     /// <param name="date">the date that I want to update</param>
     public void UpdateStartDates(int id, DateTime? startDate);
+    public void clear();
 }

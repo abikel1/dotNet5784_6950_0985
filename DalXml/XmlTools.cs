@@ -96,5 +96,11 @@ static class XMLTools
             throw new DalXMLFileLoadCreateException($"fail to load xml file: {filePath}, {ex.Message}");
         }
     }
+    public static void SetNextId(string data_config_xml, string elemName,int val)
+    {
+        XElement root=LoadListFromXMLElement(data_config_xml);
+        root.Element(elemName)?.SetValue((val).ToString());
+        SaveListToXMLElement(root, data_config_xml);
+    }
     #endregion
 }

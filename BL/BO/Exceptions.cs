@@ -47,4 +47,13 @@ public class BlcanotUpdateStartdate:Exception
 {
     public BlcanotUpdateStartdate(string? message) : base(message) { }
 }
-
+[Serializable]
+public class BlplanningStatus : Exception
+{
+    public BlplanningStatus(string? message) : base(message) { }
+}
+[Serializable]
+public class BlexecutionStatus : Exception
+{
+    public BlexecutionStatus(string? message) : base(message) { }
+}
