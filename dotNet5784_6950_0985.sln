@@ -27,9 +27,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{BA401629-B1F
 		xml\workers.xml = xml\workers.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BL", "BL\BL.csproj", "{E4362E02-BEFF-4B18-8E73-DC1991787A69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{E4362E02-BEFF-4B18-8E73-DC1991787A69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlTest", "BlTest\BlTest.csproj", "{EADD1600-E771-4275-A9D6-BD093E38F900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csproj", "{EADD1600-E771-4275-A9D6-BD093E38F900}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{9801BD02-108A-4DC7-AB9F-57B6BC37B1A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{EADD1600-E771-4275-A9D6-BD093E38F900}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EADD1600-E771-4275-A9D6-BD093E38F900}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EADD1600-E771-4275-A9D6-BD093E38F900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9801BD02-108A-4DC7-AB9F-57B6BC37B1A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9801BD02-108A-4DC7-AB9F-57B6BC37B1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9801BD02-108A-4DC7-AB9F-57B6BC37B1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9801BD02-108A-4DC7-AB9F-57B6BC37B1A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
