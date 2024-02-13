@@ -18,16 +18,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
-            <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1"/>
+            <Label Content="select rank of worker:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
+            <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding Path=Rank, Mode=TwoWay}" SelectionChanged="cbRankSelector_SelectionChanged"/>
         </Grid>
-        <ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=WorkerList}">
+        <ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=WorkerList}" MouseDoubleClick="UpdateWorker">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddWorker"/>
     </Grid>
 </Window>

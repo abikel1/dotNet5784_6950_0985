@@ -19,9 +19,56 @@ namespace PL.Worker
     /// </summary>
     public partial class WorkerWindow : Window
     {
-        public WorkerWindow()
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+
+        public BO.Worker worker
+        {
+            get { return (BO.Worker)GetValue(workerProperty); }
+            set { SetValue(workerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for worker.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty workerProperty =
+            DependencyProperty.Register("worker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
+
+
+        public WorkerWindow(int id=0)
         {
             InitializeComponent();
+            if(id== 0)
+            {
+                 worker = new BO.Worker();
+            }
+            else
+            {
+               worker= s_bl.Worker.Read(id);
+            }
+        }
+
+        private void btnAddOrUpdate(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (s_bl.Worker.ReadWorkers().FirstOrDefault(w=>w.Id==worker.Id)==null)
+                {
+                    s_bl.Worker.AddWorker(worker);
+                    MessageBox.Show("The operation of adding a worker was performed successfully");
+                    this.Close();
+                    new WorkerListWindow().Show();
+                }
+                else
+                {
+                    s_bl.Worker.UpdateWorker(worker);
+                    MessageBox.Show("The operation of updating a worker was performed successfully");
+                    this.Close();
+                    new WorkerListWindow().Show();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

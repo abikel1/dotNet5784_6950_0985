@@ -5,8 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Worker"
         mc:Ignorable="d"
+        DataContext="{Binding worker, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
         Title="WorkerWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="myLabelStyle"
+           TargetType="Label">
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="myTextBoxStyle"
+               TargetType="TextBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Content="Id:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Name:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="2" Grid.Column="0" Content="Email:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="3" Grid.Column="0" Content="Worker's rank:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="4" Grid.Column="0" Content="Hour price:" Style="{StaticResource myLabelStyle }" />
+            <TextBox IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToISEnabledKey}}" Text="{Binding Id,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="0" Grid.Column="1" Style="{StaticResource myTextBoxStyle}"/>
+            <TextBox Text="{Binding Name,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="1" Grid.Column="1" Style="{StaticResource myTextBoxStyle}"/>
+            <TextBox Text="{Binding Email,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="2" Grid.Column="1" Style="{StaticResource myTextBoxStyle}"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding RankWorker, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="3" Grid.Column="1" Height="30" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding HourPrice,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="4" Grid.Column="1" Style="{StaticResource myTextBoxStyle}"/>
+        </Grid>
+        <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddOrUpdate"/>
     </Grid>
 </Window>

@@ -20,8 +20,7 @@ namespace PL.Worker
     public partial class WorkerListWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
-
+        public BO.Rank Rank { get; set; } = BO.Rank.None;
         public IEnumerable<BO.Worker> WorkerList
         {
             get { return (IEnumerable<BO.Worker>)GetValue(WorkerListProperty); }
@@ -37,6 +36,23 @@ namespace PL.Worker
         {
             InitializeComponent();
             WorkerList = s_bl?.Worker.ReadWorkers()!;
+        }
+
+        private void cbRankSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            WorkerList = (Rank == BO.Rank.None) ? s_bl?.Worker.ReadWorkers()! : s_bl?.Worker.ReadWorkers(item => item.RankWorker == Rank)!;
+        }
+
+        private void AddWorker(object sender, RoutedEventArgs e)
+        {
+            new WorkerWindow().ShowDialog();
+            this.Close();
+        }
+        private void UpdateWorker(object sender, MouseButtonEventArgs e)
+        {
+            BO.Worker? worker = (sender as ListView)?.SelectedItem as BO.Worker;
+            new WorkerWindow(worker!.Id).ShowDialog();
+            this.Close();
         }
     }
 }
