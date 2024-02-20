@@ -1,4 +1,5 @@
-﻿using PL.Worker;
+﻿using BlApi;
+using PL.Worker;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +40,18 @@ namespace PL
                             MessageBoxButton.YesNo,
                             MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                DalTest.Initialization.Do();
+                s_bl.InitializeDB();
+            }
+        }
+
+        private void btnReset_click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to reset the data",
+                            "Reset",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                s_bl.ResetDB();
             }
         }
     }

@@ -13,8 +13,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="תמונה2.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
-    <ProjectReference Include="..\DalTest\DalTest.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="תמונה2.jpg" />
   </ItemGroup>
 
 </Project>

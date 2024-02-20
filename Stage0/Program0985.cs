@@ -11,7 +11,7 @@
     private static void Welcome0985()
     {
         Console.WriteLine("Enter your name: ");
-        string name = Console.ReadLine();
+        string? name = Console.ReadLine();
         Console.WriteLine(name + ", welcome to my first consile application");
     }
 }

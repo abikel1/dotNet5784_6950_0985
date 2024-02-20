@@ -1,73 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>250536756</Id>
+    <Id>326536950</Id>
     <RankWorker>Beginner</RankWorker>
-    <HourPrice>871</HourPrice>
+    <HourPrice>20</HourPrice>
     <Name>Avital</Name>
     <Email>avital@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>216923238</Id>
-    <RankWorker>Beginner</RankWorker>
-    <HourPrice>361</HourPrice>
-    <Name>Ayala</Name>
-    <Email>ayala@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>227528528</Id>
-    <RankWorker>AdvancedBeginner</RankWorker>
-    <HourPrice>129</HourPrice>
-    <Name>Chagai</Name>
-    <Email>chagai@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>244082859</Id>
-    <RankWorker>Intermediate</RankWorker>
-    <HourPrice>486</HourPrice>
-    <Name>Maor</Name>
-    <Email>maor@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>271797862</Id>
-    <RankWorker>Advanced</RankWorker>
-    <HourPrice>575</HourPrice>
-    <Name>Shlomo</Name>
-    <Email>shlomo@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>201161602</Id>
-    <RankWorker>Advanced</RankWorker>
-    <HourPrice>98</HourPrice>
-    <Name>Hadar</Name>
-    <Email>hadar@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>340735102</Id>
-    <RankWorker>Beginner</RankWorker>
-    <HourPrice>740</HourPrice>
-    <Name>Yehuda</Name>
-    <Email>yehuda@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>208353835</Id>
-    <RankWorker>Expert</RankWorker>
-    <HourPrice>941</HourPrice>
-    <Name>Sheli</Name>
-    <Email>sheli@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>258517780</Id>
-    <RankWorker>Advanced</RankWorker>
-    <HourPrice>710</HourPrice>
-    <Name>Nachum</Name>
-    <Email>nachum@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>204198660</Id>
-    <RankWorker>Advanced</RankWorker>
-    <HourPrice>224</HourPrice>
-    <Name>Ariel</Name>
-    <Email>ariel@gmail.co.il</Email>
   </Worker>
 </ArrayOfWorker>
