@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using PL.Task;
 using PL.Worker;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,11 @@ namespace PL
             {
                 s_bl.ResetDB();
             }
+        }
+
+        private void btnTasks_Click(object sender, RoutedEventArgs e)
+        {
+            new TaskListWindow().Show();
         }
     }
 }

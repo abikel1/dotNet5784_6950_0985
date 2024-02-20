@@ -237,7 +237,7 @@ internal class Program
         {
             Id = 0,
             Difficulty = rank,
-            TaskDescription = taskDescreption,
+            TaskDescription = taskDescription,
             Alias = name,
             CreateTask = createTask,
             BeginTask=null,
@@ -345,5 +345,6 @@ internal class Program
             };
             return task;
         }
+        return null;
     }
 }

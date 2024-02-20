@@ -14,6 +14,7 @@
             <Button Content="Handle Workers" Margin="20" Height="70" Width="100" Click="btnWorkers_Click"/>
             <Button Content="Initialization" Margin="20" Height="70" Width="100" Click="btnInitialization_click"/>
             <Button Content="Reset" Margin="20" Height="70" Width="100" Click="btnReset_click"/>
+            <Button Content="Handle Tasks" Margin="20" Height="70" Width="100" Click="btnTasks_Click"/>
         </StackPanel>
         <Image HorizontalAlignment="Left" Height="100" Margin="173,172,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>

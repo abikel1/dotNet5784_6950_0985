@@ -10,15 +10,18 @@
     <Window.Resources>
         <Style x:Key="myLabelStyle"
            TargetType="Label">
-            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="15"/>
         </Style>
         <Style x:Key="myTextBoxStyle"
                TargetType="TextBox">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="FontSize" Value="20"/>
         </Style>
     </Window.Resources>
     <Grid Background="LightSteelBlue">
@@ -29,10 +32,7 @@
         <Grid Grid.Row="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -41,17 +41,17 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="1" Content="Id:" Style="{StaticResource myLabelStyle }" />
-            <Label Grid.Row="1" Grid.Column="1" Content="Name:" Style="{StaticResource myLabelStyle }" />
-            <Label Grid.Row="2" Grid.Column="1" Content="Email:" Style="{StaticResource myLabelStyle }" />
-            <Label Grid.Row="3" Grid.Column="1" Content="Worker's rank:" Style="{StaticResource myLabelStyle }" />
-            <Label Grid.Row="4" Grid.Column="1" Content="Hour price:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="0" Grid.Column="0" Content="Id:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="1" Grid.Column="0" Content="Name:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="2" Grid.Column="0" Content="Email:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="3" Grid.Column="0" Content="Worker's rank:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="4" Grid.Column="0" Content="Hour price:" Style="{StaticResource myLabelStyle }" />
             <TextBox IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToISEnabledKey}}" Text="{Binding Id,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="0" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
             <TextBox Text="{Binding Name,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="1" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
             <TextBox Text="{Binding Email,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="2" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-            <ComboBox ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding RankWorker, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="3" Grid.Column="3" Height="30" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox FontSize="20" Background="LightGray" ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding RankWorker, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="3" Grid.Column="3" Height="35" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox Text="{Binding HourPrice,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="4" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
         </Grid>
-        <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddOrUpdate" Height="40" Width="100"/>
+        <Button Background="LightGray" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddOrUpdate" Height="40" Width="100"/>
     </Grid>
 </Window>

@@ -1,10 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>326536950</Id>
+    <Id>307335677</Id>
     <RankWorker>Beginner</RankWorker>
-    <HourPrice>20</HourPrice>
+    <HourPrice>660</HourPrice>
     <Name>Avital</Name>
     <Email>avital@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>344420377</Id>
+    <RankWorker>Intermediate</RankWorker>
+    <HourPrice>404</HourPrice>
+    <Name>Ayala</Name>
+    <Email>ayala@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>327627656</Id>
+    <RankWorker>Expert</RankWorker>
+    <HourPrice>562</HourPrice>
+    <Name>Chagai</Name>
+    <Email>chagai@gmail.co.il</Email>
+  </Worker>
+  <Worker>
+    <Id>333309218</Id>
+    <RankWorker>Expert</RankWorker>
+    <HourPrice>568</HourPrice>
+    <Name>Maor</Name>
+    <Email>maor@gmail.co.il</Email>
+  </Worker>
+  <Worker>
+    <Id>286379541</Id>
+    <RankWorker>AdvancedBeginner</RankWorker>
+    <HourPrice>149</HourPrice>
+    <Name>Shlomo</Name>
+    <Email>shlomo@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>341080977</Id>
+    <RankWorker>Advanced</RankWorker>
+    <HourPrice>207</HourPrice>
+    <Name>Hadar</Name>
+    <Email>hadar@gmail.co.il</Email>
+  </Worker>
+  <Worker>
+    <Id>216347051</Id>
+    <RankWorker>AdvancedBeginner</RankWorker>
+    <HourPrice>134</HourPrice>
+    <Name>Yehuda</Name>
+    <Email>yehuda@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>294287163</Id>
+    <RankWorker>Beginner</RankWorker>
+    <HourPrice>655</HourPrice>
+    <Name>Sheli</Name>
+    <Email>sheli@gmail.co.il</Email>
+  </Worker>
+  <Worker>
+    <Id>385478442</Id>
+    <RankWorker>Intermediate</RankWorker>
+    <HourPrice>654</HourPrice>
+    <Name>Nachum</Name>
+    <Email>nachum@gmail.com</Email>
+  </Worker>
+  <Worker>
+    <Id>323212488</Id>
+    <RankWorker>AdvancedBeginner</RankWorker>
+    <HourPrice>800</HourPrice>
+    <Name>Ariel</Name>
+    <Email>ariel@gmail.co.il</Email>
   </Worker>
 </ArrayOfWorker>
