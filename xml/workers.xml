@@ -1,72 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>256065231</Id>
-    <RankWorker>Advanced</RankWorker>
-    <HourPrice>994</HourPrice>
-    <Name>Ayala</Name>
-    <Email>ayala@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>377497312</Id>
-    <RankWorker>Intermediate</RankWorker>
-    <HourPrice>621</HourPrice>
-    <Name>Chagai</Name>
-    <Email>chagai@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>231480081</Id>
-    <RankWorker>AdvancedBeginner</RankWorker>
-    <HourPrice>643</HourPrice>
-    <Name>Maor</Name>
-    <Email>maor@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>201742230</Id>
-    <RankWorker>Expert</RankWorker>
-    <HourPrice>713</HourPrice>
-    <Name>Shlomo</Name>
-    <Email>shlomo@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>273394914</Id>
-    <RankWorker>Advanced</RankWorker>
-    <HourPrice>487</HourPrice>
-    <Name>Hadar</Name>
-    <Email>hadar@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>372576809</Id>
-    <RankWorker>Expert</RankWorker>
-    <HourPrice>18</HourPrice>
-    <Name>Yehuda</Name>
-    <Email>yehuda@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>277685136</Id>
-    <RankWorker>AdvancedBeginner</RankWorker>
-    <HourPrice>99</HourPrice>
-    <Name>Sheli</Name>
-    <Email>sheli@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>269799822</Id>
-    <RankWorker>Expert</RankWorker>
-    <HourPrice>477</HourPrice>
-    <Name>Nachum</Name>
-    <Email>nachum@gmail.com</Email>
-  </Worker>
-  <Worker>
-    <Id>382635063</Id>
+    <Id>326536950</Id>
     <RankWorker>Beginner</RankWorker>
-    <HourPrice>280</HourPrice>
-    <Name>Ariel</Name>
-    <Email>ariel@gmail.co.il</Email>
-  </Worker>
-  <Worker>
-    <Id>351950375</Id>
-    <RankWorker>Beginner</RankWorker>
-    <HourPrice>130</HourPrice>
+    <HourPrice>20</HourPrice>
     <Name>Avital</Name>
     <Email>avital@gmail.com</Email>
   </Worker>

@@ -7,10 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel>
-            <Button Content="Handle Workers" Height="50" Width="80" Click="btnWorkers_Click"/>
-            <Button Content="Initialization" Height="50" Width="80" Click="btnInitialization_click"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/תמונה2.jpg"/>
+        </Grid.Background>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <Button Content="Handle Workers" Margin="20" Height="70" Width="100" Click="btnWorkers_Click"/>
+            <Button Content="Initialization" Margin="20" Height="70" Width="100" Click="btnInitialization_click"/>
+            <Button Content="Reset" Margin="20" Height="70" Width="100" Click="btnReset_click"/>
         </StackPanel>
-
+        <Image HorizontalAlignment="Left" Height="100" Margin="173,172,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>

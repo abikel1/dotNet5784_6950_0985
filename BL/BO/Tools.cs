@@ -12,7 +12,7 @@ public static class Tools
 
         foreach (var prop in properties)
         {
-            object propValue = prop.GetValue(obj);//get the value of the prop
+            object? propValue = prop.GetValue(obj);//get the value of the prop
             if (propValue is IEnumerable<object> collectionValue)//if the prop is a IEnumerable
             {
                 // Handle collection property

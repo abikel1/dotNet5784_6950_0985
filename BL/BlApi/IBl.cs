@@ -1,21 +1,34 @@
-﻿
+﻿using BO;
 
-using BO;
-
-namespace BlApi;
-
-public interface IBl
+namespace BlApi
 {
-    public IWorker Worker { get;}
-    public ITask Task { get;}
-    public IWorkerOnTask WorkerOnTask { get;}
-    //public ITaskInList taskInList { get;}
-    //public static DateTime? ProjectStartDate { get; set; }
-    //public static DateTime? ProjectEndDate { get; set; }
-    public DateTime? GetStartProjectDate();
-    public void SetStartProjectDate(DateTime? startDate);
-    public DateTime? GetEndProjectDate();
-    public void SetEndProjectDate(DateTime? endDate);
-    public StatusProject GetStatusProject();
-    //public void autoSchedule();
+    // Interface definition for the Business Logic layer
+    public interface IBl
+    {
+        // Properties to access various entities
+        public IWorker Worker { get; }
+        public ITask Task { get; }
+        public IWorkerOnTask WorkerOnTask { get; }
+
+        // Method to initialize the database
+        public void InitializeDB();
+
+        // Method to reset the database
+        public void ResetDB();
+
+        // Methods to get and set the start project date
+        public DateTime? GetStartProjectDate();
+        public void SetStartProjectDate(DateTime? startDate);
+
+        // Methods to get and set the end project date
+        public DateTime? GetEndProjectDate();
+        public void SetEndProjectDate(DateTime? endDate);
+
+        // Method to get the status of the project
+        public StatusProject GetStatusProject();
+
+        // Method for auto-scheduling (currently commented out)
+        // public void autoSchedule();
+    }
 }
+
