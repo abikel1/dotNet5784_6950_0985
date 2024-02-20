@@ -33,14 +33,13 @@ namespace PL
 
         private void btnInitialization_click(object sender, RoutedEventArgs e)
         {
-            if(MessageBox.Show("Do you want to initialization the data",
+            if (MessageBox.Show("Do you want to initialization the data",
                             "Initialization",
                             MessageBoxButton.YesNo,
-                            MessageBoxImage.Question)==MessageBoxResult.Yes) 
+                            MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 DalTest.Initialization.Do();
             }
-            
         }
     }
 }
