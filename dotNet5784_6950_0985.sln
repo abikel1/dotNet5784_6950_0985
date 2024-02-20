@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{BA401629-B1F
 		xml\data-config.xml = xml\data-config.xml
 		xml\dependencys.xml = xml\dependencys.xml
 		xml\tasks.xml = xml\tasks.xml
+		xml\users.xml = xml\users.xml
 		xml\workers.xml = xml\workers.xml
 	EndProjectSection
 EndProject
@@ -31,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{E436
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "BlTest\BlTest.csproj", "{EADD1600-E771-4275-A9D6-BD093E38F900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{9801BD02-108A-4DC7-AB9F-57B6BC37B1A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{9801BD02-108A-4DC7-AB9F-57B6BC37B1A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

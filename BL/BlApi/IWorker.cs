@@ -30,6 +30,10 @@ public interface IWorker
     /// </summary>
     /// <param name="worker">the worker that I want to update</param>
     public void UpdateWorker(BO.Worker worker);
+    public bool CheckUser(BO.User user);
+    public void AddUser(BO.User user);
+    public void RemoveUser(BO.User user);
     public void clear();
     //public IEnumerable<BO.Worker> RankGroups(int rank);
+
 }

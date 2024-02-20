@@ -21,13 +21,22 @@
             <Label Content="select rank of worker:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
             <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding Path=Rank, Mode=TwoWay}" SelectionChanged="cbRankSelector_SelectionChanged"/>
         </Grid>
-        <ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=WorkerList}" MouseDoubleClick="UpdateWorker">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Path=WorkerList}" IsReadOnly="True" MouseDoubleClick="UpdateWorker" AutoGenerateColumns="False" EnableRowVirtualization="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Id" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding Email}" Header="Email" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding HourPrice}" Header="HourPrice" Width="Auto"/>
+                <DataGridTextColumn Binding="{Binding RankWorker}" Header="RankWorker" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--<ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=WorkerList}" MouseDoubleClick="UpdateWorker">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
-        </ListView>
+        </ListView>-->
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddWorker"/>
     </Grid>
 </Window>

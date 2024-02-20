@@ -24,7 +24,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public MainWindow()
+        public MainWindow(bool isManeger)
         {
             InitializeComponent();
         }

@@ -55,4 +55,10 @@ internal class WorkerImplementation : IWorker
     {
         DataSource.Workers.Clear();
     }
+
+    public bool Check(User user)=> DataSource.Users.Contains(user);
+
+    public void AddUser(User user)=>DataSource.Users.Add(user);
+
+    public void RemoveUser(User user) => DataSource.Users.RemoveAll(x => x.Password == user.Password && x.UserName == user.UserName);
 }

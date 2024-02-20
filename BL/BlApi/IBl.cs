@@ -8,7 +8,6 @@ namespace BlApi
         // Properties to access various entities
         public IWorker Worker { get; }
         public ITask Task { get; }
-        public IWorkerOnTask WorkerOnTask { get; }
 
         // Method to initialize the database
         public void InitializeDB();

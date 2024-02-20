@@ -6,6 +6,8 @@ using DO;
 internal class WorkerImplementation:IWorker
 {
     readonly string s_workers_xml = "workers";
+    readonly string s_users_xml = "users";
+
 
     public int Create(Worker item)
     {
@@ -68,5 +70,25 @@ internal class WorkerImplementation:IWorker
         List<DO.Worker> workers = XMLTools.LoadListFromXMLSerializer<DO.Worker>(s_workers_xml);
         workers.Clear();
         XMLTools.SaveListToXMLSerializer<DO.Worker>(workers, s_workers_xml);
+    }
+
+    public bool Check(User user)
+    {
+        var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+        return users.Any(u=>u.UserName == user.UserName&&u.Password==user.Password);
+    }
+
+    public void AddUser(User user)
+    {
+        var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+        users.Add(user);
+        XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
+    }
+
+    public void RemoveUser(User user)
+    {
+        var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+        users.RemoveAll(u => u.UserName == user.UserName && u.Password == user.Password);
+        XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
     }
 }

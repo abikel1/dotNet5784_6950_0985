@@ -50,9 +50,9 @@ namespace PL.Worker
         }
         private void UpdateWorker(object sender, MouseButtonEventArgs e)
         {
-            BO.Worker? worker = (sender as ListView)?.SelectedItem as BO.Worker;
+            BO.Worker? worker = (sender as DataGrid)?.SelectedItem as BO.Worker;
             new WorkerWindow(worker!.Id).ShowDialog();
-            this.Close();
+            this.Close(); 
         }
     }
 }

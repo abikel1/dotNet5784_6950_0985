@@ -14,7 +14,6 @@ namespace BlImplementation
         // Properties returning instances of worker, task, and worker-task implementations
         public IWorker Worker => new WorkerImplementation();
         public ITask Task => new TaskImplementation();
-        public IWorkerOnTask WorkerOnTask => new WorkerOnTaskImplementation();
 
         // Method to initialize the database
         public void InitializeDB() => DalTest.Initialization.Do();

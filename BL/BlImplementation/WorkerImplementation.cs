@@ -2,6 +2,7 @@
 namespace BlImplementation;
 using BlApi;
 using BO;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -203,5 +204,35 @@ internal class WorkerImplementation : IWorker
                    RankWorker = (BO.Rank)doworker.RankWorker,
                    CurrentTask = GetCurrentTaskOfWorker(doworker.Id)
                };
+    }
+
+    public bool CheckUser(User user)
+    {
+        DO.User dUser = new()
+        {
+            UserName = user.UserName,
+            Password=user.password
+        };
+        return _dal.Worker.Check(dUser);
+    }
+
+    public void AddUser(User user)
+    {
+        DO.User dUser = new()
+        {
+            UserName = user.UserName,
+            Password=user.password
+        };
+         _dal.Worker.AddUser(dUser);
+    }
+
+    public void RemoveUser(User user)
+    {
+        DO.User dUser = new()
+        {
+            UserName = user.UserName,
+            Password = user.password
+        };
+        _dal.Worker.RemoveUser(dUser);
     }
 }
