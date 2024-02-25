@@ -124,7 +124,7 @@ internal class TaskImplementation : ITask
             EndWorkTime = task!.EndWorkTime,
             Remarks = task.Remarks,
             Product = task.Product,
-            DependencyTasks = getPriviousTask(task)
+            DependencyTasks = getPriviousTask(id)
         };
     }
 
@@ -133,20 +133,24 @@ internal class TaskImplementation : ITask
         // Read the task from the database
         DO.Task task = _dal.Task.Read(id)!;
         // Query previous tasks to check constraints on begin task date
-        var result = from BO.Task t in getPriviousTask(task)
-                     where (t.BeginWork == null || date <= t.DeadLine)
+        IEnumerable<BO.TaskInList> tasks = getPriviousTask(id);
+        var result = from BO.TaskInList t in tasks
+                     let dTask = _dal.Task.Read(t.Id)
+                     where (dTask.BeginWork == null || date <= dTask.DeadLine)
                      select t;
         // Check if any constraint violation exists and throw exception
-        if (result.Count() > 0)
+        if (result.Any())
             throw new BO.BLcantUpdateTask("this date cant be update");
         // Check if project start date is defined and task has no previous tasks
-        if (getPriviousTask(task) == null && BlApi.Factory.Get().GetStartProjectDate() == null && date <= BlApi.Factory.Get().GetStartProjectDate())
+        if (getPriviousTask(id) == null && BlApi.Factory.Get().GetStartProjectDate() == null && date <= BlApi.Factory.Get().GetStartProjectDate())
             throw new BO.BLcantUpdateTask("this date cant be update");
     }
     // Method to retrieve previous tasks based on dependencies
-    private IEnumerable<BO.TaskInList> getPriviousTask(DO.Task task)
+    public IEnumerable<BO.TaskInList> getPriviousTask(int id)
     {
-           var result= from DO.Dependency depend in _dal.Dependency.ReadAll(x => x.IdDependentTask == task.Id)
+       DO.Task? task = _dal.Task.Read(id);
+        IEnumerable<DO.Dependency> dependencies = _dal.Dependency.ReadAll(x => x.IdDependentTask == task.Id);
+           var result= from DO.Dependency depend in dependencies
                    let deptask= _dal.Task.Read(depend.IdPreviousTask)!
                    select new BO.TaskInList
                    {
@@ -163,7 +167,7 @@ internal class TaskImplementation : ITask
         DO.Task oldTask = _dal.Task.Read(task.Id)!;
             if (oldTask != null && task.Worker!=null && oldTask.WorkerId != task.Worker!.Id)
                 throw new BO.BlCantAssignWorker("the task is already assigned to an worker");
-        if (getPriviousTask(oldTask!).Where(x => x.StatusTask != BO.Status.Done).Any())
+        if (getPriviousTask(oldTask!.Id).Where(x => x.StatusTask != BO.Status.Done).Any())
             throw new BO.BlCantAssignWorker("cant assign worker for this task");
         if(task.Worker !=null)
         {
@@ -221,13 +225,16 @@ internal class TaskImplementation : ITask
 
         // Calculate and set the status of the updated task
         task.StatusTask = CalculateStatus(newTask);
-        task.DependencyTasks = getPriviousTask(newTask).ToList();
+        task.DependencyTasks = getPriviousTask(newTask.Id).ToList();
 
         try
         {
             // Check constraints before updating the task
             CheckTaskForWorker(task);
-            CheckBeginTask(task.Id, task.BeginTask);
+            if(task.BeginTask!=null)
+            {
+                CheckBeginTask(task.Id, task.BeginTask);
+            }
             _dal.Task.Update(newTask);
         }
         catch (DO.DalDoesNotExistException ex)
@@ -256,7 +263,7 @@ internal class TaskImplementation : ITask
         if(dotask==null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
         // Retrieve previous tasks
-        IEnumerable<TaskInList> previousTasks = getPriviousTask(dotask);
+        IEnumerable<TaskInList> previousTasks = getPriviousTask(id);
         // Check constraints related to updating start dates
         if ((previousTasks == null) && (startDate < BlApi.Factory.Get().GetStartProjectDate()))
             throw new BO.BlcanotUpdateStartdate("cant update start date because the start date is before the planning date of starting the project");

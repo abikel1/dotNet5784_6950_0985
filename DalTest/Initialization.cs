@@ -186,12 +186,20 @@ public static class Initialization
         s_dal!.Dependency.Create(new Dependency(0, 8, 2));
         s_dal!.Dependency.Create(new Dependency(0, 8, 13));
     }
+    private static void createUser()
+    {
+        s_dal!.User.Create(new User("Avital", 326536950, true));
+        s_dal!.User.Create(new User("Ayala", 326060985, true));
+    }
+
     public static void Do()
     {
         s_dal = DalApi.Factory.Get; //?? throw new NullReferenceException("DAL object can not be null!");
         s_dal.Worker.clear();
         s_dal.Task.clear();
         s_dal.Dependency.clear();
+        s_dal.User.clear();
+        createUser();
         createWorker();
         createTask();
         createDependency(); 
@@ -202,5 +210,10 @@ public static class Initialization
         s_dal.Worker.clear();
         s_dal.Task.clear();
         s_dal.Dependency.clear();
+        s_dal.User.clear();
+        createUser();
+        createWorker();
+        s_dal.Worker.clear();
+        s_dal.SetStartProjectDate(null);
     }
 }

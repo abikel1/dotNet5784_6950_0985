@@ -21,13 +21,29 @@
             <Label Content="select rank of Task:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
             <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" ItemsSource="{Binding Source={StaticResource StausCollectionKey}}" SelectedValue="{Binding Path=Status, Mode=TwoWay}" SelectionChanged="cbRankSelector_SelectionChanged"/>
         </Grid>
-        <ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=TaskList}" MouseDoubleClick="UpdateTask">
+        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding Path=TaskList}" IsReadOnly="True" MouseDoubleClick="UpdateTask" AutoGenerateColumns="False" EnableRowVirtualization="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn FontSize="10" Binding="{Binding Id}" Header="Id" Width="Auto"/>
+                <DataGridTextColumn FontSize="10" Binding="{Binding Description}" Header="Description" Width="Auto"/>
+                <DataGridTextColumn FontSize="10" Binding="{Binding Alias}" Header="Alias" Width="Auto"/>
+                <DataGridTextColumn FontSize="10" Binding="{Binding StatusTask}" Header="StatusTask" Width="Auto"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="delete" Margin="5" CommandParameter="{Binding}" Foreground="#FFFA0A0A">
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--<ListView Grid.Row="1" Margin="5" ItemsSource="{Binding Path=TaskList}" MouseDoubleClick="UpdateTask">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
-        </ListView>
+        </ListView>-->
         <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddTask"/>
     </Grid>
 </Window>

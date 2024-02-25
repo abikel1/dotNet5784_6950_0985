@@ -1,7 +1,11 @@
 ﻿namespace DO;
 
-public class User
+public record User
+(
+     string? UserName,
+     int Password,
+     bool IsMennager=false
+)
 {
-    public string? UserName { get; set; }
-    public int Password { get; set; }
+    public User() : this(" ", 0, false) { }//empty ctor
 }

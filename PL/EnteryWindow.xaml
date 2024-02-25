@@ -9,18 +9,94 @@
       Title="EnteryWindow">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <Label Content="User"/>
-            <Label Content="Password"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1">
-            <TextBox Text="{Binding User.UserName, Mode=TwoWay}"/>
-            <TextBox Text="{Binding User.password, Mode=TwoWay}"/>
-        </StackPanel>
-        <Button Click="Check"  Width="100" Height="50"/>
+        <Border Width="300"
+            Height="400"
+            Background="White"
+            CornerRadius="6">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15"
+                              Direction ="-90" 
+                              RenderingBias ="Quality" 
+                              ShadowDepth ="2" 
+                              Color ="Gray" />
+            </Border.Effect>
+            <StackPanel Orientation="Vertical"
+                    Margin="20">
+                <TextBlock Text="Login" 
+                       FontSize="25"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       FontWeight="Bold"
+                       Padding="10"
+                       />
+                <Grid VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="User Name" 
+                   Grid.Row="0"
+                   Margin="0,15"
+                   HorizontalAlignment="Left"/>
+                    <TextBox Text="{Binding User.UserName, Mode=TwoWay}"  Grid.Column="1"
+                  Grid.Row="1"
+                  Padding="0,5"
+                  Width="255"
+                  BorderThickness="0,0,0,1"
+                  HorizontalAlignment="Left"/>
+                    <TextBlock Text="Password" 
+                   Grid.Row="2"
+                   Margin="0,15"
+                   HorizontalAlignment="Left"/>
+                    <TextBox  Grid.Row="3"
+                      Text="{Binding User.password, Mode=TwoWay}"
+                      Padding="0,5"                           
+                      Width="255"
+                      BorderThickness="0,0,0,1"
+                      HorizontalAlignment="Left"/>
+                </Grid>
+                <Button 
+                    Content="Login" 
+                    Foreground="White"
+                    Background="Black"
+                    Margin="0,25"
+                    Height="35"
+                    Width="250"
+                    Click="Check">
+                </Button>
+                <!--<TextBlock Text="Not a member?"
+                         Margin="0,5"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center"/>
+                <TextBlock Text="Sign Up"
+                         Margin="0,10"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center"/>-->
+            </StackPanel>
+        </Border>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1">
+                <Label FontSize="20" Content="User"/>
+                <Label FontSize="20" Content="Password"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <TextBox FontSize="20" Height="20" Width="100"  Text="{Binding User.UserName, Mode=TwoWay}"/>
+                <TextBox FontSize="20" Height="20"  Width="100" Text="{Binding User.password, Mode=TwoWay}"/>
+            </StackPanel>
+        </Grid>-->
+        <!--<Button Click="Check"  Width="100"/>-->
     </Grid>
 </Window>

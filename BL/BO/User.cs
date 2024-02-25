@@ -10,5 +10,6 @@ namespace BO
     {
         public string? UserName { get; set; }
         public int password {  get; set; }
+        public bool IsMennager { get; set; }=false;
     }
 }

@@ -9,9 +9,13 @@ internal class WorkerImplementation : IWorker
         if (Read(item.Id) is not null)
         {
             throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
-
         }
         DataSource.Workers.Add(item);
+        DataSource.Users.Add(new User()
+        {
+            UserName = item.Name,
+            Password = item.Id
+        }); 
         return item.Id;
     }
     public void Delete(int id)

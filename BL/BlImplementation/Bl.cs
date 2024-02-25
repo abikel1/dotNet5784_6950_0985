@@ -15,6 +15,8 @@ namespace BlImplementation
         public IWorker Worker => new WorkerImplementation();
         public ITask Task => new TaskImplementation();
 
+        public ITaskInList TaskInList =>new TaskInLIstImplementation();
+
         // Method to initialize the database
         public void InitializeDB() => DalTest.Initialization.Do();
         //public void autoSchedule()
