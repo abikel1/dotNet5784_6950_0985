@@ -12,12 +12,19 @@ internal class WorkerImplementation:IWorker
     public int Create(Worker item)
     {
         List<DO.Worker> workers = XMLTools.LoadListFromXMLSerializer<DO.Worker>(s_workers_xml);
+        List<DO.User> users = XMLTools.LoadListFromXMLSerializer<DO.User>(s_users_xml);
         if (Read(item.Id) is not null)
         {
             throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
         }
         workers.Add(item);
+        users.Add(new User()
+        {
+            UserName = item.Name,
+            Password = item.Id
+        });
         XMLTools.SaveListToXMLSerializer<DO.Worker>(workers, s_workers_xml);
+        XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
         return item.Id;
     }
 
@@ -75,7 +82,7 @@ internal class WorkerImplementation:IWorker
     public bool Check(User user)
     {
         var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
-        return users.Any(u=>u.UserName == user.UserName&&u.Password==user.Password);
+        return users.Where(u => u.UserName == user.UserName && u.Password == user.Password).First().IsMennager; 
     }
 
     public void AddUser(User user)

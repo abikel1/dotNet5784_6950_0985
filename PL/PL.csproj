@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Worker\220_F_346383913_JQecl2DhpHy2YakDz1t3h0Tk3Ov8hikq.jpg" />
     <None Remove="תמונה2.jpg" />
   </ItemGroup>
 
@@ -21,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Worker\220_F_346383913_JQecl2DhpHy2YakDz1t3h0Tk3Ov8hikq.jpg" />
     <Resource Include="תמונה2.jpg" />
   </ItemGroup>
 

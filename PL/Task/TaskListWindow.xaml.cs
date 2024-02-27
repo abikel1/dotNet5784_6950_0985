@@ -32,7 +32,7 @@ namespace PL.Task
 
         // Using a DependencyProperty as the backing store for TaskList.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TaskListProperty =
-            DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow));
+            DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
 
 
         public TaskListWindow()
@@ -44,34 +44,18 @@ namespace PL.Task
         {
             
             TaskList = (Status == BO.Status.None) ? s_bl?.Task.ReadTasks()! : s_bl?.Task.ReadTasks(item => item.StatusTask == Status)!;
-            //if (Rank == BO.Rank.None)
-            //    TaskList = s_bl?.Task.ReadTasks()!;
-            //else
-            //{
-            //    IEnumerable<BO.Task> x = from t in TaskList
-            //            let task = s_bl.Task.Read(t.Id)
-            //            where task.Difficulty==Rank
-            //            select task;
-            //    TaskList = from t in x
-            //               let task = new BO.TaskInList()
-            //               {
-            //                   Id = t.Id,
-            //                   Alias = t.Alias,
-            //                   Description = t.TaskDescription,
-            //                   StatusTask = t.StatusTask
-            //               }
-            //               select task;
-            //}
         }
 
         private void UpdateTask(object sender, MouseButtonEventArgs e)
         {
-            BO.TaskInList? task=(sender as ListView)?.SelectedItem as BO.TaskInList;
+            BO.TaskInList? task=(sender as DataGrid)?.SelectedItem as BO.TaskInList;
+            new TaskWindow(task!.Id).ShowDialog();
             this.Close();
         }
 
         private void AddTask(object sender, RoutedEventArgs e)
         {
+            new TaskWindow().Show();
             this.Close();
         }
     }

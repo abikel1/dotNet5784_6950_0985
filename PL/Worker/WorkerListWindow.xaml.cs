@@ -54,5 +54,27 @@ namespace PL.Worker
             new WorkerWindow(worker!.Id).ShowDialog();
             this.Close(); 
         }
+
+        private void RemoveWorker(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var worker = (BO.Worker)button.CommandParameter;
+            //var dataGridRow = (DataGridRow)((Button)sender).Parent;
+            //BO.Worker worker = (BO.Worker)dataGridRow.DataContext;
+            if (MessageBox.Show("Are you sure you want to delete the worker?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    s_bl.Worker.RemoveWorker(worker.Id);
+                    MessageBox.Show("Worker deleted successfully!");
+                    this.Close();
+                    new WorkerListWindow().Show();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
     }
 }

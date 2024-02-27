@@ -5,6 +5,7 @@ public interface IDal
     IWorker Worker { get; }
     ITask Task { get; }
     IDependency Dependency { get; }
+    IUser User { get; }
 
     public DateTime? GetStartProjectDate();
     public void SetStartProjectDate(DateTime? startDate);
