@@ -8,7 +8,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Title="DependencyWindow" Height="600" Width="700">
     <Grid>
-        <DataGrid ItemsSource="{Binding Path=TaskList}"  MouseDoubleClick="AddDependency_MouseDoubleClick">
+        <DataGrid ItemsSource="{Binding Path=TaskList}" IsReadOnly="True" MouseDoubleClick="AddDependency_MouseDoubleClick" >
             <DataGrid.Columns>
                 <DataGridTextColumn FontSize="10" Binding="{Binding Id}" Header="Id" Width="Auto"/>
                 <DataGridTextColumn FontSize="10" Binding="{Binding Description}" Header="Description" Width="Auto"/>

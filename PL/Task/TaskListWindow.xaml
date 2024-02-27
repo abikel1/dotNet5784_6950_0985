@@ -30,7 +30,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="delete" Margin="5" CommandParameter="{Binding}" Foreground="#FFFA0A0A">
+                            <Button Content="delete" Margin="5" CommandParameter="{Binding}" Foreground="#FFFA0A0A" Click="btnDeleteTask">
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

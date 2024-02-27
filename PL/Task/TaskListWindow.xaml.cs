@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Worker;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,7 @@ namespace PL.Task
         private void UpdateTask(object sender, MouseButtonEventArgs e)
         {
             BO.TaskInList? task=(sender as DataGrid)?.SelectedItem as BO.TaskInList;
-            new TaskWindow(task!.Id).ShowDialog();
+            new TaskWindow(task!.Id).Show();
             this.Close();
         }
 
@@ -57,6 +58,26 @@ namespace PL.Task
         {
             new TaskWindow().Show();
             this.Close();
+        }
+
+        private void btnDeleteTask(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var task = (BO.TaskInList)button.CommandParameter;
+            if (MessageBox.Show("Are you sure you want to delete the task?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    s_bl.Task.RemoveTask(task.Id);
+                    MessageBox.Show("Task deleted successfully!");
+                    this.Close();
+                    new TaskListWindow().Show();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

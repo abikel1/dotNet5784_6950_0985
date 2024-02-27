@@ -69,11 +69,11 @@
                 <!--<TextBlock Text="Not a member?"
                          Margin="0,5"
                        VerticalAlignment="Bottom"
-                       HorizontalAlignment="Center"/>
-                <TextBlock Text="Sign Up"
+                       HorizontalAlignment="Center"/>-->
+                <Button Click="btnAddUser" Text="Sign Up"
                          Margin="0,10"
                        VerticalAlignment="Bottom"
-                       HorizontalAlignment="Center"/>-->
+                       HorizontalAlignment="Center"/>
             </StackPanel>
         </Border>
         <!--<Grid.RowDefinitions>

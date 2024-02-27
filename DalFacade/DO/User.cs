@@ -2,10 +2,10 @@
 
 public record User
 (
-     string? UserName,
+     int Id,
      int Password,
      bool IsMennager=false
 )
 {
-    public User() : this(" ", 0, false) { }//empty ctor
+    public User() : this(0, 0, false) { }//empty ctor
 }

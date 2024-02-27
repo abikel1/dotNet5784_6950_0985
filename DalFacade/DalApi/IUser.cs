@@ -8,7 +8,7 @@ namespace DalApi
 {
     public interface IUser
     {
-        int Create(DO.User item);
+        void Create(DO.User item);
         void clear();
     }
 }

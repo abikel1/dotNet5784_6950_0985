@@ -37,7 +37,6 @@ namespace PL.Task
             _id = id;
         }
 
-
         private void AddDependency_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
@@ -48,9 +47,9 @@ namespace PL.Task
                 MessageBox.Show("Dependency added successfully!");
                 new TaskWindow(_id).Show();
             }
-            catch(Exception ex)
-            { 
-                MessageBox.Show(ex.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -45,5 +45,10 @@ namespace PL
             new MainWindow(isManeger).Show();
             this.Close();
         }
+
+        private void btnAddUser(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

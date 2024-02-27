@@ -18,11 +18,11 @@ internal class WorkerImplementation:IWorker
             throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
         }
         workers.Add(item);
-        users.Add(new User()
-        {
-            UserName = item.Name,
-            Password = item.Id
-        });
+        //users.Add(new User()
+        //{
+        //    UserName = item.Name,
+        //    Password = item.Id
+        //});
         XMLTools.SaveListToXMLSerializer<DO.Worker>(workers, s_workers_xml);
         XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
         return item.Id;

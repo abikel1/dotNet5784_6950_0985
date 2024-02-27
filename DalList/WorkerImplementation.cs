@@ -11,11 +11,11 @@ internal class WorkerImplementation : IWorker
             throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
         }
         DataSource.Workers.Add(item);
-        DataSource.Users.Add(new User()
-        {
-            UserName = item.Name,
-            Password = item.Id
-        }); 
+        //DataSource.Users.Add(new User()
+        //{
+        //    UserName = item.Name,
+        //    Password = item.Id
+        //}); 
         return item.Id;
     }
     public void Delete(int id)
