@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
-    public interface IUser
+    public interface IUser:ICrud<User>
     {
-        void Create(DO.User item);
-        void clear();
+        public User? Read(string name);
     }
 }

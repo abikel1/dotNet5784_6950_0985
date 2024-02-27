@@ -4,6 +4,7 @@ using DO;
 using System.Collections.Generic;
 internal class WorkerImplementation : IWorker
 {
+    private DalApi.IDal _dal = DalApi.Factory.Get;
     public int Create(Worker item)
     {
         if (Read(item.Id) is not null)
@@ -23,6 +24,10 @@ internal class WorkerImplementation : IWorker
         if (Read(id) is null)
         {
             throw new DalDoesNotExistException($"Worker with ID={id} is not exists");
+        }
+        if(_dal.User.Read(id) is not null)
+        {
+            _dal.User.Delete(id);
         }
         DataSource.Workers.Remove(Read(id)!);
     }

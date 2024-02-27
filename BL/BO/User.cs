@@ -8,8 +8,8 @@ namespace BO
 {
     public class User
     {
+        public string? userName {  get; set; }
         public int Id { get; set; }
         public int password {  get; set; }
-        public bool IsMennager { get; set; }=false;
     }
 }

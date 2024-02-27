@@ -79,23 +79,23 @@ internal class WorkerImplementation:IWorker
         XMLTools.SaveListToXMLSerializer<DO.Worker>(workers, s_workers_xml);
     }
 
-    public bool Check(User user)
-    {
-        var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
-        return users.Where(u => u.UserName == user.UserName && u.Password == user.Password).First().IsMennager; 
-    }
+    //public bool Check(User user)
+    //{
+    //    var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+    //    return users.Where(u => u.userName == user.userName && u.Password == user.Password).First().IsMennager; 
+    //}
 
-    public void AddUser(User user)
-    {
-        var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
-        users.Add(user);
-        XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
-    }
+    //public void AddUser(User user)
+    //{
+    //    var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+    //    users.Add(user);
+    //    XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
+    //}
 
-    public void RemoveUser(User user)
-    {
-        var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
-        users.RemoveAll(u => u.UserName == user.UserName && u.Password == user.Password);
-        XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
-    }
+    //public void RemoveUser(User user)
+    //{
+    //    var users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+    //    users.RemoveAll(u => u.userName == user.userName && u.Password == user.Password);
+    //    XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
+    //}
 }
