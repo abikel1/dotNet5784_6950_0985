@@ -49,11 +49,11 @@ namespace PL.Task
 
 
 
-        public TaskListWindow(BO.User? user=null)
+        public TaskListWindow(BO.User? user = null)
         {
-            if (user!=null&&user.isMennager==false)
+            if (user != null && user.isMennager == false)
             {
-                TaskList=s_bl.Task.relevantTask(s_bl.Worker.Read(user.Id)).ToObservableCollection();
+                TaskList = s_bl.Task.relevantTask(s_bl.Worker.Read(user.Id)).ToObservableCollection();
                 isMennager = false;
             }
             else
@@ -72,9 +72,9 @@ namespace PL.Task
                 Alias = s_bl.Task.Read(id)!.Alias,
                 Description = s_bl.Task.Read(id)!.TaskDescription,
             };
-            if(isUpdate)
+            if (isUpdate)
             {
-                var oldTask= TaskList.FirstOrDefault(t=>t.Id==id);
+                var oldTask = TaskList.FirstOrDefault(t => t.Id == id);
                 TaskList.Remove(oldTask!);
                 TaskList.OrderBy(t => t.Id).ToObservableCollection();
             }
@@ -82,11 +82,11 @@ namespace PL.Task
         }
         private void cbSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(Status==BO.Status.None&&Rank==BO.Rank.None)
+            if (Status == BO.Status.None && Rank == BO.Rank.None)
             {
                 return;
             }
-            if(Status==BO.Status.None)
+            if (Status == BO.Status.None)
             {
                 TaskList = s_bl?.Task.ReadTaskInList(item => s_bl.Task.Read(item.Id).Difficulty == Rank).ToObservableCollection()!;
                 return;
@@ -98,14 +98,14 @@ namespace PL.Task
             }
             else
             {
-                TaskList = s_bl?.Task.ReadTaskInList(item =>(item.StatusTask==Status)&&(s_bl.Task.Read(item.Id).Difficulty == Rank)).ToObservableCollection()!;
+                TaskList = s_bl?.Task.ReadTaskInList(item => (item.StatusTask == Status) && (s_bl.Task.Read(item.Id).Difficulty == Rank)).ToObservableCollection()!;
             }
         }
 
         private void UpdateTask(object sender, MouseButtonEventArgs e)
         {
-                BO.TaskInList? task = (sender as DataGrid)?.SelectedItem as BO.TaskInList;
-                new TaskWindow(onAddOrUpdate, task!.Id).Show();
+            BO.TaskInList? task = (sender as DataGrid)?.SelectedItem as BO.TaskInList;
+            new TaskWindow(onAddOrUpdate, task!.Id, isMennager).Show();
         }
         private void AddTask(object sender, RoutedEventArgs e)
         {

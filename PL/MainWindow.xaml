@@ -19,6 +19,13 @@
             <Button Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Schdule" Margin="20" Height="70" Width="100" Click="btnSchedule"/>
             <Button Content="Handle Tasks" Margin="20" Height="70" Width="100" Click="btnTasks_Click"/>
         </StackPanel>
+        <Label Content="{Binding CurrentTime}"/>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="שעה קדימה" />
+            <Button Content="יום קדימה" />
+            <Button Content="שנה קדימה" />
+            <Button Content="איפוס" />
+        </StackPanel>
         <Image HorizontalAlignment="Left" Height="100" Margin="173,172,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>
 </Window>
