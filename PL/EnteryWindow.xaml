@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
- DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-      Title="EnteryWindow">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        Title="EnteryWindow">
 
     <Grid>
         <Border Width="300"
@@ -40,7 +40,7 @@
                    Grid.Row="0"
                    Margin="0,15"
                    HorizontalAlignment="Left"/>
-                    <TextBox Text="{Binding User.UserName, Mode=TwoWay}"  Grid.Column="1"
+                    <TextBox Text="{Binding User.userName, Mode=TwoWay}"  Grid.Column="1"
                   Grid.Row="1"
                   Padding="0,5"
                   Width="255"
@@ -70,7 +70,7 @@
                          Margin="0,5"
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Center"/>-->
-                <Button Click="btnAddUser" Text="Sign Up"
+                <Button Click="btnAddUser" Content="Sign Up"
                          Margin="0,10"
                        VerticalAlignment="Bottom"
                        HorizontalAlignment="Center"/>

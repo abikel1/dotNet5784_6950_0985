@@ -64,3 +64,8 @@ public class BlexecutionStatus : Exception
 {
     public BlexecutionStatus(string? message) : base(message) { }
 }
+[Serializable]
+public class BlCantAddMenagger : Exception
+{
+    public BlCantAddMenagger(string? message) : base(message) { }
+}

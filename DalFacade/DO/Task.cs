@@ -28,7 +28,7 @@ public record Task
     DateTime? CreateTask = null,
     DateTime? BeginWork = null,
     DateTime? BeginTask = null,
-    int? TimeTask = null,
+    TimeSpan? TimeTask = null,
     DateTime? DeadLine = null,
     DateTime? EndWorkTime = null,
     string? Remarks = null,

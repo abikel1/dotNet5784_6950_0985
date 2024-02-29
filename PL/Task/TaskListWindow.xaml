@@ -14,14 +14,22 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="select rank of Task:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0"/>
-            <ComboBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" ItemsSource="{Binding Source={StaticResource StausCollectionKey}}" SelectedValue="{Binding Path=Status, Mode=TwoWay}" SelectionChanged="cbRankSelector_SelectionChanged"/>
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>-->
+            <StackPanel Orientation="Horizontal" >
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="select status of Task:" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <ComboBox Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource StausCollectionKey}}" SelectedValue="{Binding Path=Status, Mode=TwoWay}" SelectionChanged="cbSelector_SelectionChanged"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey}, Mode=OneTime}" Content="select rank of Task:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ComboBox Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey}, Mode=OneTime}" Width="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding Path=Rank, Mode=TwoWay}" SelectionChanged="cbSelector_SelectionChanged"/>
+                </StackPanel>
+            </StackPanel>
         </Grid>
-        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding Path=TaskList}" IsReadOnly="True" MouseDoubleClick="UpdateTask" AutoGenerateColumns="False" EnableRowVirtualization="True">
+        <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding Path=TaskList}" IsReadOnly="True"  MouseDoubleClick="UpdateTask" AutoGenerateColumns="False" EnableRowVirtualization="True">
             <DataGrid.Columns>
                 <DataGridTextColumn FontSize="10" Binding="{Binding Id}" Header="Id" Width="Auto"/>
                 <DataGridTextColumn FontSize="10" Binding="{Binding Description}" Header="Description" Width="Auto"/>
@@ -44,6 +52,6 @@
                 </GridView>
             </ListView.View>
         </ListView>-->
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddTask"/>
+        <Button Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey}, Mode=OneTime}" Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddTask"/>
     </Grid>
 </Window>

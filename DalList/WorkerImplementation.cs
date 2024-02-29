@@ -25,10 +25,6 @@ internal class WorkerImplementation : IWorker
         {
             throw new DalDoesNotExistException($"Worker with ID={id} is not exists");
         }
-        if(_dal.User.Read(id) is not null)
-        {
-            _dal.User.Delete(id);
-        }
         DataSource.Workers.Remove(Read(id)!);
     }
 
@@ -65,9 +61,9 @@ internal class WorkerImplementation : IWorker
         DataSource.Workers.Clear();
     }
 
-    public bool Check(User user)=> DataSource.Users.Contains(user);
+    //public bool Check(User user)=> DataSource.Users.Contains(user);
 
-    public void AddUser(User user)=>DataSource.Users.Add(user);
+    //public void AddUser(User user)=>DataSource.Users.Add(user);
 
-    public void RemoveUser(User user) => DataSource.Users.RemoveAll(x => x.Password == user.Password && x.UserName == user.UserName);
+    //public void RemoveUser(User user) => DataSource.Users.RemoveAll(x => x.Password == user.Password && x.UserName == user.UserName);
 }

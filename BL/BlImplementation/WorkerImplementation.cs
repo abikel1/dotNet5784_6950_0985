@@ -14,7 +14,7 @@ internal class WorkerImplementation : IWorker
     // Private field for accessing data layer
     private DalApi.IDal _dal=DalApi.Factory.Get;
     // Method to add a new worker
-    public void AddWorker(BO.Worker worker)
+    public int AddWorker(BO.Worker worker)
     {
         // Check for invalid input: ID
         if (worker.Id <= 0)//If the id isnt correct
@@ -34,7 +34,8 @@ internal class WorkerImplementation : IWorker
         {
             // Create a new worker object and add it to the data layer
             DO.Worker newWorker = new DO.Worker(worker.Id,(DO.Rank)((int)worker.RankWorker),worker.HourPrice,worker.Name,worker.Email);//Building a worker with the data of the worker that the function got
-            _dal.Worker.Create(newWorker);//Adding the worker to the data
+            int id=_dal.Worker.Create(newWorker);//Adding the worker to the data
+            return id;
         }
         catch(DO.DalAlreadyExistsException d) 
         {
@@ -83,7 +84,7 @@ internal class WorkerImplementation : IWorker
             IEnumerable<DO.Task> taskForWorker = _dal.Task.ReadAll(x => x.WorkerId == id);
             if (taskForWorker != null)
             {
-                //We check if the worker in the middle of the task or that he finish the task, if so we cant delete the worker
+                //We checkInvalid if the worker in the middle of the task or that he finish the task, if so we cant delete the worker
                 bool taskInTheMiddle = taskForWorker.Where(x => (x.BeginTask < DateTime.Now && x.EndWorkTime == null)).Any();
                 if (taskInTheMiddle)
                     throw new BlCantRemoveObject("Cant delete worker that in the middle of a task");
@@ -96,6 +97,10 @@ internal class WorkerImplementation : IWorker
             }
             // Delete the worker from the data layer
             _dal.Worker.Delete(id);
+            if (_dal.User.Read(id) is not null)
+            {
+                _dal.User.Delete(id);
+            }
         }
         catch (DO.DalDoesNotExistException e) 
         {
@@ -206,33 +211,33 @@ internal class WorkerImplementation : IWorker
                };
     }
 
-    public bool CheckUser(User user)
-    {
-        DO.User dUser = new()
-        {
-            UserName = user.UserName,
-            Password=user.password
-        };
-        return _dal.Worker.Check(dUser);
-    }
+    //public bool CheckUser(User user)
+    //{
+    //    DO.User dUser = new()
+    //    {
+    //        UserName = user.UserName,
+    //        Password=user.password
+    //    };
+    //    return _dal.Worker.Check(dUser);
+    //}
 
-    public void AddUser(User user)
-    {
-        DO.User dUser = new()
-        {
-            UserName = user.UserName,
-            Password=user.password
-        };
-         _dal.Worker.AddUser(dUser);
-    }
+    //public void AddUser(User user)
+    //{
+    //    DO.User dUser = new()
+    //    {
+    //        UserName = user.UserName,
+    //        Password=user.password
+    //    };
+    //     _dal.Worker.AddUser(dUser);
+    //}
 
-    public void RemoveUser(User user)
-    {
-        DO.User dUser = new()
-        {
-            UserName = user.UserName,
-            Password = user.password
-        };
-        _dal.Worker.RemoveUser(dUser);
-    }
+    //public void RemoveUser(User user)
+    //{
+    //    DO.User dUser = new()
+    //    {
+    //        UserName = user.UserName,
+    //        Password = user.password
+    //    };
+    //    _dal.Worker.RemoveUser(dUser);
+    //}
 }

@@ -10,7 +10,10 @@ public interface IUser
     IEnumerable<BO.User> ReadAll(Func<BO.User, bool>? filter = null); 
     public void Update(BO.User item); //Updates user
     void Delete(int id); //Deletes an user by its Id
-    BO.User? Read(Func<BO.User, bool> filter); 
+    //BO.User? Read(Func<BO.User, bool> filter); 
     void clear();
-   
+    void checkInvalid(BO.User user);
+    //void checkMennager(BO.User user);
+    //bool checkWorkers(BO.User user);//check if the user is part of the workers
+
 }

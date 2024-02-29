@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -41,14 +42,22 @@ namespace PL
 
         private void Check(object sender, RoutedEventArgs e)
         {
-            bool isManeger = s_bl.Worker.CheckUser(User);
-            new MainWindow(isManeger).Show();
-            this.Close();
+            try
+            {
+                s_bl.User.checkInvalid(User);
+                User = s_bl.User.Read(User.userName!)!;
+                new MainWindow(User).Show();
+                this.Close();
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnAddUser(object sender, RoutedEventArgs e)
         {
-
+            new UserWindow().ShowDialog();
         }
     }
 }

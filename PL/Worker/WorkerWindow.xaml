@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Worker"
         mc:Ignorable="d"
         DataContext="{Binding worker, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
-        Title="WorkerWindow" Height="450" Width="400">
+        Title="WorkerWindow" Height="450" Width="450">
     <Window.Resources>
         <Style x:Key="myLabelStyle"
            TargetType="Label">
@@ -41,17 +41,23 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Content="Id:" Style="{StaticResource myLabelStyle }" />
             <Label Grid.Row="1" Grid.Column="0" Content="Name:" Style="{StaticResource myLabelStyle }" />
             <Label Grid.Row="2" Grid.Column="0" Content="Email:" Style="{StaticResource myLabelStyle }" />
             <Label Grid.Row="3" Grid.Column="0" Content="Worker's rank:" Style="{StaticResource myLabelStyle }" />
             <Label Grid.Row="4" Grid.Column="0" Content="Hour price:" Style="{StaticResource myLabelStyle }" />
+            <Label Grid.Row="5" Grid.Column="0" Content="Current task:" Style="{StaticResource myLabelStyle }" />
             <TextBox MaxLength="9"  IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToISEnabledKey}}" Text="{Binding Id,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="0" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
             <TextBox Text="{Binding Name,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="1" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
             <TextBox Text="{Binding Email,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="2" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
             <ComboBox FontSize="20" Background="LightGray" ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding RankWorker, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="3" Grid.Column="3" Height="30" Width="170" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBox Text="{Binding HourPrice,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="4" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1">
+                <TextBlock Height="15" Width="170" FontSize="10" Margin="8" Background="LightGray" Text="{Binding CurrentTask.Id,Mode=TwoWay}"/>
+                <TextBlock Height="15" Width="170" FontSize="10" Margin="8" Background="LightGray" Text="{Binding CurrentTask.Name,Mode=TwoWay}"/>
+            </StackPanel>
         </Grid>
         <Button Background="LightGray" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddOrUpdate" Height="40" Width="100"/>
     </Grid>

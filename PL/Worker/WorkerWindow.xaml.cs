@@ -20,7 +20,8 @@ namespace PL.Worker
     public partial class WorkerWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
+        private event Action<int, bool> _onAddOrUpdate;
+        private bool _isUpdate;
 
         public BO.Worker worker
         {
@@ -33,37 +34,54 @@ namespace PL.Worker
             DependencyProperty.Register("worker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
 
 
-        public WorkerWindow(int id=0)
+        public WorkerWindow(Action<int, bool> onAddOrUpdate, int id=0)
         {
             InitializeComponent();
             if(id== 0)
             {
                  worker = new BO.Worker();
+                _isUpdate = false;
             }
             else
             {
                worker= s_bl.Worker.Read(id);
+                _isUpdate = true;
             }
+            _onAddOrUpdate = onAddOrUpdate;
         }
 
         private void btnAddOrUpdate(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (s_bl.Worker.ReadWorkers().FirstOrDefault(w=>w.Id==worker.Id)==null)
+                if(_isUpdate)
                 {
-                    s_bl.Worker.AddWorker(worker);
-                    MessageBox.Show("The operation of adding a worker was performed successfully");
+                    s_bl.Worker.UpdateWorker(worker);
+                    _onAddOrUpdate(worker.Id, true);
+                    MessageBox.Show("The operation of updating a worker was performed successfully");
                     this.Close();
-                    new WorkerListWindow().Show();
                 }
                 else
                 {
-                    s_bl.Worker.UpdateWorker(worker);
-                    MessageBox.Show("The operation of updating a worker was performed successfully");
+                    int id=s_bl.Worker.AddWorker(worker);
+                    _onAddOrUpdate(worker.Id, false);
+                    MessageBox.Show("The operation of adding a worker was performed successfully");
                     this.Close();
-                    new WorkerListWindow().Show();
                 }
+                //if (s_bl.Worker.ReadWorkers().FirstOrDefault(w=>w.Id==worker.Id)==null)
+                //{
+                //    s_bl.Worker.AddWorker(worker);
+                //    _onAddOrUpdate(worker.Id, false);
+                //    MessageBox.Show("The operation of adding a worker was performed successfully");
+                //    this.Close();
+                //}
+                //else
+                //{
+                //    s_bl.Worker.UpdateWorker(worker);
+                //    _onAddOrUpdate(worker.Id, true);
+                //    MessageBox.Show("The operation of updating a worker was performed successfully");
+                //    this.Close();
+                //}
             }
             catch(Exception ex)
             {

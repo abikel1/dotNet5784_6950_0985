@@ -15,7 +15,7 @@ internal class TaskInLIstImplementation : ITaskInList
     {
         try
         {
-            DO.Dependency dependency = _dal.Dependency.Read(x => x.IdDependentTask == idDepend && x.IdPreviousTask == idPrevius);
+            DO.Dependency dependency = _dal.Dependency.Read(x => x.IdDependentTask == idDepend && x.IdPreviousTask == idPrevius)!;
             _dal.Dependency.Delete(dependency.Id);
         }
         catch(DO.DalDoesNotExistException ex)

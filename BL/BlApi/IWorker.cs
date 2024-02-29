@@ -19,7 +19,7 @@ public interface IWorker
     /// add new worker with the details that the function got
     /// </summary>
     /// <param name="worker">the worker that I want to add</param>
-    public void AddWorker(BO.Worker worker);
+    public int AddWorker(BO.Worker worker);
     /// <summary>
     /// remove worker with the id that the function got
     /// </summary>
@@ -30,9 +30,9 @@ public interface IWorker
     /// </summary>
     /// <param name="worker">the worker that I want to update</param>
     public void UpdateWorker(BO.Worker worker);
-    public bool CheckUser(BO.User user);
-    public void AddUser(BO.User user);
-    public void RemoveUser(BO.User user);
+    //public bool CheckUser(BO.User user);
+    //public void AddUser(BO.User user);
+    //public void RemoveUser(BO.User user);
     public void clear();
     //public IEnumerable<BO.Worker> RankGroups(int rank);
 

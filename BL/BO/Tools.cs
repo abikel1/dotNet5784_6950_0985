@@ -27,4 +27,10 @@ public static class Tools
 
         return resultBuilder.ToString();//return the string
     }
+    public static DateTime? updateDeadLine(this BO.Task task)
+    {
+        if (task.BeginTask != null && task.BeginTask > task.BeginWork)
+            return task.BeginTask + task.TimeTask;
+        return task.BeginWork + task.TimeTask;
+    }
 }

@@ -7,6 +7,8 @@
         <local:RankCollection x:Key="RankCollectionKey" />
         <local:ConvertIdToContent x:Key="ConvertIdToContentKey" />
         <local:ConvertIdToISEnabled x:Key="ConvertIdToISEnabledKey" />
+        <local:ConvertBoolToVisibility x:Key="ConvertBoolToVisibilityKey"/>
+        <local:ConvertBoolToVisibility1 x:Key="ConvertBoolToVisibilityKey1"/>
         <local:StatusCollection x:Key="StausCollectionKey"/>
     </Application.Resources>
 </Application>

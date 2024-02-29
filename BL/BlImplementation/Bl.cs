@@ -14,37 +14,12 @@ namespace BlImplementation
         // Properties returning instances of worker, task, and worker-task implementations
         public IWorker Worker => new WorkerImplementation();
         public ITask Task => new TaskImplementation();
+        public IUser User => new UserImplementation();
 
         public ITaskInList TaskInList =>new TaskInLIstImplementation();
 
         // Method to initialize the database
         public void InitializeDB() => DalTest.Initialization.Do();
-        //public void autoSchedule()
-        //{
-        //    var tasks = BlApi.Factory.Get().Task;
-        //    var tasks1 = tasks.ReadTasks();
-        //    foreach( var t in tasks1)
-        //    {
-        //        BO.Task task = tasks.Read(t.Id);
-        //        if(task.DependencyTasks is null)
-        //        {
-        //            task.BeginWork= IBl.ProjectStartDate;
-        //        }
-        //        else
-        //        {
-        //            DateTime? max = DateTime.Now;
-        //            foreach(var dlist in task.DependencyTasks)
-        //            {
-        //                if(tasks.Read(dlist.Id).DeadLine>max)
-        //                {
-        //                    max = tasks.Read(dlist.Id).DeadLine;
-        //                }
-        //            }
-        //            task.BeginWork = max;
-        //        }
-        //        tasks.UpdateTask(task);
-        //    }
-        //}
 
         // Method to get the end project date from the data access layer
         public DateTime? GetEndProjectDate() => _dal.GetEndProjectDate();

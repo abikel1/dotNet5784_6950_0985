@@ -1,20 +1,27 @@
 ﻿using BlApi;
 using BO;
+using DalApi;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Xml.Linq;
 
 namespace BlImplementation;
 
 // Internal implementation of the ITask interface
-internal class TaskImplementation : ITask
+internal class TaskImplementation : BlApi.ITask
 {
     // Private field for accessing the data access layer
     private DalApi.IDal _dal = DalApi.Factory.Get;
     // Method to add a new task
-    public void AddTask(BO.Task task)
+    public int AddTask(BO.Task task)
     {
         // Validation checks before adding a task
         if (task.Alias == "")
-            throw new BO.BlInValidInputException("Invalid alisa of task");
+            throw new BO.BlInValidInputException("Invalid alias of task");
+        if(task.TimeTask==null)
+        {
+            throw new BO.BlInValidInputException("Invalid time of task");
+        }
         // Check project status before adding a task
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
@@ -32,7 +39,7 @@ internal class TaskImplementation : ITask
             throw new BO.BlexecutionStatus("You cant add a task during execution");
         }
         // Create a new DO.Task object and calculate status
-        DO.Task newTask = (new DO.Task(task.Id, (DO.Rank)task.Difficulty, 0, task.TaskDescription, false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
+        DO.Task newTask = (new DO.Task(task.Id, (DO.Rank)task.Difficulty, 0, task.TaskDescription, false, task.Alias, DateTime.Now, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
         task.StatusTask = CalculateStatus(newTask);
         // Add the task to the database
         int id =_dal.Task.Create(newTask);
@@ -49,9 +56,10 @@ internal class TaskImplementation : ITask
             var y = (from t in x
                     select _dal.Dependency.Create(t)).ToList();
         }
+        return id;
     }
     // Method to read tasks
-    public IEnumerable<BO.TaskInList> ReadTasks(Func<BO.TaskInList, bool>? filter = null)
+    public IEnumerable<BO.TaskInList> ReadTaskInList(Func<BO.TaskInList, bool>? filter = null)
     {
         // Read all tasks from the database and apply filter
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
@@ -132,7 +140,7 @@ internal class TaskImplementation : ITask
     {
         // Read the task from the database
         DO.Task task = _dal.Task.Read(id)!;
-        // Query previous tasks to check constraints on begin task date
+        // Query previous tasks to checkInvalid constraints on begin task date
         IEnumerable<BO.TaskInList> tasks = getPriviousTask(id);
         var result = from BO.TaskInList t in tasks
                      let dTask = _dal.Task.Read(t.Id)
@@ -146,7 +154,7 @@ internal class TaskImplementation : ITask
             throw new BO.BLcantUpdateTask("this date cant be update");
     }
     // Method to retrieve previous tasks based on dependencies
-    public IEnumerable<BO.TaskInList> getPriviousTask(int id)
+    public IEnumerable<BO.TaskInList>? getPriviousTask(int id)
     {
        DO.Task? task = _dal.Task.Read(id);
         IEnumerable<DO.Dependency> dependencies = _dal.Dependency.ReadAll(x => x.IdDependentTask == task.Id);
@@ -161,13 +169,13 @@ internal class TaskImplementation : ITask
                    };
         return result;
     }
-    // Method to check constraints related to assigning a worker to a task
+    // Method to checkInvalid constraints related to assigning a worker to a task
     private void CheckTaskForWorker(BO.Task task)
     {
         DO.Task oldTask = _dal.Task.Read(task.Id)!;
             if (oldTask != null && task.Worker!=null && oldTask.WorkerId != task.Worker!.Id)
                 throw new BO.BlCantAssignWorker("the task is already assigned to an worker");
-        if (getPriviousTask(oldTask!.Id).Where(x => x.StatusTask != BO.Status.Done).Any())
+        if (getPriviousTask(oldTask!.Id)!.Where(x => x.StatusTask != BO.Status.Done).Any())
             throw new BO.BlCantAssignWorker("cant assign worker for this task");
         if(task.Worker !=null)
         {
@@ -225,7 +233,7 @@ internal class TaskImplementation : ITask
 
         // Calculate and set the status of the updated task
         task.StatusTask = CalculateStatus(newTask);
-        task.DependencyTasks = getPriviousTask(newTask.Id).ToList();
+        task.DependencyTasks = getPriviousTask(newTask.Id)!.ToList();
 
         try
         {
@@ -263,29 +271,30 @@ internal class TaskImplementation : ITask
         if(dotask==null)
             throw new BO.BlDoesNotExistException($"Task with ID={id} does Not exist");
         // Retrieve previous tasks
-        IEnumerable<TaskInList> previousTasks = getPriviousTask(id);
+        IEnumerable<TaskInList> previousTasks = getPriviousTask(id)!;
         // Check constraints related to updating start dates
-        if ((previousTasks == null) && (startDate < BlApi.Factory.Get().GetStartProjectDate()))
+        if ((startDate < BlApi.Factory.Get().GetStartProjectDate()))
             throw new BO.BlcanotUpdateStartdate("cant update start date because the start date is before the planning date of starting the project");
-        else
-        {
-            var result = from p in previousTasks
+            if (previousTasks.Count()!=0)
+            {
+                IEnumerable<TaskInList>? result = null;
+                result = from p in previousTasks
                          let t = _dal.Task.Read(p.Id)
                          where t != null && t.BeginWork == null
                          select p;
-            if (result != null)
-                throw new BO.BlcanotUpdateStartdate("cant update the start date of the task because the task depent on tasks that dont have start date ");
-            var result2 = from p in previousTasks
-                          let t = _dal.Task.Read(p.Id)
-                          where (t != null) && (startDate < t.EndWorkTime)
-                          select p;
-            if (result2 != null)
-                throw new BO.BlcanotUpdateStartdate("cant update start date because the task depent on tasks that finish after the satart date");
-        }
+                if (result.Count()!=0)
+                    throw new BO.BlcanotUpdateStartdate("cant update the start date of the task because the task depent on tasks that dont have start date ");
+                var result2 = from p in previousTasks
+                              let t = _dal.Task.Read(p.Id)
+                              where (t != null) && (startDate < t.EndWorkTime)
+                              select p;
+                if (result2.Count()!=0)
+                    throw new BO.BlcanotUpdateStartdate("cant update start date because the task depent on tasks that finish after the start date");
+            }
         // Update the start date of the task
         try
         {
-            DO.Task updateTask = dotask with { BeginTask = startDate };
+            DO.Task updateTask = dotask with { BeginWork = startDate, DeadLine=startDate+dotask.TimeTask };
             _dal.Task.Update(updateTask);
         }
         catch(DO.DalDoesNotExistException)
@@ -300,4 +309,129 @@ internal class TaskImplementation : ITask
         _dal.Dependency.clear();
         _dal.Task.clear();
     }
+
+    public IEnumerable<BO.Task> ReadTasks(Func<BO.Task, bool>? filter = null)
+    {
+        IEnumerable<BO.TaskInList> tasksI = ReadTaskInList();
+        IEnumerable<BO.Task> tasks=from BO.TaskInList task in tasksI
+                                   let t=Read(task.Id)
+                                   where filter is null ? true : filter(t)
+                                   select t;
+        return tasks;
+    }
+
+    public IEnumerable<TaskInList> relevantTask(BO.Worker worker)
+    {
+        IEnumerable<BO.Task> tasks = ReadTasks();
+        var result = from BO.Task task in tasks
+                     where task.Worker == null && task.BeginWork != null && worker.RankWorker == task.Difficulty
+                     select new BO.TaskInList()
+                     {
+                         Id = task.Id,
+                         Alias = task.Alias,
+                         Description = task.TaskDescription,
+                         StatusTask = task.StatusTask
+                     };
+        return result;
+    }
+
+    public void autoSchedule()
+    {
+        List<BO.TaskInList> allNoStartDate = new List<BO.TaskInList>();
+        IEnumerable<DO.Task> allTasks = _dal.Task.ReadAll();
+        foreach (var task in allTasks)
+        {
+            if ((getPriviousTask(task.Id))!.Count() == 0)
+            {
+                UpdateStartDates(task.Id, _dal.GetStartProjectDate());
+            }
+        }
+        allTasks = _dal.Task.ReadAll();
+        while (allTasks.Any(t => t.BeginWork == null))
+        {
+            foreach (DO.Task task in allTasks)
+            {
+                IEnumerable<BO.TaskInList> tasksDependencies = getPriviousTask(task.Id)!;
+                List<BO.TaskInList> noStartDate = new List<BO.TaskInList>();
+                List<DO.Task> thereIsStartDate = new List<DO.Task>();
+                foreach (BO.TaskInList taskList in tasksDependencies)
+                {
+                    DO.Task dep = _dal.Task.Read(taskList.Id)!;
+                    if (dep.BeginWork == null)
+                    {
+                        noStartDate.Add(taskList);
+                        allNoStartDate.Add(taskList);
+                    }
+                    else
+                    {
+                        thereIsStartDate.Add(dep);
+                    }
+                }
+                if (noStartDate.Count() == 0 && task.BeginWork == null)
+                {
+                    var scheduledDate = thereIsStartDate.Max(dep => dep.BeginWork + dep.TimeTask);
+                    UpdateStartDates(task.Id, (DateTime)scheduledDate!);
+                    allTasks = _dal.Task.ReadAll();
+                }
+            }
+        }
+        ////Selects all tasks that have no previous tasks and updates the task's scheduled date to the project's start date
+        //IEnumerable<DO.Task> tasks = _dal.Task.ReadAll();
+        //foreach(var task in tasks)
+        //{
+        //    if(getPriviousTask(task.Id)==null)
+        //    {
+        //        UpdateStartDates(task.Id, BlApi.Factory.Get().GetStartProjectDate());
+        //    }
+        //}
+        ////List<BO.Task> tasks = (from DO.Task task in _dal.Task.ReadAll()
+        ////                              where getPriviousTask(task.Id) == null
+        ////                              let t = task with { BeginWork = BlApi.Factory.Get().GetStartProjectDate() }
+        ////                              select Read(t.Id)).ToList();
+        ////Selects all tasks that do not have a scheduled date and sends to the function
+        //List<BO.Task> tasks1 = (from DO.Task task in _dal.Task.ReadAll()
+        //     where task.BeginWork== null
+        //     select Read(task.Id)).ToList();
+        //taskWithDepend(tasks1);
+    }
+    private void taskWithDepend(List<BO.Task> tasks)
+    {
+        if (tasks == null)
+            return;
+        else
+        {
+            List<BO.Task>? tasksWithScheduleDate = new List<BO.Task>();
+            foreach(BO.Task task in tasks)
+            {
+                if(task.DependencyTasks!=null)
+                {
+                    if(!(from d in task.DependencyTasks//chack if all the dependency task have schedule date
+                       let t=Read(d.Id)
+                       where t.BeginWork == null
+                       select t).Any())
+                    {
+                        DateTime? possibleDate = PossibleDate(task);
+                        if(possibleDate!=null)
+                        {
+                            UpdateStartDates(task.Id, possibleDate);
+                        }
+                        tasksWithScheduleDate!.Add(task);
+                    }
+                }
+            }
+            //foreach(BO.Task ta in tasksWithScheduleDate!)
+            //{
+            //    if (tasks.FirstOrDefault(t => t.Id == ta.Id) != null)
+            //        tasks.Remove(ta);
+            //}
+            //taskWithDepend(tasks);
+        }
+    }
+    private DateTime? PossibleDate(BO.Task task)
+    {
+        var result = from BO.TaskInList d in task.DependencyTasks!
+                     select Read(d.Id);
+        return result.Max(t => (t.BeginWork+t.TimeTask));
+    }
+
 }

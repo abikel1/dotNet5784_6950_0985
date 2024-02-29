@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
-        DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
-        Title="TaskWindow" Height="600" Width="600">
+        Title="TaskWindow" Height="600" Width="600"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Activated="newOpenTask">
+        <!--DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}" Activated="newOpenTask">-->
     <Window.Resources>
         <Style x:Key="myLabelStyle"
          TargetType="Label">
@@ -16,6 +17,15 @@
         </Style>
         <Style x:Key="myTextBoxStyle"
              TargetType="TextBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style x:Key="myDatePickerStyleStyle"
+             TargetType="DatePicker">
             <Setter Property="Height" Value="35"/>
             <Setter Property="Width" Value="200"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -66,22 +76,22 @@
                 <Label Grid.Row="11" Grid.Column="0" Content="DeadLine:" Style="{StaticResource myLabelStyle }" />
                 <Label Grid.Row="12" Grid.Column="0" Content="EndWorkTime:" Style="{StaticResource myLabelStyle }" />
                 <Label Grid.Row="13" Grid.Column="0" Content="Dependencies:" Style="{StaticResource myLabelStyle }" />
-                <TextBox Text="{Binding Id ,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="0" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding Alias,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="1" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding TaskDescription,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="2" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding Remarks,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="3" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding Product,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="4" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <ComboBox FontSize="20" Background="LightGray" ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding Difficulty, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="5" Grid.Column="3" Height="35" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <ComboBox FontSize="20" Background="LightGray" ItemsSource="{Binding Source={StaticResource StausCollectionKey}}" SelectedValue="{Binding StatusTask, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="6" Grid.Column="3" Height="35" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                <TextBox Text="{Binding CreateTask,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="7" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding BeginWork,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="8" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding BeginTask,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="9" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding TimeTask,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="10" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding DeadLine,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="11" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
-                <TextBox Text="{Binding EndWorkTime,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="12" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
+                <TextBox IsEnabled="False" Text="{Binding Task.Id ,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="0" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
+                <TextBox IsEnabled="{Binding isMennager, Mode=OneWay}"  Text="{Binding Task.Alias,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="1" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
+                <TextBox IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=isMennager}" Text="{Binding Task.TaskDescription,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="2" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
+                <TextBox IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=isMennager}" Text="{Binding Task.Remarks,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="3" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
+                <TextBox IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=isMennager}" Text="{Binding Task.Product,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="4" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
+                <ComboBox FontSize="20" Background="LightGray" ItemsSource="{Binding Source={StaticResource RankCollectionKey}}" SelectedValue="{Binding Task.Difficulty, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="5" Grid.Column="3" Height="35" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <ComboBox IsEnabled="False" FontSize="20" Background="LightGray" ItemsSource="{Binding Source={StaticResource StausCollectionKey}}" SelectedValue="{Binding Task.StatusTask, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="6" Grid.Column="3" Height="35" Width="200" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <DatePicker IsEnabled="False" Text="{Binding Task.CreateTask,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="7" Grid.Column="3" Style="{StaticResource myDatePickerStyleStyle}"/>
+                <DatePicker IsEnabled="False" Text="{Binding Task.BeginWork,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="8" Grid.Column="3" Style="{StaticResource myDatePickerStyleStyle}"/>
+                <DatePicker IsEnabled="False" Text="{Binding Task.BeginTask,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="9" Grid.Column="3" Style="{StaticResource myDatePickerStyleStyle}"/>
+                <TextBox IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=isMennager}" Text="{Binding Task.TimeTask,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="10" Grid.Column="3" Style="{StaticResource myTextBoxStyle}"/>
+                <DatePicker IsEnabled="False" Text="{Binding Task.DeadLine,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="11" Grid.Column="3" Style="{StaticResource myDatePickerStyleStyle}"/>
+                <DatePicker IsEnabled="False" Text="{Binding Task.EndWorkTime,Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" Grid.Row="12" Grid.Column="3" Style="{StaticResource myDatePickerStyleStyle}"/>
                 <StackPanel Grid.Row="13" Grid.Column="3" Orientation="Vertical">
-                    <Button Click="btnAddDependency" Content="Add dependency" Background="Gray" Height="30" Width="100"/>
-                    <ListView ItemsSource="{Binding DependencyTasks}">
+                    <Button Visibility="{Binding isMennager , Converter={StaticResource ConvertBoolToVisibilityKey}, Mode=OneTime}" Click="btnAddDependency" Content="Add dependency" Background="Gray" Height="30" Width="100"/>
+                    <ListView ItemsSource="{Binding Task.DependencyTasks}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}"/>
@@ -93,7 +103,7 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <Button Background="Transparent" Click="btnDeleteDependency" Command="{Binding btnDeleteDependency}" CommandParameter="{Binding}" Content="delete" Margin="5">
+                                                <Button Visibility="{Binding isMennager , Converter={StaticResource ConvertBoolToVisibilityKey}, Mode=OneTime}" Background="Transparent" Click="btnDeleteDependency" Command="{Binding btnDeleteDependency}" CommandParameter="{Binding}" Content="delete" Margin="5">
                                                 </Button>
                                             </StackPanel>
                                         </DataTemplate>
@@ -107,5 +117,4 @@
             <Button Background="LightGray"  Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddOrUpdate"  Height="30" Width="200"/>
         </Grid>
     </ScrollViewer>
-    
 </Window>

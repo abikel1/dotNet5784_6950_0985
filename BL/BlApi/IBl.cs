@@ -9,6 +9,7 @@ namespace BlApi
         public IWorker Worker { get; }
         public ITask Task { get; }
         public ITaskInList TaskInList { get; }
+        public IUser User { get; }
 
         // Method to initialize the database
         public void InitializeDB();
@@ -26,9 +27,6 @@ namespace BlApi
 
         // Method to get the status of the project
         public StatusProject GetStatusProject();
-
-        // Method for auto-scheduling (currently commented out)
-        // public void autoSchedule();
     }
 }
 

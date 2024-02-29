@@ -30,7 +30,7 @@ public class Task
     public DateTime? CreateTask { get; set; }
     public DateTime? BeginWork { get; set; }
     public DateTime? BeginTask { get; set; }
-    public int? TimeTask {  get; set; }
+    public TimeSpan? TimeTask {  get; set; }
     public DateTime? DeadLine {  get; set; }
     public DateTime? EndWorkTime { get; set; }
     public string? Remarks {  get; set; }

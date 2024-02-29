@@ -21,6 +21,8 @@ namespace PL.Task
     public partial class TaskWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        private event Action<int, bool> _onAddOrUpdate;
+        private bool _isUpdate;
 
         public BO.Task Task
         {
@@ -30,40 +32,71 @@ namespace PL.Task
 
         // Using a DependencyProperty as the backing store for Task.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TaskProperty =
-            DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow));
 
 
-        public TaskWindow(int id=0)
+        public bool isMennager
         {
-            InitializeComponent();
+            get { return (bool)GetValue(isMennagerProperty); }
+            set { SetValue(isMennagerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for isMennager.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty isMennagerProperty =
+            DependencyProperty.Register("isMennager", typeof(bool), typeof(TaskWindow));
+
+
+
+
+        public TaskWindow(Action<int,bool> onAddOrUpdate, int id=0, bool _isMennager=true)
+        {
             if (id == 0) 
             {
                 Task=new BO.Task();
+                _isUpdate=false;
             }
             else
             {
                 Task = s_bl.Task.Read(id);
+                _isUpdate = true;
             }
+            isMennager = _isMennager;
+            _onAddOrUpdate=onAddOrUpdate;
+            InitializeComponent();
         }
 
         private void btnAddOrUpdate(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (s_bl.Task.ReadTasks().FirstOrDefault(w => w.Id == Task.Id) == null)
+                if(_isUpdate)
                 {
-                    s_bl.Task.AddTask(Task);
-                    MessageBox.Show("The operation of adding a task was performed successfully");
+                    s_bl.Task.UpdateTask(Task);
+                    _onAddOrUpdate(Task.Id, true);
+                    MessageBox.Show("The operation of updating a task was performed successfully");
                     this.Close();
-                    new TaskListWindow().Show();
                 }
                 else
                 {
-                    s_bl.Task.UpdateTask(Task);
-                    MessageBox.Show("The operation of updating a task was performed successfully");
+                    int id= s_bl.Task.AddTask(Task);
+                    _onAddOrUpdate(id, false);
+                    MessageBox.Show("The operation of adding a task was performed successfully");
                     this.Close();
-                    new TaskListWindow().Show();
                 }
+                //if (s_bl.Task.ReadTaskInList().FirstOrDefault(w => w.Id == Task.Id) == null)
+                //{
+                //    s_bl.Task.AddTask(Task);
+                //    _onAddOrUpdate(Task.Id, false);
+                //    MessageBox.Show("The operation of adding a task was performed successfully");
+                //    this.Close();
+                //}
+                //else
+                //{
+                //    s_bl.Task.UpdateTask(Task);
+                //    _onAddOrUpdate(Task.Id, true);
+                //    MessageBox.Show("The operation of updating a task was performed successfully");
+                //    this.Close();
+                //}
             }
             catch (Exception ex)
             {
@@ -79,15 +112,13 @@ namespace PL.Task
 
         private void btnDeleteDependency(object sender, RoutedEventArgs e)
         {
-            BO.TaskInList _task = (sender as Button)?.CommandParameter as BO.TaskInList;
+            BO.TaskInList? _task = (sender as Button)?.CommandParameter as BO.TaskInList;
             if (MessageBox.Show("Are you sure you want to delete the dependency?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 try
                 {
                     s_bl.TaskInList.Remove(Task.Id, _task.Id);
                     MessageBox.Show("Dependency deleted successfully!");
-                    this.Close();
-                    new TaskWindow(Task.Id).Show();
                 }
                 catch (Exception ex)
                 {
@@ -99,6 +130,11 @@ namespace PL.Task
         private void btnAddDependency(object sender, RoutedEventArgs e)
         {
             new DependencyWindow(Task.Id).Show();
+        }
+
+        private void newOpenTask(object sender, EventArgs e)
+        {
+            Task = (_isUpdate ? s_bl.Task.Read(Task.Id) : new BO.Task());
         }
     }
 }

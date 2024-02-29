@@ -20,15 +20,6 @@ internal class UserImplementation:IUser
     public int Create(User item)
     {
         List<DO.User> users = XMLTools.LoadListFromXMLSerializer<DO.User>(s_users_xml);
-        Worker worker = _dal.Worker.Read(item.Id)!;
-        if (worker == null)
-        {
-            throw new DalDoesNotExistException($"Worker with ID={item.Id} is not exists");
-        }
-        if (Read(item.userName) is not null)
-        {
-            throw new DalAlreadyExistsException($"User with userName={item.userName} is already exist");
-        }
         users.Add(item);
         XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
         return item.Id;
@@ -55,13 +46,6 @@ internal class UserImplementation:IUser
         if (Read(item.Id) is null)
         {
             throw new DalDoesNotExistException($"User with ID={item.Id} is not exists");
-        }
-        if (Read(item.Id)!.userName != item.userName)//if we want to update the user Name
-        {
-            if (Read(item.userName) is not null)
-            {
-                throw new DalAlreadyExistsException($"User with userName={item.userName} is already exist");
-            }
         }
         Delete(item.Id);
         List<DO.User> users = XMLTools.LoadListFromXMLSerializer<DO.User>(s_users_xml);

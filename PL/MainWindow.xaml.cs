@@ -24,8 +24,35 @@ namespace PL
     public partial class MainWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public MainWindow(bool isManeger)
+
+
+        public bool isMennager
         {
+            get { return (bool)GetValue(isMennagerProperty); }
+            set { SetValue(isMennagerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for isMennager.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty isMennagerProperty =
+            DependencyProperty.Register("isMennager", typeof(bool), typeof(MainWindow), new PropertyMetadata(null));
+
+
+        public BO.User User
+        {
+            get { return (BO.User)GetValue(UserProperty); }
+            set { SetValue(UserProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for User.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty UserProperty =
+            DependencyProperty.Register("User", typeof(BO.User), typeof(MainWindow), new PropertyMetadata(null));
+
+
+
+        public MainWindow(BO.User _user)
+        {
+            isMennager=_user.isMennager;
+            User = _user;
             InitializeComponent();
         }
 
@@ -58,7 +85,12 @@ namespace PL
 
         private void btnTasks_Click(object sender, RoutedEventArgs e)
         {
-            new TaskListWindow().Show();
+            new TaskListWindow(User).Show();
+        }
+
+        private void btnSchedule(object sender, RoutedEventArgs e)
+        {
+            new StartDateWindow().ShowDialog();
         }
     }
 }

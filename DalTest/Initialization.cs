@@ -127,18 +127,30 @@ public static class Initialization
             else 
                 difficult=(DO.Rank)2;
             Random rand = new Random(DateTime.Now.Millisecond);
-            DateTime start = new DateTime(2025, 2, 9, 0, 0, 0);
-            int rangestart = (start - DateTime.Today).Days;
-            DateTime RanDay=start.AddDays(rand.Next(rangestart));
-            DateTime createProject = RanDay;
+            DateTime start = new DateTime(2024, 2, 9, 0, 0, 0);
+            int rangeStart = Math.Abs((start - DateTime.Today).Days);
+            DateTime RanDay = start.AddDays(rand.Next(rangeStart));
+            //DateTime ranDay = start.AddDays(rand.Next(rangeStart));
+            DateTime createTask = RanDay;
             string name = nameTasks[i];
             string desciption = descriptionTasks[i];
             string? remark = remarksTasks[i];
             string product = productTasks[i];
-            int timeTask=s_rand.Next(0,24);
-            Task task = new Task(0, difficult, 0, desciption, false, name, createProject, null, null, timeTask, null, null, remark, product);
+            Random random = new Random();
+            TimeSpan startTime = TimeSpan.FromHours(8);
+            TimeSpan endTime = TimeSpan.FromHours(18);
+            TimeSpan timeRange = endTime - startTime;
+            TimeSpan randomTimeSpan = TimeSpan.FromTicks((long)(random.NextDouble() * timeRange.Ticks) + startTime.Ticks);
+            //TimeSpan? timeTask = TimeSpan.FromTicks(random.Next());
+            //TimeSpan max=TimeSpan.MaxValue;
+            //TimeSpan min=TimeSpan.MinValue;
+            //int days = random.Next((max - min).Days + 1);
+            //int hours = random.Next(24);
+            //int minutes = random.Next(60);
+            //int seconds = random.Next(60);
+            //TimeSpan? timeTask=new TimeSpan(days, hours, minutes, seconds);
+            Task task = new Task(0, difficult, 0, desciption, false, name, createTask, null, null, randomTimeSpan, null, null, remark, product);
             s_dal!.Task.Create(task);
-
         }
     }
     private static void createDependency()
@@ -167,30 +179,29 @@ public static class Initialization
         s_dal!.Dependency.Create(new Dependency(0, 15, 16));
         s_dal!.Dependency.Create(new Dependency(0, 5, 17));
         s_dal!.Dependency.Create(new Dependency(0, 3, 17));
-        s_dal!.Dependency.Create(new Dependency(0, 20, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 20, 13));
-        s_dal!.Dependency.Create(new Dependency(0, 4, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 4, 13));
-        s_dal!.Dependency.Create(new Dependency(0, 19, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 19, 13));
-        s_dal!.Dependency.Create(new Dependency(0, 17, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 17, 13));
-        s_dal!.Dependency.Create(new Dependency(0, 18, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 18, 13));
-        s_dal!.Dependency.Create(new Dependency(0, 14, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 14, 13));
-        s_dal!.Dependency.Create(new Dependency(0, 7, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 7, 13));
-        s_dal!.Dependency.Create(new Dependency(0, 6, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 6, 13));
-        s_dal!.Dependency.Create(new Dependency(0, 8, 2));
-        s_dal!.Dependency.Create(new Dependency(0, 8, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 20, 2));//
+        //s_dal!.Dependency.Create(new Dependency(0, 20, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 4, 2));
+        //s_dal!.Dependency.Create(new Dependency(0, 4, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 19, 2));
+        //s_dal!.Dependency.Create(new Dependency(0, 19, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 17, 2));
+        //s_dal!.Dependency.Create(new Dependency(0, 17, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 18, 2));
+        //s_dal!.Dependency.Create(new Dependency(0, 18, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 14, 2));
+        //s_dal!.Dependency.Create(new Dependency(0, 14, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 7, 2));
+        //s_dal!.Dependency.Create(new Dependency(0, 7, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 6, 2));
+        //s_dal!.Dependency.Create(new Dependency(0, 6, 13));
+        //s_dal!.Dependency.Create(new Dependency(0, 8, 2));
+        //s_dal!.Dependency.Create(new Dependency(0, 8, 13));
     }
-    //private static void createUser()
-    //{
-    //    s_dal!.User.Create(new User("Avital", 326536950, true));
-    //    s_dal!.User.Create(new User("Ayala", 326060985, true));
-    //}
+    private static void createUser()
+    {
+        s_dal!.User.Create(new User("Efrat", 123456789, 12345678, true));
+    }
 
     public static void Do()
     {
@@ -200,6 +211,8 @@ public static class Initialization
         s_dal.Dependency.clear();
         //s_dal.User.clear();
         //createUser();
+        s_dal.User.clear();
+        createUser();
         createWorker();
         createTask();
         createDependency(); 
@@ -210,10 +223,8 @@ public static class Initialization
         s_dal.Worker.clear();
         s_dal.Task.clear();
         s_dal.Dependency.clear();
-        //s_dal.User.clear();
-        //createUser();
-        //createWorker();
-        //s_dal.Worker.clear();
+        s_dal.User.clear();
+        createUser();
         s_dal.SetStartProjectDate(null);
     }
 }

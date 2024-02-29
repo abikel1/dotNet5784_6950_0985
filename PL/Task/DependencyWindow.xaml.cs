@@ -33,23 +33,23 @@ namespace PL.Task
         public DependencyWindow(int id)
         {
             InitializeComponent();
-            TaskList = s_bl.Task.ReadTasks();
+            TaskList = s_bl.Task.ReadTaskInList();
             _id = id;
         }
+
 
         private void AddDependency_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             try
             {
                 BO.TaskInList? task = (sender as DataGrid)?.SelectedItem as BO.TaskInList;
-                s_bl.TaskInList.Add(_id, task.Id);
+                s_bl.TaskInList.Add(_id, task!.Id);
                 this.Close();
                 MessageBox.Show("Dependency added successfully!");
-                new TaskWindow(_id).Show();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            catch(Exception ex)
+            { 
+                MessageBox.Show(ex.Message,"ERROR",MessageBoxButton.OK,MessageBoxImage.Error);
             }
         }
     }

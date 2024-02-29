@@ -295,11 +295,11 @@ internal class Program
         string? product = Console.ReadLine()!;
         if (product == "") { product = task2.Product; }
         string time = Console.ReadLine()!;
-        int? timeTask;
+        TimeSpan? timeTask;
         if (time == "")
             timeTask = task2.TimeTask;
         else
-            timeTask=int.Parse(time);
+            timeTask = null;
         string? remarks = Console.ReadLine()!;
         if (remarks == "") { remarks = task2!.Remarks; }
         //string? createTime = Console.ReadLine();

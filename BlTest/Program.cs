@@ -34,7 +34,7 @@ internal class Program
                 BlApi.Factory.Get().SetStartProjectDate(date); // Setting the start project date
             }
             // Prompting the user to choose an entity
-            Console.WriteLine("Choose the entity that you want to check");
+            Console.WriteLine("Choose the entity that you want to checkInvalid");
             Console.WriteLine("Enter 1-Worker\n 2-Task\n  3-data initialization\n 0-Exit");
             entity = int.Parse(Console.ReadLine()!); // Reading the user's choice
             switch (entity) // Switching based on the chosen entity
@@ -143,7 +143,7 @@ internal class Program
                     Console.WriteLine(taskR); // Displaying the task information
                     break;
                 case 3://Print all the tasks
-                    IEnumerable<BO.TaskInList?> listTasks = s_bl!.Task.ReadTasks(); // Reading all tasks from the business logic API
+                    IEnumerable<BO.TaskInList?> listTasks = s_bl!.Task.ReadTaskInList(); // Reading all tasks from the business logic API
                     foreach (BO.TaskInList? task1 in listTasks) // Looping through each task
                     {
                         if (task1 != null) // Checking if the task is not null
@@ -309,11 +309,11 @@ internal class Program
         string? product = Console.ReadLine()!; // Reading task product
         if (product == "") { product = task2.Product; } // If product is empty, use the existing product
         string time = Console.ReadLine()!; // Reading task time
-        int? timeTask; // Declaring variable to store task time
+        TimeSpan? timeTask; // Declaring variable to store task time
         if (time == "") // If time is empty
             timeTask = task2.TimeTask; // Use the existing time
         else
-            timeTask = int.Parse(time); // Otherwise, parse time
+            timeTask = TimeSpan.Parse(time); // Otherwise, parse time
         string? remarks = Console.ReadLine()!; // Reading task remarks
         if (remarks == "") { remarks = task2!.Remarks; } // If remarks are empty, use the existing remarks
         string? beginWork = Console.ReadLine(); // Reading begin work date
