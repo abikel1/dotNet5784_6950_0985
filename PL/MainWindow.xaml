@@ -7,24 +7,33 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/תמונה2.jpg"/>
         </Grid.Background>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-            <Button Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Handle Workers" Margin="20" Height="70" Width="100" Click="btnWorkers_Click"/>
-            <Button Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Initialization" Margin="20" Height="70" Width="100" Click="btnInitialization_click"/>
-            <Button Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Reset" Margin="20" Height="70" Width="100" Click="btnReset_click"/>
-            <Button Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey1},Mode=OneTime}" Content="Current task" Margin="20" Height="70" Width="100"/>
-            <Button Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Schdule" Margin="20" Height="70" Width="100" Click="btnSchedule"/>
-            <Button Content="Handle Tasks" Margin="20" Height="70" Width="100" Click="btnTasks_Click"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Handle Workers" Margin="20" Height="70" Width="100" Click="btnWorkers_Click"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Initialization" Margin="20" Height="70" Width="100" Click="btnInitialization_click"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Reset" Margin="20" Height="70" Width="100" Click="btnReset_click"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey1},Mode=OneTime}" Content="Current task" Margin="20" Height="70" Width="100"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Schdule" Margin="20" Height="70" Width="100" Click="btnSchedule"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Content="Handle Tasks" Margin="20" Height="70" Width="100" Click="btnTasks_Click"/>
         </StackPanel>
-        <Label Content="{Binding CurrentTime}"/>
-        <StackPanel Orientation="Horizontal">
-            <Button Content="שעה קדימה" />
-            <Button Content="יום קדימה" />
-            <Button Content="שנה קדימה" />
-            <Button Content="איפוס" />
+        <StackPanel Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Vertical">
+            <Label FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Height="45" Content="{Binding CurrentTime, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" />
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Button Click="AdvanceHour" Margin="5" Style="{StaticResource buttonStyle}" FontSize="8" Height="30" Width="40" Content="One Hour" />
+                <Button Click="AdvanceDay" Margin="5" Style="{StaticResource buttonStyle}" FontSize="8" Height="30" Width="40" Content="One Day" />
+                <Button Click="AdvanceYear" Margin="5" Style="{StaticResource buttonStyle}" FontSize="8" Height="30" Width="40" Content="One Year" />
+                <Button Click="ResetTime" Margin="5" Style="{StaticResource buttonStyle}" FontSize="8" Height="30" Width="40" Content="Raset" />
+            </StackPanel>
         </StackPanel>
         <Image HorizontalAlignment="Left" Height="100" Margin="173,172,0,0" VerticalAlignment="Top" Width="100"/>
     </Grid>

@@ -34,7 +34,7 @@ namespace BlApi
         /// <summary>
         /// מאפס את השעון לתאריך ושעה נוכחיים.
         /// </summary>
-        public void ResetClock();
+        public DateTime ResetClock();
         #endregion
         // Method to initialize the database
         public void InitializeDB();

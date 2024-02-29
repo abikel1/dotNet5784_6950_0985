@@ -1,4 +1,6 @@
-﻿using PL.Worker;
+﻿using BO;
+using DalApi;
+using PL.Worker;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +26,7 @@ namespace PL.Task
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public BO.Rank Rank { get; set; } = BO.Rank.None;
 
+        public BO.User User;
         public BO.Status Status { get; set; } = BO.Status.None;
 
         public ObservableCollection<BO.TaskInList> TaskList
@@ -46,9 +49,6 @@ namespace PL.Task
         // Using a DependencyProperty as the backing store for isMennager.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty isMennagerProperty =
             DependencyProperty.Register("isMennager", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(null));
-
-
-
         public TaskListWindow(BO.User? user = null)
         {
             if (user != null && user.isMennager == false)
@@ -61,6 +61,7 @@ namespace PL.Task
                 TaskList = s_bl.Task.ReadTaskInList().ToObservableCollection();
                 isMennager = true;
             }
+            User = user!;
             InitializeComponent();
         }
         private void onAddOrUpdate(int id, bool isUpdate)
@@ -114,20 +115,28 @@ namespace PL.Task
 
         private void btnDeleteTask(object sender, RoutedEventArgs e)
         {
-            var button = (Button)sender;
-            var task = (BO.TaskInList)button.CommandParameter;
-            if (MessageBox.Show("Are you sure you want to delete the task?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            try
             {
-                try
+                var button = (Button)sender;
+            var task = (BO.TaskInList)button.CommandParameter;
+            if(isMennager)
+            {
+                if (MessageBox.Show("Are you sure you want to delete the task?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    s_bl.Task.RemoveTask(task.Id);
-                    TaskList.Remove(task);
-                    MessageBox.Show("Task deleted successfully!");
+                        s_bl.Task.RemoveTask(task.Id);
+                        TaskList.Remove(task);
+                        MessageBox.Show("Task deleted successfully!");
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            }
+            else
+            {
+                s_bl.Task.AddTaskForWorker(User.Id, task.Id);
+            }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                MessageBox.Show("Task added to you successfully!");
             }
         }
     }

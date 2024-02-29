@@ -202,7 +202,7 @@ internal class Program
         int.TryParse(Console.ReadLine(), out int difficulty); // Reading task difficulty
         String taskDescription = Console.ReadLine()!; // Reading task description
         String product = Console.ReadLine()!; // Reading task product
-        int.TryParse(Console.ReadLine(), out int timeTask); // Reading task time
+        TimeSpan.TryParse(Console.ReadLine(), out TimeSpan timeTask); // Reading task time
         String? remarks = Console.ReadLine()!; // Reading task remarks
         if (remarks == "") // Checking if remarks are empty
             remarks = null; // Setting remarks to null

@@ -13,6 +13,7 @@ internal class TaskImplementation : BlApi.ITask
 
     private readonly IBl _bl;
     internal TaskImplementation(IBl bl) => _bl = bl;
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
     // Private field for accessing the data access layer
     private DalApi.IDal _dal = DalApi.Factory.Get;
@@ -177,7 +178,7 @@ internal class TaskImplementation : BlApi.ITask
     private void CheckTaskForWorker(BO.Task task)
     {
         DO.Task oldTask = _dal.Task.Read(task.Id)!;
-            if (oldTask != null && task.Worker!=null && oldTask.WorkerId != task.Worker!.Id)
+            if (oldTask != null && task.Worker!=null && oldTask.WorkerId != 0)
                 throw new BO.BlCantAssignWorker("the task is already assigned to an worker");
         if (getPriviousTask(oldTask!.Id)!.Where(x => x.StatusTask != BO.Status.Done).Any())
             throw new BO.BlCantAssignWorker("cant assign worker for this task");
@@ -187,7 +188,7 @@ internal class TaskImplementation : BlApi.ITask
             {
                 DO.Worker worker = _dal.Worker.Read(idWorker)!;
                 if (task.Difficulty > (BO.Rank)((int)worker.RankWorker))
-                    throw new BlCantAssignWorker("the worker cant do this task");
+                    throw new BlCantAssignWorker("the worker cant do this task bacause his rank is lower");
             }
         }
     }
@@ -195,6 +196,7 @@ internal class TaskImplementation : BlApi.ITask
     // Method to update a task
     public void UpdateTask(BO.Task task)//לבדוק אם מעדכנים עובד במשימה האם צריך לעדכן גם אצל העובד
     {
+        BO.Task oldTask = Read(task.Id);
         // Check for invalid alias
         if (task.Alias == "")
             throw new BO.BlInValidInputException("Invalid alias of task");
@@ -202,18 +204,18 @@ internal class TaskImplementation : BlApi.ITask
         // Check project status for planning phase
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
-            if (task.Worker != null)
+            if (task.Worker != oldTask.Worker)
                 throw new BO.BlplanningStatus("Cant update worker on task in the planning level");
-            if (task.BeginWork != null)
+            if (task.BeginWork != oldTask.BeginWork)
                 throw new BO.BlplanningStatus("Cant update planning startDate of task in the planning level");
         }
 
         // Check project status for execution phase
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Execution)
         {
-            if (task.TimeTask != null)
+            if (task.TimeTask != oldTask.TimeTask)
                 throw new BO.BlexecutionStatus("Cant update during time of task in the excution level");
-            if (task.BeginTask != null)
+            if (task.BeginTask != oldTask.BeginTask)
                 throw new BO.BlexecutionStatus("Cant update startDate of task in the excution level");
         }
 
@@ -436,6 +438,35 @@ internal class TaskImplementation : BlApi.ITask
         var result = from BO.TaskInList d in task.DependencyTasks!
                      select Read(d.Id);
         return result.Max(t => (t.BeginWork+t.TimeTask));
+    }
+    public void AddTaskForWorker(int idWorker, int idTask)
+    {
+        BO.Worker worker = s_bl.Worker.Read(idWorker);
+        BO.Task taskB =Read(idTask);
+        CheckTaskForWorker(taskB);
+        BO.Task task1 = new BO.Task()
+        {
+            Id = taskB.Id,
+            Alias = taskB.Alias,
+            TaskDescription = taskB.TaskDescription,
+            Difficulty = (BO.Rank)taskB.Difficulty,
+            StatusTask = taskB.StatusTask,
+            Worker = new BO.WorkerOnTask()
+            {
+                Id = worker.Id,
+                Name = worker.Name
+            },
+            TimeTask = taskB.TimeTask,
+            CreateTask = taskB.CreateTask,
+            BeginTask = taskB.BeginTask,
+            BeginWork = taskB.BeginWork,
+            DeadLine = taskB.DeadLine,
+            EndWorkTime = taskB.EndWorkTime,
+            Remarks = taskB.Remarks,
+            Product = taskB.Product,
+            DependencyTasks = taskB.DependencyTasks
+        };
+        UpdateTask(task1);
     }
 
 }

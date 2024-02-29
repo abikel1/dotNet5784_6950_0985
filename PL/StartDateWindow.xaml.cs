@@ -34,7 +34,7 @@ namespace PL
         public StartDateWindow()
         {
             InitializeComponent();
-            StartDate=s_bl.Clock;
+            StartDate = s_bl.Clock;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

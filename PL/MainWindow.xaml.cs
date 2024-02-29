@@ -66,6 +66,7 @@ namespace PL
         {
             isMennager=_user.isMennager;
             User = _user;
+            CurrentTime = s_bl.Clock;
             InitializeComponent();
         }
 
@@ -104,6 +105,25 @@ namespace PL
         private void btnSchedule(object sender, RoutedEventArgs e)
         {
             new StartDateWindow().ShowDialog();
+        }
+
+        private void AdvanceHour(object sender, RoutedEventArgs e)
+        {
+            CurrentTime = s_bl.AdvanceByHour();
+        }
+
+        private void AdvanceDay(object sender, RoutedEventArgs e)
+        {
+            CurrentTime = s_bl.AdvanceByDay();
+        }
+        private void AdvanceYear(object sender, RoutedEventArgs e)
+        {
+            CurrentTime = s_bl.AdvanceByYear();
+        }
+
+        private void ResetTime(object sender, RoutedEventArgs e)
+        {
+            CurrentTime = s_bl.ResetClock();
         }
     }
 }

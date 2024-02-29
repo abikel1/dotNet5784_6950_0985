@@ -31,14 +31,14 @@
         </Grid>
         <DataGrid Grid.Row="1" Margin="5" ItemsSource="{Binding Path=TaskList}" IsReadOnly="True"  MouseDoubleClick="UpdateTask" AutoGenerateColumns="False" EnableRowVirtualization="True">
             <DataGrid.Columns>
-                <DataGridTextColumn FontSize="10" Binding="{Binding Id}" Header="Id" Width="Auto"/>
-                <DataGridTextColumn FontSize="10" Binding="{Binding Description}" Header="Description" Width="Auto"/>
-                <DataGridTextColumn FontSize="10" Binding="{Binding Alias}" Header="Alias" Width="Auto"/>
-                <DataGridTextColumn FontSize="10" Binding="{Binding StatusTask}" Header="StatusTask" Width="Auto"/>
+                <DataGridTextColumn FontSize="20" Binding="{Binding Id}" Header="Id" Width="Auto"/>
+                <DataGridTextColumn FontSize="20" Binding="{Binding Description}" Header="Description" Width="Auto"/>
+                <DataGridTextColumn FontSize="20" Binding="{Binding Alias}" Header="Alias" Width="Auto"/>
+                <DataGridTextColumn FontSize="20" Binding="{Binding StatusTask}" Header="StatusTask" Width="Auto"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="delete" Margin="5" CommandParameter="{Binding}" Foreground="#FFFA0A0A" Click="btnDeleteTask">
+                            <Button Content="{Binding isMennager,Converter={StaticResource ConvertBoolToContentKey}, Mode=OneTime}" Margin="5" CommandParameter="{Binding}" FontSize="10" Foreground="#FFFA0A0A" Click="btnDeleteTask">
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

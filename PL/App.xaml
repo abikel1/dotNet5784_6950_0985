@@ -10,5 +10,6 @@
         <local:ConvertBoolToVisibility x:Key="ConvertBoolToVisibilityKey"/>
         <local:ConvertBoolToVisibility1 x:Key="ConvertBoolToVisibilityKey1"/>
         <local:StatusCollection x:Key="StausCollectionKey"/>
+        <local:ConvertBoolToContent x:Key="ConvertBoolToContentKey"/>
     </Application.Resources>
 </Application>

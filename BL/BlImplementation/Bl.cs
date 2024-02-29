@@ -49,7 +49,7 @@ namespace BlImplementation
 
         // Method to reset the database
         public void ResetDB() => DalTest.Initialization.Reset();
-        private static DateTime s_Clock = DateTime.Now.Date;
+        private static DateTime s_Clock = DateTime.Now;
 
         public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
 
@@ -68,6 +68,9 @@ namespace BlImplementation
             return Clock = Clock.AddHours(1);
         }
 
-        public void ResetClock() => Clock = DateTime.Now.Date;
+        public DateTime ResetClock()
+        {
+          return  Clock = DateTime.Now.Date;
+        }
     }
 }

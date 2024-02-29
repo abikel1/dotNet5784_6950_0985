@@ -45,4 +45,5 @@ public interface ITask
  //   Method for auto-scheduling(currently commented out)
      public void autoSchedule();
     public void clear();
+    public void AddTaskForWorker(int idWorker, int idTask);
 }
