@@ -10,7 +10,32 @@ namespace BlApi
         public ITask Task { get; }
         public ITaskInList TaskInList { get; }
         public IUser User { get; }
+        #region
+        /// <summary>
+        /// תאריך ושעה נוכחיים.
+        /// </summary>
+        public DateTime Clock { get; }
 
+        /// <summary>
+        /// מקדם את השעון בשנה אחת.
+        /// </summary>
+        public DateTime AdvanceByYear();
+
+        /// <summary>
+        /// מקדם את השעון ביום אחד.
+        /// </summary>
+        public DateTime AdvanceByDay();
+
+        /// <summary>
+        /// מקדם את השעון בשעה אחת.
+        /// </summary>
+        public DateTime AdvanceByHour();
+
+        /// <summary>
+        /// מאפס את השעון לתאריך ושעה נוכחיים.
+        /// </summary>
+        public void ResetClock();
+        #endregion
         // Method to initialize the database
         public void InitializeDB();
 

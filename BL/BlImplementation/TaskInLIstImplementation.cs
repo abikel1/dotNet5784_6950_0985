@@ -5,6 +5,11 @@ namespace BlImplementation;
 
 internal class TaskInLIstImplementation : ITaskInList
 {
+
+
+    private readonly IBl _bl;
+    internal TaskInLIstImplementation(IBl bl) => _bl = bl;
+
     private DalApi.IDal _dal = DalApi.Factory.Get;
     public void Add(int idTask, int Previous)
     {

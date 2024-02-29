@@ -12,11 +12,11 @@ namespace BlImplementation
         private DalApi.IDal _dal = DalApi.Factory.Get;
 
         // Properties returning instances of worker, task, and worker-task implementations
-        public IWorker Worker => new WorkerImplementation();
-        public ITask Task => new TaskImplementation();
-        public IUser User => new UserImplementation();
+        public IWorker Worker => new WorkerImplementation(this);
+        public ITask Task => new TaskImplementation(this);
+        public IUser User => new UserImplementation(this);
 
-        public ITaskInList TaskInList =>new TaskInLIstImplementation();
+        public ITaskInList TaskInList => new TaskInLIstImplementation(this);
 
         // Method to initialize the database
         public void InitializeDB() => DalTest.Initialization.Do();
@@ -49,5 +49,25 @@ namespace BlImplementation
 
         // Method to reset the database
         public void ResetDB() => DalTest.Initialization.Reset();
+        private static DateTime s_Clock = DateTime.Now.Date;
+
+        public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
+
+        public DateTime AdvanceByYear()
+        {
+            return Clock = Clock.AddYears(1);
+        }
+
+        public DateTime AdvanceByDay()
+        {
+            return Clock = Clock.AddDays(1);
+        }
+
+        public DateTime AdvanceByHour()
+        {
+            return Clock = Clock.AddHours(1);
+        }
+
+        public void ResetClock() => Clock = DateTime.Now.Date;
     }
 }

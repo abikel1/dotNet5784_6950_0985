@@ -9,6 +9,10 @@ namespace BlImplementation;
 
 internal class UserImplementation : IUser
 {
+
+    private readonly IBl _bl;
+    internal UserImplementation(IBl bl) => _bl = bl;
+
     private DalApi.IDal _dal = DalApi.Factory.Get;
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 

@@ -11,6 +11,10 @@ using System.Xml.Linq;
 // WorkerImplementation class implements the IWorker interface and provides methods for CRUD operations on workers
 internal class WorkerImplementation : IWorker
 {
+
+    private readonly IBl _bl;
+    internal WorkerImplementation(IBl bl) => _bl = bl;
+
     // Private field for accessing data layer
     private DalApi.IDal _dal=DalApi.Factory.Get;
     // Method to add a new worker

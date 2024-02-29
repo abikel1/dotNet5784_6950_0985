@@ -10,6 +10,10 @@ namespace BlImplementation;
 // Internal implementation of the ITask interface
 internal class TaskImplementation : BlApi.ITask
 {
+
+    private readonly IBl _bl;
+    internal TaskImplementation(IBl bl) => _bl = bl;
+
     // Private field for accessing the data access layer
     private DalApi.IDal _dal = DalApi.Factory.Get;
     // Method to add a new task
@@ -39,7 +43,7 @@ internal class TaskImplementation : BlApi.ITask
             throw new BO.BlexecutionStatus("You cant add a task during execution");
         }
         // Create a new DO.Task object and calculate status
-        DO.Task newTask = (new DO.Task(task.Id, (DO.Rank)task.Difficulty, 0, task.TaskDescription, false, task.Alias, DateTime.Now, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
+        DO.Task newTask = (new DO.Task(task.Id, (DO.Rank)task.Difficulty, 0, task.TaskDescription, false, task.Alias, _bl.Clock, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
         task.StatusTask = CalculateStatus(newTask);
         // Add the task to the database
         int id =_dal.Task.Create(newTask);
@@ -253,7 +257,7 @@ internal class TaskImplementation : BlApi.ITask
 
     private BO.Status CalculateStatus(DO.Task task)
     {
-        var dateTimeNow = DateTime.Now;
+        var dateTimeNow = _bl.Clock;
         return task switch
         {
             DO.Task t when t.WorkerId is null => BO.Status.Unscheduled,
