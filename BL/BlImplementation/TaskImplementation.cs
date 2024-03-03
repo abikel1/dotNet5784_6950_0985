@@ -225,13 +225,13 @@ internal class TaskImplementation : BlApi.ITask
         DO.Task newTask;
         if (task.Worker is null)
         {
-            newTask = new DO.Task(task.Id, (DO.Rank)task.Difficulty,null, task.TaskDescription,
+            newTask = new DO.Task(task.Id, (DO.Rank)task.Difficulty,0, task.TaskDescription,
             false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask,
             task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
         }
         else
         {
-           newTask = new DO.Task(task.Id, (DO.Rank)task.Difficulty, null, task.TaskDescription,
+           newTask = new DO.Task(task.Id, (DO.Rank)task.Difficulty, task.Worker.Id, task.TaskDescription,
            false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask,
            task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
         }
@@ -243,7 +243,10 @@ internal class TaskImplementation : BlApi.ITask
         try
         {
             // Check constraints before updating the task
-            CheckTaskForWorker(task);
+            if(task.Worker!=oldTask.Worker)
+            {
+                CheckTaskForWorker(task);
+            }
             if(task.BeginTask!=null)
             {
                 CheckBeginTask(task.Id, task.BeginTask);
@@ -446,7 +449,7 @@ internal class TaskImplementation : BlApi.ITask
                      select Read(d.Id);
         return result.Max(t => (t.BeginWork+t.TimeTask));
     }
-    public void AddTaskForWorker(int idWorker, int idTask)
+    public BO.Task AddTaskForWorker(int idWorker, int idTask)
     {
         BO.Worker worker = s_bl.Worker.Read(idWorker);
         BO.Task taskB =Read(idTask);
@@ -474,6 +477,7 @@ internal class TaskImplementation : BlApi.ITask
             DependencyTasks = taskB.DependencyTasks
         };
         UpdateTask(task1);
+        return task1;
     }
 
     public IEnumerable<TaskInList> ReadPossibleDependencies(int id)

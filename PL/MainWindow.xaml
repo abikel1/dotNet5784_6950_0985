@@ -31,7 +31,7 @@
             <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Handle Workers" Margin="20" Click="btnWorkers_Click"/>
             <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Initialization" Margin="20" Click="btnInitialization_click"/>
             <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Reset" Margin="20"  Click="btnReset_click"/>
-            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey1},Mode=OneTime}" Content="Current task" Margin="20" />
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey1},Mode=OneTime}" Content="Current task" Margin="20" Click="btnCurrentTask" />
             <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Schdule" Margin="20" Click="btnSchedule"/>
             <Button FontSize="12" Style="{StaticResource buttonStyle}" Content="Handle Tasks" Margin="20" Click="btnTasks_Click"/>
         </StackPanel>

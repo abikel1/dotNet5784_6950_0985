@@ -80,41 +80,43 @@ namespace PL.Task
                 TaskList.Remove(oldTask!);
                 TaskList.OrderBy(t => t.Id).ToObservableCollection();
             }
-            else
                 TaskList.Add(taskInLIst);
         }
 
         private void cbSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Status == BO.Status.None && Rank == BO.Rank.None)
+            if(isMennager)
             {
-                TaskList = s_bl.Task.ReadTaskInList().ToObservableCollection();
-                return;
-            }
-            if (Status == BO.Status.None)
-            {
-                TaskList = s_bl?.Task.ReadTaskInList(item => s_bl.Task.Read(item.Id).Difficulty == Rank).ToObservableCollection()!;
-                return;
-            }
-            if (Rank == BO.Rank.None)
-            {
-                TaskList = s_bl?.Task.ReadTaskInList(item => item.StatusTask == Status).ToObservableCollection()!;
-                return;
-            }
-            else
-            {
-                TaskList = s_bl?.Task.ReadTaskInList(item => (item.StatusTask == Status) && (s_bl.Task.Read(item.Id).Difficulty == Rank)).ToObservableCollection()!;
+                if (Status == BO.Status.None && Rank == BO.Rank.None)
+                {
+                    TaskList = s_bl.Task.ReadTaskInList().ToObservableCollection();
+                    return;
+                }
+                if (Status == BO.Status.None)
+                {
+                    TaskList = s_bl?.Task.ReadTaskInList(item => s_bl.Task.Read(item.Id).Difficulty == Rank).ToObservableCollection()!;
+                    return;
+                }
+                if (Rank == BO.Rank.None)
+                {
+                    TaskList = s_bl?.Task.ReadTaskInList(item => item.StatusTask == Status).ToObservableCollection()!;
+                    return;
+                }
+                else
+                {
+                    TaskList = s_bl?.Task.ReadTaskInList(item => (item.StatusTask == Status) && (s_bl.Task.Read(item.Id).Difficulty == Rank)).ToObservableCollection()!;
+                }
             }
         }
 
         private void UpdateTask(object sender, MouseButtonEventArgs e)
         {
             BO.TaskInList? task = (sender as DataGrid)?.SelectedItem as BO.TaskInList;
-            new TaskWindow(onAddOrUpdate, task!.Id, isMennager).Show();
+            new TaskWindow(task!.Id, isMennager, onAddOrUpdate).Show();
         }
         private void AddTask(object sender, RoutedEventArgs e)
         {
-            new TaskWindow(onAddOrUpdate).Show();
+            new TaskWindow(0,true,onAddOrUpdate).Show();
         }
 
         private void btnDeleteTask(object sender, RoutedEventArgs e)
@@ -134,8 +136,12 @@ namespace PL.Task
                 }
                 else
                 {
-                    s_bl.Task.AddTaskForWorker(User.Id, task.Id);
-                    MessageBox.Show("Task added to you successfully!");
+                    if (MessageBox.Show("Are you sure you want to add the task for you?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        BO.Task newTask=s_bl.Task.AddTaskForWorker(User.Id, task.Id);
+                        TaskList.Remove(task);
+                        MessageBox.Show("Task added to you successfully!");
+                    }
                 }
             }
             catch (Exception ex)

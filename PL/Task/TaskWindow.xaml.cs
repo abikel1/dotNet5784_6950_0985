@@ -49,9 +49,21 @@ namespace PL.Task
             DependencyProperty.Register("isMennager", typeof(bool), typeof(TaskWindow));
 
 
+        public bool StatusTask
+        {
+            get { return (bool)GetValue(StatusTaskProperty); }
+            set { SetValue(StatusTaskProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for StatusTask.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty StatusTaskProperty =
+            DependencyProperty.Register("StatusTask", typeof(bool), typeof(TaskWindow), new PropertyMetadata(null));
 
 
-        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool _isMennager = true)
+
+
+
+        public TaskWindow(int id = 0, bool _isMennager = true, Action<int, bool> onAddOrUpdate = null)
         {
             if (id == 0)
             {
@@ -63,6 +75,12 @@ namespace PL.Task
             {
                 Task = s_bl.Task.Read(id);
                 _isUpdate = true;
+                if (isMennager)
+                    StatusTask = false;
+                else
+                {
+                    StatusTask = Task.StatusTask == Status.Started ? true : false;
+                }
             }
             isMennager = _isMennager;
             _onAddOrUpdate = onAddOrUpdate;

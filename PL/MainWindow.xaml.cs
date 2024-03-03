@@ -125,5 +125,18 @@ namespace PL
         {
             CurrentTime = s_bl.ResetClock();
         }
+
+        private void btnCurrentTask(object sender, RoutedEventArgs e)
+        {
+            BO.TaskOnWorker? task = s_bl.Worker.GetCurrentTaskOfWorker(User.Id);
+            if (task!=null)
+            {
+                new TaskWindow(task.Id, false);
+            }
+            else
+            {
+
+            }
+        }
     }
 }

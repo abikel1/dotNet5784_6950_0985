@@ -172,7 +172,7 @@ internal class WorkerImplementation : IWorker
         };
     }
     // Helper method to get the current task of a worker
-    private BO.TaskOnWorker? GetCurrentTaskOfWorker(int id)//function that return the current task of the worker with is that she got
+    public BO.TaskOnWorker? GetCurrentTaskOfWorker(int id)//function that return the current task of the worker with is that she got
     {
         // Retrieve the current task of the worker from the data layer
         DO.Task? task = _dal.Task.ReadAll(x => x.WorkerId == id).Where(x => x!.BeginTask != null&&x.EndWorkTime is null).FirstOrDefault();
