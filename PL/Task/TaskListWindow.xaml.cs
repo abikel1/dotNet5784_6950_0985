@@ -85,6 +85,7 @@ namespace PL.Task
         {
             if (Status == BO.Status.None && Rank == BO.Rank.None)
             {
+                TaskList = s_bl.Task.ReadTaskInList().ToObservableCollection();
                 return;
             }
             if (Status == BO.Status.None)
@@ -131,12 +132,12 @@ namespace PL.Task
             else
             {
                 s_bl.Task.AddTaskForWorker(User.Id, task.Id);
+                MessageBox.Show("Task added to you successfully!");
             }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                MessageBox.Show("Task added to you successfully!");
             }
         }
     }
