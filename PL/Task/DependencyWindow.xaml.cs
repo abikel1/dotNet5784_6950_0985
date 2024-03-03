@@ -33,7 +33,7 @@ namespace PL.Task
         public DependencyWindow(int id)
         {
             InitializeComponent();
-            TaskList = s_bl.Task.ReadTaskInList();
+            TaskList = s_bl.Task.ReadPossibleDependencies(id);
             _id = id;
         }
 

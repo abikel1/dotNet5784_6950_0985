@@ -31,8 +31,7 @@ internal class TaskImplementation : BlApi.ITask
         if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Planning)
         {
             // Additional checks if project is in the planning phase
-            if (task.Worker != null)
-                if (task.Worker != null)
+            if (task.Worker!=null&& task.Worker!.Id !=0)
                 throw new BO.BlplanningStatus("Cant update worker on task in the planning level");
             if (task.BeginWork != null)
                 throw new BO.BlplanningStatus("Cant update planning startDate of task in the planning level");
@@ -44,7 +43,7 @@ internal class TaskImplementation : BlApi.ITask
             throw new BO.BlexecutionStatus("You cant add a task during execution");
         }
         // Create a new DO.Task object and calculate status
-        DO.Task newTask = (new DO.Task(task.Id, (DO.Rank)task.Difficulty, 0, task.TaskDescription, false, task.Alias, _bl.Clock, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
+        DO.Task newTask = (new DO.Task(task.Id, (DO.Rank)task.Difficulty,task.Worker!=null? task.Worker!.Id : 0, task.TaskDescription, false, task.Alias, _bl.Clock, task.BeginWork, task.BeginTask, task.TimeTask, task.DeadLine, task.EndWorkTime, task.Remarks, task.Product));
         task.StatusTask = CalculateStatus(newTask);
         // Add the task to the database
         int id =_dal.Task.Create(newTask);
@@ -262,11 +261,19 @@ internal class TaskImplementation : BlApi.ITask
         var dateTimeNow = _bl.Clock;
         return task switch
         {
-            DO.Task t when t.WorkerId is null => BO.Status.Unscheduled,
-            DO.Task t when t.BeginTask > dateTimeNow => BO.Status.Scheduled,
-            DO.Task t when t.EndWorkTime > dateTimeNow => BO.Status.OnTrack,
+            DO.Task t when t.BeginWork is null => BO.Status.Unscheduled,
+            DO.Task t when t.WorkerId is 0 => BO.Status.Scheduled,
+            DO.Task t when t.BeginTask is null=> BO.Status.OnTrack,
+            DO.Task t when t.EndWorkTime is null=>BO.Status.Started,
             _ => BO.Status.Done,
         };
+        //return task switch
+        //{
+        //    DO.Task t when t.WorkerId is null => BO.Status.Unscheduled,
+        //    DO.Task t when t.BeginTask > dateTimeNow => BO.Status.Scheduled,
+        //    DO.Task t when t.EndWorkTime > dateTimeNow => BO.Status.OnTrack,
+        //    _ => BO.Status.Done,
+        //};
     }
 
     // Method to update the start dates of a task
@@ -469,4 +476,11 @@ internal class TaskImplementation : BlApi.ITask
         UpdateTask(task1);
     }
 
+    public IEnumerable<TaskInList> ReadPossibleDependencies(int id)
+    {
+        var result=from BO.TaskInList task in ReadTaskInList()
+                   where _dal.Dependency.ReadAll(d=>d.IdDependentTask==id&&d.IdPreviousTask==task.Id).Count() ==0
+                   select task;
+        return result;
+    }
 }

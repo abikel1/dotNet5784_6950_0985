@@ -1,4 +1,6 @@
-﻿namespace BlApi;
+﻿using System.Net.Mail;
+
+namespace BlApi;
 public interface ITask
 {
     /// <summary>
@@ -46,4 +48,6 @@ public interface ITask
      public void autoSchedule();
     public void clear();
     public void AddTaskForWorker(int idWorker, int idTask);
+
+    public IEnumerable<BO.TaskInList> ReadPossibleDependencies(int id);//list of the dependencies that the task still doesnt have
 }

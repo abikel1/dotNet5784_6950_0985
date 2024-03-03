@@ -23,6 +23,7 @@ namespace PL.Task
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         private event Action<int, bool> _onAddOrUpdate;
         private bool _isUpdate;
+        private int _id;
 
         public BO.Task Task
         {
@@ -78,25 +79,11 @@ namespace PL.Task
                 }
                 else
                 {
-                    int id= s_bl.Task.AddTask(Task);
-                    _onAddOrUpdate(id, false);
+                    _id= s_bl.Task.AddTask(Task);
+                    _onAddOrUpdate(_id, false);
                     MessageBox.Show("The operation of adding a task was performed successfully");
                     this.Close();
                 }
-                //if (s_bl.Task.ReadTaskInList().FirstOrDefault(w => w.Id == Task.Id) == null)
-                //{
-                //    s_bl.Task.AddTask(Task);
-                //    _onAddOrUpdate(Task.Id, false);
-                //    MessageBox.Show("The operation of adding a task was performed successfully");
-                //    this.Close();
-                //}
-                //else
-                //{
-                //    s_bl.Task.UpdateTask(Task);
-                //    _onAddOrUpdate(Task.Id, true);
-                //    MessageBox.Show("The operation of updating a task was performed successfully");
-                //    this.Close();
-                //}
             }
             catch (Exception ex)
             {

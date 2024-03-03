@@ -47,7 +47,6 @@ namespace PL
                 s_bl.User.checkInvalid(User);
                 User = s_bl.User.Read(User.userName!)!;
                 new MainWindow(User).Show();
-                this.Close();
             }
             catch(Exception ex) 
             {
