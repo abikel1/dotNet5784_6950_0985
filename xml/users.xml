@@ -6,10 +6,4 @@
     <Password>12345678</Password>
     <isMennager>true</isMennager>
   </User>
-  <User>
-    <userName>Avital</userName>
-    <Id>361774974</Id>
-    <Password>12345678</Password>
-    <isMennager>false</isMennager>
-  </User>
 </ArrayOfUser>

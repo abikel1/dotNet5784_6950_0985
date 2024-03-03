@@ -9,9 +9,18 @@
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="70"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Background" Value="Transparent"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Width" Value="110" />
+                    <Setter Property="Height" Value="80" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
     <Grid>
@@ -19,12 +28,12 @@
             <ImageBrush ImageSource="/תמונה2.jpg"/>
         </Grid.Background>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Handle Workers" Margin="20" Height="70" Width="100" Click="btnWorkers_Click"/>
-            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Initialization" Margin="20" Height="70" Width="100" Click="btnInitialization_click"/>
-            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Reset" Margin="20" Height="70" Width="100" Click="btnReset_click"/>
-            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey1},Mode=OneTime}" Content="Current task" Margin="20" Height="70" Width="100"/>
-            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Schdule" Margin="20" Height="70" Width="100" Click="btnSchedule"/>
-            <Button FontSize="12" Style="{StaticResource buttonStyle}" Content="Handle Tasks" Margin="20" Height="70" Width="100" Click="btnTasks_Click"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Handle Workers" Margin="20" Click="btnWorkers_Click"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Initialization" Margin="20" Click="btnInitialization_click"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Reset" Margin="20"  Click="btnReset_click"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey1},Mode=OneTime}" Content="Current task" Margin="20" />
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey},Mode=OneTime}" Content="Schdule" Margin="20" Click="btnSchedule"/>
+            <Button FontSize="12" Style="{StaticResource buttonStyle}" Content="Handle Tasks" Margin="20" Click="btnTasks_Click"/>
         </StackPanel>
         <StackPanel Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Left" Orientation="Vertical">
             <Label FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Height="45" Content="{Binding CurrentTime, StringFormat='{}{0:dd/MM/yyyy HH:mm:ss}'}" />
