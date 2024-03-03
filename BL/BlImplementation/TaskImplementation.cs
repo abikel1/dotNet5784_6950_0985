@@ -21,7 +21,7 @@ internal class TaskImplementation : BlApi.ITask
     public int AddTask(BO.Task task)
     {
         // Validation checks before adding a task
-        if (task.Alias == "")
+        if (string.IsNullOrEmpty( task.Alias))
             throw new BO.BlInValidInputException("Invalid alias of task");
         if(task.TimeTask==null)
         {

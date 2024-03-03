@@ -64,6 +64,7 @@ namespace PL.Task
             User = user!;
             InitializeComponent();
         }
+
         private void onAddOrUpdate(int id, bool isUpdate)
         {
             BO.TaskInList taskInLIst = new BO.TaskInList()
@@ -79,8 +80,10 @@ namespace PL.Task
                 TaskList.Remove(oldTask!);
                 TaskList.OrderBy(t => t.Id).ToObservableCollection();
             }
-            TaskList.Add(taskInLIst);
+            else
+                TaskList.Add(taskInLIst);
         }
+
         private void cbSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Status == BO.Status.None && Rank == BO.Rank.None)
@@ -119,21 +122,21 @@ namespace PL.Task
             try
             {
                 var button = (Button)sender;
-            var task = (BO.TaskInList)button.CommandParameter;
-            if(isMennager)
-            {
-                if (MessageBox.Show("Are you sure you want to delete the task?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                var task = (BO.TaskInList)button.CommandParameter;
+                if (isMennager)
                 {
+                    if (MessageBox.Show("Are you sure you want to delete the task?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
                         s_bl.Task.RemoveTask(task.Id);
                         TaskList.Remove(task);
                         MessageBox.Show("Task deleted successfully!");
+                    }
                 }
-            }
-            else
-            {
-                s_bl.Task.AddTaskForWorker(User.Id, task.Id);
-                MessageBox.Show("Task added to you successfully!");
-            }
+                else
+                {
+                    s_bl.Task.AddTaskForWorker(User.Id, task.Id);
+                    MessageBox.Show("Task added to you successfully!");
+                }
             }
             catch (Exception ex)
             {

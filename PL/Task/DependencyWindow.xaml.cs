@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BO;
+using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +22,8 @@ namespace PL.Task
     public partial class DependencyWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        private event Action<TaskInList> _updateDependency;
         public IEnumerable<BO.TaskInList> TaskList
         {
             get { return (IEnumerable<BO.TaskInList>)GetValue(TaskListProperty); }
@@ -30,8 +34,9 @@ namespace PL.Task
         public static readonly DependencyProperty TaskListProperty =
             DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(DependencyWindow), new PropertyMetadata(null));
         int _id;
-        public DependencyWindow(int id)
+        public DependencyWindow(int id, Action<TaskInList> updateDependency)
         {
+            _updateDependency = updateDependency;
             InitializeComponent();
             TaskList = s_bl.Task.ReadPossibleDependencies(id);
             _id = id;
@@ -42,7 +47,10 @@ namespace PL.Task
         {
             try
             {
-                BO.TaskInList? task = (sender as DataGrid)?.SelectedItem as BO.TaskInList;
+                BO.TaskInList? task = (sender as DataGrid)?.SelectedItem as BO.TaskInList;    ;
+
+                _updateDependency(task);
+
                 s_bl.TaskInList.Add(_id, task!.Id);
                 this.Close();
                 MessageBox.Show("Dependency added successfully!");

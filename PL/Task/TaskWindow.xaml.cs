@@ -1,4 +1,6 @@
-﻿using PL.Worker;
+﻿using BlApi;
+using PL.Worker;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,12 +51,13 @@ namespace PL.Task
 
 
 
-        public TaskWindow(Action<int,bool> onAddOrUpdate, int id=0, bool _isMennager=true)
+        public TaskWindow(Action<int, bool> onAddOrUpdate, int id = 0, bool _isMennager = true)
         {
-            if (id == 0) 
+            if (id == 0)
             {
-                Task=new BO.Task();
-                _isUpdate=false;
+                Task = new BO.Task();
+                Task.DependencyTasks = new List<TaskInList>();
+                _isUpdate = false;
             }
             else
             {
@@ -62,7 +65,7 @@ namespace PL.Task
                 _isUpdate = true;
             }
             isMennager = _isMennager;
-            _onAddOrUpdate=onAddOrUpdate;
+            _onAddOrUpdate = onAddOrUpdate;
             InitializeComponent();
         }
 
@@ -70,7 +73,7 @@ namespace PL.Task
         {
             try
             {
-                if(_isUpdate)
+                if (_isUpdate)
                 {
                     s_bl.Task.UpdateTask(Task);
                     _onAddOrUpdate(Task.Id, true);
@@ -79,7 +82,7 @@ namespace PL.Task
                 }
                 else
                 {
-                    _id= s_bl.Task.AddTask(Task);
+                    _id = s_bl.Task.AddTask(Task);
                     _onAddOrUpdate(_id, false);
                     MessageBox.Show("The operation of adding a task was performed successfully");
                     this.Close();
@@ -93,8 +96,34 @@ namespace PL.Task
 
         private void DependencyTasks(object sender, RoutedEventArgs e)
         {
-            new DependencyWindow(Task.Id).Show();
+            new DependencyWindow(Task.Id, UpdateDependendy).Show();
             this.Close();
+        }
+
+        private void UpdateDependendy(TaskInList depTask)
+        {
+
+            BO.Task tmp = new BO.Task()
+            {
+                Id = Task.Id,
+                Alias = Task.Alias,
+                TaskDescription = Task.TaskDescription,
+                Difficulty = Task.Difficulty,
+                StatusTask = Task.StatusTask,
+                Worker = Task.Worker,
+                CreateTask = Task.CreateTask,
+                BeginWork = Task.BeginWork,
+                BeginTask = Task.BeginTask,
+                TimeTask = Task.TimeTask,
+                DeadLine = Task.DeadLine,
+                EndWorkTime = Task.EndWorkTime,
+                Remarks = Task.Remarks,
+                Product = Task.Product,
+                DependencyTasks = Task.DependencyTasks.Append(depTask)
+            };
+
+            Task = null;
+            Task = tmp;
         }
 
         private void btnDeleteDependency(object sender, RoutedEventArgs e)
@@ -116,7 +145,7 @@ namespace PL.Task
 
         private void btnAddDependency(object sender, RoutedEventArgs e)
         {
-            new DependencyWindow(Task.Id).Show();
+            new DependencyWindow(Task.Id, UpdateDependendy).Show();
         }
 
         private void newOpenTask(object sender, EventArgs e)

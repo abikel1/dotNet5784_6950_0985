@@ -7,10 +7,10 @@
     <TaskDescription> Select the desired country or city to visit</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Choose Destination</Alias>
-    <CreateTask>2024-02-15T00:00:00</CreateTask>
+    <CreateTask>2024-02-10T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT12H56M1.4734918S</TimeTask>
+    <TimeTask>PT13H21M6.8059574S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Consider factors like interests, budget, travel time, and visa requirements</Remarks>
@@ -23,10 +23,10 @@
     <TaskDescription>Determine the total amount available for travel expenses</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Set a Budget</Alias>
-    <CreateTask>2024-02-22T00:00:00</CreateTask>
+    <CreateTask>2024-02-23T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT13H20M45.3985604S</TimeTask>
+    <TimeTask>PT9H45M8.1116504S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Account for flights, accommodation, activities, food, transportation, and emergencies</Remarks>
@@ -39,10 +39,10 @@
     <TaskDescription>Gather necessary clothing, toiletries, travel essentials, and medications</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Pack for the Trip</Alias>
-    <CreateTask>2024-02-17T00:00:00</CreateTask>
+    <CreateTask>2024-02-21T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT14H20M24.499497S</TimeTask>
+    <TimeTask>PT12H57M27.9001002S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Consider weather conditions, cultural norms, and activity requirements</Remarks>
@@ -55,10 +55,10 @@
     <TaskDescription>Inform friends and family of travel plans and arrange communication methods (e.g., phone, internet)</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Set Up Communication Methods</Alias>
-    <CreateTask>2024-02-22T00:00:00</CreateTask>
+    <CreateTask>2024-02-28T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT8H9M47.4424445S</TimeTask>
+    <TimeTask>PT17H25M59.1064934S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Established communication methods</Product>
@@ -70,10 +70,10 @@
     <TaskDescription>List all items needed for the trip to ensure nothing is forgotten</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Create a Packing List</Alias>
-    <CreateTask>2024-02-18T00:00:00</CreateTask>
+    <CreateTask>2024-02-12T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT15H24M43.4545777S</TimeTask>
+    <TimeTask>PT9H52M47.6301255S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Comprehensive packing list</Product>
@@ -85,10 +85,10 @@
     <TaskDescription>Obtain the local currency of the destination country</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Arrange Currency Exchange</Alias>
-    <CreateTask>2024-02-13T00:00:00</CreateTask>
+    <CreateTask>2024-02-09T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT9H31M32.6803381S</TimeTask>
+    <TimeTask>PT8H2M53.1352245S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Compare exchange rates and fees at banks or currency exchange bureaus</Remarks>
@@ -101,10 +101,10 @@
     <TaskDescription>Familiarize yourself with essential phrases in the destination language</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Learn Basic Phrases in Local Language</Alias>
-    <CreateTask>2024-02-19T00:00:00</CreateTask>
+    <CreateTask>2024-02-17T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT10H20M43.2257714S</TimeTask>
+    <TimeTask>PT9H38M29.5505176S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Use language learning apps, books, or online resources</Remarks>
@@ -117,10 +117,10 @@
     <TaskDescription>Purchase travel insurance to cover medical expenses, cancellations, and emergency situations</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Book Travel Insurance</Alias>
-    <CreateTask>2024-02-27T00:00:00</CreateTask>
+    <CreateTask>2024-02-13T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT14H47M43.6306396S</TimeTask>
+    <TimeTask>PT16H10M40.4930254S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Travel insurance policy</Product>
@@ -132,10 +132,10 @@
     <TaskDescription>Gather passports, visas, travel insurance, and other necessary documents</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Prepare Travel Documents</Alias>
-    <CreateTask>2024-02-10T00:00:00</CreateTask>
+    <CreateTask>2024-03-01T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT13H29M5.147581S</TimeTask>
+    <TimeTask>PT17H42M4.1800873S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Make copies and store them securely</Remarks>
@@ -148,10 +148,10 @@
     <TaskDescription>Arrange transportation to and from the airport at each destination</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Book Airport Transfers</Alias>
-    <CreateTask>2024-02-26T00:00:00</CreateTask>
+    <CreateTask>2024-02-25T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT9H38M28.4243419S</TimeTask>
+    <TimeTask>PT17H7M55.4119756S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Confirmed airport transfer bookings</Product>
@@ -163,10 +163,10 @@
     <TaskDescription>Inform financial institutions of travel plans to avoid card blocks</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Notify Banks and Credit Cards of Travel</Alias>
-    <CreateTask>2024-02-19T00:00:00</CreateTask>
+    <CreateTask>2024-02-10T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT14H16.9307104S</TimeTask>
+    <TimeTask>PT17H3M59.5293372S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Updated travel notifications for banks and credit cards</Product>
@@ -178,10 +178,10 @@
     <TaskDescription>Complete online check-in for flights to save time at the airport</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Check-in for Flights</Alias>
-    <CreateTask>2024-02-13T00:00:00</CreateTask>
+    <CreateTask>2024-02-17T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT11H54M17.8286202S</TimeTask>
+    <TimeTask>PT10H28M40.4475161S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Checked-in flight confirmations</Product>
@@ -193,10 +193,10 @@
     <TaskDescription>Determine if a visa is needed and gather application requirements</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Research Visa Requirements</Alias>
-    <CreateTask>2024-02-20T00:00:00</CreateTask>
+    <CreateTask>2024-02-13T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT16H7M4.1439731S</TimeTask>
+    <TimeTask>PT14H38M43.8557751S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Check official government websites for accurate information</Remarks>
@@ -209,10 +209,10 @@
     <TaskDescription>Secure flights and accommodation within the budget</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Book Flights and Accommodation</Alias>
-    <CreateTask>2024-02-16T00:00:00</CreateTask>
+    <CreateTask>2024-02-09T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT17H54M27.4377761S</TimeTask>
+    <TimeTask>PT12H43M14.5259038S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Compare prices across different platforms and consider travel insurance</Remarks>
@@ -225,10 +225,10 @@
     <TaskDescription>Research attractions, events, and tours, and create a daily schedule</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Plan Activities and Itinerary</Alias>
-    <CreateTask>2024-02-10T00:00:00</CreateTask>
+    <CreateTask>2024-02-27T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT17H56M19.031283S</TimeTask>
+    <TimeTask>PT8H52M54.7511367S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Allocate time for travel between destinations, rest, and flexibility</Remarks>
@@ -241,10 +241,10 @@
     <TaskDescription>Explore local transportation options (e.g., public transit, taxis, ride-sharing, car rentals)</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Research Transportation Options</Alias>
-    <CreateTask>2024-03-02T00:00:00</CreateTask>
+    <CreateTask>2024-02-22T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT15H57M49.3497057S</TimeTask>
+    <TimeTask>PT11H42M44.9853055S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Remarks>Consider cost, convenience, and safety when making decisions</Remarks>
@@ -257,10 +257,10 @@
     <TaskDescription>Learn about cultural norms, dress codes, and expectations to avoid misunderstandings</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Research Local Customs and Etiquette</Alias>
-    <CreateTask>2024-02-27T00:00:00</CreateTask>
+    <CreateTask>2024-02-29T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT16H14M1.865022S</TimeTask>
+    <TimeTask>PT13H8M33.7660792S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Knowledge of local customs and etiquette</Product>
@@ -275,7 +275,7 @@
     <CreateTask>2024-02-11T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT8H14M28.9284998S</TimeTask>
+    <TimeTask>PT11H31M38.8356201S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>List of emergency contacts and procedures</Product>
@@ -287,10 +287,10 @@
     <TaskDescription>Stay informed about any COVID-19-related restrictions or health requirements for the destination</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Research Travel Restrictions and Requirements</Alias>
-    <CreateTask>2024-02-09T00:00:00</CreateTask>
+    <CreateTask>2024-02-29T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT16H21M49.2100627S</TimeTask>
+    <TimeTask>PT9H14M30.4007254S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Updated knowledge of travel restrictions</Product>
@@ -302,24 +302,28 @@
     <TaskDescription>Save maps and important information to devices for offline access</TaskDescription>
     <MileStone>false</MileStone>
     <Alias>Download Offline Maps and Information</Alias>
-    <CreateTask>2024-02-27T00:00:00</CreateTask>
+    <CreateTask>2024-02-14T00:00:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>PT9H52M51.0828307S</TimeTask>
+    <TimeTask>PT15H56M16.2711402S</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
     <Product>Offline maps and travel information</Product>
   </Task>
   <Task>
     <Id>21</Id>
-    <Difficulty>Beginner</Difficulty>
+    <Difficulty>AdvancedBeginner</Difficulty>
     <WorkerId>0</WorkerId>
+    <TaskDescription>rr</TaskDescription>
     <MileStone>false</MileStone>
-    <CreateTask>2024-03-03T16:44:11.8386691+02:00</CreateTask>
+    <Alias>RR</Alias>
+    <CreateTask>2024-03-03T17:28:50.3952188+02:00</CreateTask>
     <BeginWork xsi:nil="true" />
     <BeginTask xsi:nil="true" />
-    <TimeTask>P40D</TimeTask>
+    <TimeTask>P12D</TimeTask>
     <DeadLine xsi:nil="true" />
     <EndWorkTime xsi:nil="true" />
+    <Remarks>r</Remarks>
+    <Product>r</Product>
   </Task>
 </ArrayOfTask>

@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
+        xmlns:converter="clr-namespace:PL"
         mc:Ignorable="d"
         Title="TaskWindow" Height="650" Width="600"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Activated="newOpenTask">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
         <!--DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}" Activated="newOpenTask">-->
     <Window.Resources>
         <Style x:Key="myLabelStyle"
@@ -117,7 +118,7 @@
                     </ListView>
                 </StackPanel>
             </Grid>
-            <Button Margin="10" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=isMennager}"  Background="LightGray"  Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" FontSize="10" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddOrUpdate"  Height="30" Width="100"/>
+            <Button Margin="10" IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=isMennager}"  Background="LightGray"  Content="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" FontSize="10" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddOrUpdate"  Height="30" Width="100"/>
             <Button Margin="10" Visibility="{Binding isMennager , Converter={StaticResource ConvertBoolToVisibilityKey1}, Mode=OneTime}" Background="LightGray"  Content="finish task"  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="200"/>
         </Grid>
     </ScrollViewer>

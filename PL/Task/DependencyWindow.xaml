@@ -14,7 +14,8 @@
                 <DataGridTextColumn FontSize="10" Binding="{Binding Description}" Header="Description" Width="Auto"/>
                 <DataGridTextColumn FontSize="10" Binding="{Binding Alias}" Header="Alias" Width="Auto"/>
                 <DataGridTextColumn FontSize="10" Binding="{Binding StatusTask}" Header="StatusTask" Width="Auto"/>
-            </DataGrid.Columns>
+
+           </DataGrid.Columns>
         </DataGrid>
     </Grid>
 </Window>
