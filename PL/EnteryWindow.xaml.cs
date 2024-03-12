@@ -56,7 +56,7 @@ namespace PL
 
         private void btnAddUser(object sender, RoutedEventArgs e)
         {
-            new UserWindow().ShowDialog();
+            new UserWindow(false).ShowDialog();
         }
     }
 }

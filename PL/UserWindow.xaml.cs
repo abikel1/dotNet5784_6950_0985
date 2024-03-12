@@ -32,9 +32,37 @@ namespace PL
             DependencyProperty.Register("user", typeof(BO.User), typeof(UserWindow), new PropertyMetadata(null));
 
 
-        public UserWindow()
+        public bool _isUpdate
         {
+            get { return (bool)GetValue(_isUpdateProperty); }
+            set { SetValue(_isUpdateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for _isUpdate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty _isUpdateProperty =
+            DependencyProperty.Register("_isUpdate", typeof(bool), typeof(UserWindow), new PropertyMetadata(null));
+
+
+        public int IdUser
+        {
+            get { return (int)GetValue(IdUserProperty); }
+            set { SetValue(IdUserProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IdUser.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IdUserProperty =
+            DependencyProperty.Register("IdUser", typeof(int), typeof(UserWindow), new PropertyMetadata(null));
+
+
+
+
+
+        public UserWindow(bool isUpdate,int id=0)
+        {
+            IdUser = id;
             user=new BO.User();
+            _isUpdate=isUpdate;
+            user.Id = id;
             InitializeComponent();
         }
 
@@ -42,8 +70,16 @@ namespace PL
         {
             try
             {
-                s_bl.User.Create(user);
-                MessageBox.Show("The operation of adding a worker was performed successfully");
+                if(!_isUpdate)
+                {
+                    s_bl.User.Create(user);
+                    MessageBox.Show("The operation of adding a user was performed successfully");
+                }
+                else
+                {
+                    s_bl.User.Update(user);
+                    MessageBox.Show("The operation of update a user was performed successfully");
+                }
                 //if(s_bl.User.checkWorkers(user)==true)//the user doesnt exist in the worker list
                 //{
                 //    if (MessageBox.Show("the id is not of worker, Do you want to create a mennager?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)

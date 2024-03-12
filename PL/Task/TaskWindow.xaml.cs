@@ -170,5 +170,9 @@ namespace PL.Task
         {
             Task = (_isUpdate ? s_bl.Task.Read(Task.Id) : new BO.Task());
         }
+
+        private void btnFinishTask(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }

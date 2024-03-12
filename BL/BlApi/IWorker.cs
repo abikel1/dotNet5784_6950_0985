@@ -36,5 +36,6 @@ public interface IWorker
     public void clear();
     //public IEnumerable<BO.Worker> RankGroups(int rank);
     public BO.TaskOnWorker? GetCurrentTaskOfWorker(int id);
+    public IEnumerable<BO.TaskInList> GetAssociatedTasksForWorker(int id);
 
 }

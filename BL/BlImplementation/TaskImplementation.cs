@@ -1,8 +1,10 @@
 ﻿using BlApi;
 using BO;
 using DalApi;
+using DO;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace BlImplementation;
@@ -208,14 +210,11 @@ internal class TaskImplementation : BlApi.ITask
             if (task.BeginWork != oldTask.BeginWork)
                 throw new BO.BlplanningStatus("Cant update planning startDate of task in the planning level");
         }
-
         // Check project status for execution phase
-        if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Execution)
+        if (BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Execution || BlApi.Factory.Get().GetStatusProject() == BO.StatusProject.Schedule)
         {
             if (task.TimeTask != oldTask.TimeTask)
                 throw new BO.BlexecutionStatus("Cant update during time of task in the excution level");
-            if (task.BeginTask != oldTask.BeginTask)
-                throw new BO.BlexecutionStatus("Cant update startDate of task in the excution level");
         }
 
         // Check if assigned worker exists
@@ -235,7 +234,8 @@ internal class TaskImplementation : BlApi.ITask
            false, task.Alias, task.CreateTask, task.BeginWork, task.BeginTask, task.TimeTask,
            task.DeadLine, task.EndWorkTime, task.Remarks, task.Product);
         }
-
+        DateTime? deadLine = task.BeginTask > task.BeginWork ? task.BeginTask + task.TimeTask : task.BeginWork + task.TimeTask;
+        newTask = newTask with { DeadLine = deadLine };
         // Calculate and set the status of the updated task
         task.StatusTask = CalculateStatus(newTask);
         task.DependencyTasks = getPriviousTask(newTask.Id)!.ToList();
@@ -243,7 +243,7 @@ internal class TaskImplementation : BlApi.ITask
         try
         {
             // Check constraints before updating the task
-            if(task.Worker!=oldTask.Worker)
+            if(task.Worker!=null&&oldTask.Worker!=null&& task.Worker.Id!=oldTask.Worker.Id)
             {
                 CheckTaskForWorker(task);
             }
@@ -262,6 +262,8 @@ internal class TaskImplementation : BlApi.ITask
     private BO.Status CalculateStatus(DO.Task task)
     {
         var dateTimeNow = _bl.Clock;
+        if (task.BeginTask is not null && task.BeginWork < dateTimeNow)
+            return Status.Delayed;
         return task switch
         {
             DO.Task t when t.BeginWork is null => BO.Status.Unscheduled,
@@ -359,6 +361,7 @@ internal class TaskImplementation : BlApi.ITask
         {
             if ((getPriviousTask(task.Id))!.Count() == 0)
             {
+                if(task.BeginWork==null)
                 UpdateStartDates(task.Id, _dal.GetStartProjectDate());
             }
         }
@@ -486,5 +489,122 @@ internal class TaskImplementation : BlApi.ITask
                    where _dal.Dependency.ReadAll(d=>d.IdDependentTask==id&&d.IdPreviousTask==task.Id).Count() ==0
                    select task;
         return result;
+    }
+
+    public void UpdateBeginDateOfTask(int idTask)
+    {
+        IEnumerable<BO.TaskInList?> tasks = getPriviousTask(idTask)!;
+        if(tasks!=null)
+        {
+            var result = from BO.TaskInList task in tasks
+                         let t = Read(idTask)
+                         where t.EndWorkTime == null
+                         select task;
+            if(result.Any())
+            {
+                throw new BO.BlcanotUpdateStartdate("can't start the task bacause the privious task didnt complete");
+            }
+        }
+        BO.Task taskB = Read(idTask);
+        BO.Task task1 = new BO.Task()
+        {
+            Id = taskB.Id,
+            Alias = taskB.Alias,
+            TaskDescription = taskB.TaskDescription,
+            Difficulty = (BO.Rank)taskB.Difficulty,
+            StatusTask = taskB.StatusTask,
+            Worker = new BO.WorkerOnTask()
+            {
+                Id=taskB.Worker!.Id,
+                Name=taskB.Worker.Name
+            },
+            TimeTask = taskB.TimeTask,
+            CreateTask = taskB.CreateTask,
+            BeginTask = s_bl.Clock,
+            BeginWork = taskB.BeginWork,
+            DeadLine = taskB.DeadLine,
+            EndWorkTime = taskB.EndWorkTime,
+            Remarks = taskB.Remarks,
+            Product = taskB.Product,
+            DependencyTasks = taskB.DependencyTasks
+        };
+        UpdateTask(task1);
+
+    }
+
+    public void DeleteWorkerFromTask(int idTask)
+    {
+        BO.Task? task = Read(idTask);
+        BO.Task newTask = new BO.Task()
+        {
+            Id = task.Id,
+            Alias = task.Alias,
+            TaskDescription = task.TaskDescription,
+            Difficulty = (BO.Rank)task.Difficulty,
+            StatusTask = task.StatusTask,
+            Worker = null,
+            TimeTask = task.TimeTask,
+            CreateTask = task.CreateTask,
+            BeginTask = task.BeginTask,
+            BeginWork = task.BeginWork,
+            DeadLine = task.DeadLine,
+            EndWorkTime = task.EndWorkTime,
+            Remarks = task.Remarks,
+            Product = task.Product,
+            DependencyTasks = task.DependencyTasks
+        };
+        UpdateTask(newTask);
+    }
+    public IEnumerable<BO.Gant> GetDetailsToGantt(Func<BO.Gant, bool>? filter = null)
+    {
+        return (from task in ReadTaskInList()
+                let t = _dal.Task.Read(task.Id)
+                let start = (int)(t.BeginWork - _bl.GetStartProjectDate())!.Value.TotalHours
+                select new BO.Gant()
+                {
+                    ID = task.Id,
+                    Name = task.Alias,
+                    TasksDays = (int)t.TimeTask!.Value.TotalHours * 2,
+                    StartOffset = start * 2,
+                    EndOffset = (int)(start + t.TimeTask.Value.TotalHours) * 2,
+                    Dependencies = StringDependencies(task.Id),
+                    Status = task.StatusTask,
+                }).ToList().OrderBy(x => x.StartOffset);
+    }
+
+    private string StringDependencies(int id)
+    {
+        var x = _dal.Dependency.ReadAll(x => x.IdPreviousTask == id)
+                                    .Where(dependency => dependency.IdPreviousTask == id)
+                                    .Select(dependency => dependency.IdDependentTask.ToString() + " ");
+        string dep = "";
+        foreach (string tmp in x)
+        {
+            dep += tmp.ToString();
+        }
+        return dep;
+    }
+    public void FinishTask(BO.Task task)
+    {
+        BO.Task newTask = new BO.Task()
+        {
+            Id = task.Id,
+            Alias = task.Alias,
+            TaskDescription = task.TaskDescription,
+            Difficulty = task.Difficulty,
+            StatusTask = task.StatusTask,
+            Worker = task.Worker,
+            TimeTask = task.TimeTask,
+            CreateTask = task.CreateTask,
+            BeginTask = task.BeginTask,
+            BeginWork = task.BeginWork,
+            DeadLine = task.DeadLine,
+            EndWorkTime = s_bl.Clock,
+            Remarks = task.Remarks,
+            Product = task.Product,
+            DependencyTasks = task.DependencyTasks
+        };
+        UpdateTask(newTask);
+        autoSchedule();
     }
 }

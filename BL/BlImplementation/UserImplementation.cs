@@ -87,17 +87,22 @@ internal class UserImplementation : IUser
     public BO.User? Read(string name)
     {
         DO.User user = _dal.User.Read(name)!;
-        if (user == null)
+        //if (user == null)
+        //{
+        //    throw new BO.BlDoesNotExistException($"user with Name={name} dosent exist");
+        //}
+        if (user != null)
         {
-            throw new BO.BlDoesNotExistException($"user with Name={name} dosent exist");
+            return new BO.User()
+            {
+                userName = user.userName,
+                Id = user.Id,
+                password = user.Password,
+                isMennager = user.isMennager
+            };
         }
-        return new BO.User()
-        {
-            userName = user.userName,
-            Id = user.Id,
-            password = user.Password,
-            isMennager=user.isMennager
-        };
+        else
+            return null;
     }
     //public BO.User? Read(Func<BO.User, bool> filter)
     //{

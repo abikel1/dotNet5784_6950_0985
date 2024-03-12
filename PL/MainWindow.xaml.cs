@@ -131,11 +131,28 @@ namespace PL
             BO.TaskOnWorker? task = s_bl.Worker.GetCurrentTaskOfWorker(User.Id);
             if (task!=null)
             {
-                new TaskWindow(task.Id, false);
+                new TaskWindow(task.Id, false).Show();
             }
             else
             {
+                new TasksForWorkerWindow(User.Id).Show();
+            }
+        }
 
+        private void btnUpdateUser(object sender, RoutedEventArgs e)
+        {
+            new UserWindow(true,User.Id).ShowDialog();
+        }
+
+        private void btnGant_Click(object sender, RoutedEventArgs e)
+        {
+            if (s_bl.GetStartProjectDate() == null)
+            {
+                MessageBox.Show("There is no schedule for the project.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                new GantWindow().Show();
             }
         }
     }

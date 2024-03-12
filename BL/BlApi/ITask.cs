@@ -50,4 +50,8 @@ public interface ITask
     public BO.Task AddTaskForWorker(int idWorker, int idTask);
 
     public IEnumerable<BO.TaskInList> ReadPossibleDependencies(int id);//list of the dependencies that the task still doesnt have
+    public void UpdateBeginDateOfTask(int idTask);//update start date of task
+    public void DeleteWorkerFromTask(int idTask);//delete worket from the task with this id
+    public IEnumerable<BO.Gant> GetDetailsToGantt(Func<BO.Gant, bool>? filter = null);
+    public void FinishTask(BO.Task task);
 }
