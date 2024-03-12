@@ -10,8 +10,8 @@
         Title="StartDateWindow" Height="150" Width="150">
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Margin="5" Content="Enter the start date of the project:"/>
-            <DatePicker SelectedDate="{Binding StartDate, Mode=TwoWay}" Margin="5"/>
+            <Label Content="Enter the start date of the project:" FontSize="9"/>
+            <DatePicker FontSize="9" SelectedDate="{Binding StartDate, Mode=TwoWay}" Margin="5"/>
             <Button Margin="5"  Content="Update" Click="Button_Click"/>
         </StackPanel>
     </Grid>

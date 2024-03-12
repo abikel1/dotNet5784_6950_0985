@@ -215,7 +215,8 @@ public static class Initialization
         createUser();
         createWorker();
         createTask();
-        createDependency(); 
+        createDependency();
+        s_dal.SetStartProjectDate(null);
     }
     public static void Reset()
     {

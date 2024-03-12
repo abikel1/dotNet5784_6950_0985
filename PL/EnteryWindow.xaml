@@ -73,7 +73,34 @@
                 <Button Click="btnAddUser" Content="Sign Up"
                          Margin="0,10"
                        VerticalAlignment="Bottom"
-                       HorizontalAlignment="Center"/>
+                       HorizontalAlignment="Center"
+                        Background="Transparent"
+                        BorderBrush="Transparent" FontFamily="Gabriola">
+                        <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <EventTrigger.Actions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="20"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger.Actions>
+                            </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <EventTrigger.Actions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Duration="0:0:0.800" Storyboard.TargetProperty="FontSize" To="18"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </EventTrigger.Actions>
+                                </EventTrigger>
+                            </Style.Triggers>
+                    </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
         </Border>
         <!--<Grid.RowDefinitions>

@@ -14,7 +14,7 @@ internal class WorkerImplementation : IWorker
 
     private readonly IBl _bl;
     internal WorkerImplementation(IBl bl) => _bl = bl;
-
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     // Private field for accessing data layer
     private DalApi.IDal _dal=DalApi.Factory.Get;
     // Method to add a new worker
@@ -213,6 +213,16 @@ internal class WorkerImplementation : IWorker
                    RankWorker = (BO.Rank)doworker.RankWorker,
                    CurrentTask = GetCurrentTaskOfWorker(doworker.Id)
                };
+    }
+
+    public IEnumerable<TaskInList> GetAssociatedTasksForWorker(int id)
+    {
+        IEnumerable<BO.TaskInList> tasks = s_bl.Task.ReadTaskInList();
+        var result = from task in tasks
+                     let t = s_bl.Task.Read(task.Id)
+                     where t.Worker != null && t.Worker.Id == id && t.BeginTask == null
+                     select task;
+        return result;
     }
 
     //public bool CheckUser(User user)

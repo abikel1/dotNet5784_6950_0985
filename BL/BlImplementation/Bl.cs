@@ -34,8 +34,8 @@ namespace BlImplementation
                 return StatusProject.Planning;
             else
             {
-                bool flag = _dal.Task.ReadAll().Where(x => x!.BeginWork == null).Any();
-                if (flag)
+                bool flag = _dal.Task.ReadAll().Where(x => x!.BeginWork != null && x.BeginTask != null).Any();
+                if (!flag)
                     return StatusProject.Schedule;
             }
             return StatusProject.Execution;

@@ -119,7 +119,7 @@
                 </StackPanel>
             </Grid>
             <Button Margin="10" Visibility="{Binding isMennager, Converter={StaticResource ConvertBoolToVisibilityKey}, Mode=OneTime}"  Background="LightGray"  Content="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConvertIdToContentKey}}" FontSize="10" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnAddOrUpdate"  Height="30" Width="100"/>
-            <Button Margin="10" Visibility="{Binding StatusTask , Converter={StaticResource ConvertBoolToVisibilityKey}, Mode=OneTime}" Background="LightGray"  Content="finish task"  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="200"/>
+            <Button Margin="10" Visibility="{Binding StatusTask , Converter={StaticResource ConvertBoolToVisibilityKey}, Mode=OneTime}" Background="LightGray"  Content="finish task"  Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="200" Click="btnFinishTask"/>
         </Grid>
     </ScrollViewer>
 </Window>

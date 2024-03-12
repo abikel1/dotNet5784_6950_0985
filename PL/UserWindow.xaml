@@ -27,11 +27,11 @@
             <TextBox Text="{Binding user.password,Mode=TwoWay}"/>
             <!--<Label Content="Confirm Password:" />
             <PasswordBox Name="ConfirmPasswordBox" />-->
-            <Label Content="Id:"/>
-            <TextBox Text="{Binding user.Id,Mode=TwoWay}"/>
+            <Label Visibility="{Binding IdUser, Converter={StaticResource ConvertIdlToVisibilityKey}, Mode=OneTime}" Content="Id:"/>
+            <TextBox Visibility="{Binding IdUser, Converter={StaticResource ConvertIdlToVisibilityKey}, Mode=OneTime}" Text="{Binding user.Id,Mode=TwoWay}"/>
         </StackPanel>
 
-        <Button Content="Add user" 
+        <Button Content="{Binding _isUpdate, Mode=OneTime, Converter={StaticResource ConvertBoolToContent1Key}}"
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
             Margin="0,10,0,0" 

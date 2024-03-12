@@ -70,11 +70,4 @@
     <Name>Ariel</Name>
     <Email>ariel@gmail.co.il</Email>
   </Worker>
-  <Worker>
-    <Id>326060985</Id>
-    <RankWorker>Expert</RankWorker>
-    <HourPrice>30</HourPrice>
-    <Name>Ayala</Name>
-    <Email>a320@gmail.com</Email>
-  </Worker>
 </ArrayOfWorker>

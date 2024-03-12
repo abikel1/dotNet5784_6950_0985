@@ -12,5 +12,8 @@
         <local:StatusCollection x:Key="StausCollectionKey"/>
         <local:ConvertBoolToContent x:Key="ConvertBoolToContentKey"/>
         <local:ConvertBoolToIsEnable x:Key="ConvertBoolToIsEnableKey"/>
+        <local:ConvertBoolToContent1 x:Key="ConvertBoolToContent1Key"/>
+        <local:ConvertIdlToVisibility x:Key="ConvertIdlToVisibilityKey"/>
+        <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
     </Application.Resources>
 </Application>
