@@ -128,21 +128,6 @@
     <Product>Basic understanding of common phrases</Product>
   </Task>
   <Task>
-    <Id>8</Id>
-    <Difficulty>AdvancedBeginner</Difficulty>
-    <WorkerId>0</WorkerId>
-    <TaskDescription>Purchase travel insurance to cover medical expenses, cancellations, and emergency situations</TaskDescription>
-    <MileStone>false</MileStone>
-    <Alias>Book Travel Insurance</Alias>
-    <CreateTask>2024-02-22T00:00:00</CreateTask>
-    <BeginWork>2024-03-21T21:12:39.0782311</BeginWork>
-    <BeginTask xsi:nil="true" />
-    <TimeTask>PT8H43M6.15325S</TimeTask>
-    <DeadLine>2024-03-22T05:55:45.2314811</DeadLine>
-    <EndWorkTime xsi:nil="true" />
-    <Product>Travel insurance policy</Product>
-  </Task>
-  <Task>
     <Id>14</Id>
     <Difficulty>Intermediate</Difficulty>
     <WorkerId>0</WorkerId>
@@ -309,5 +294,20 @@
     <DeadLine>2024-03-23T00:00:00</DeadLine>
     <EndWorkTime xsi:nil="true" />
     <Product>Comprehensive packing list</Product>
+  </Task>
+  <Task>
+    <Id>8</Id>
+    <Difficulty>AdvancedBeginner</Difficulty>
+    <WorkerId>0</WorkerId>
+    <TaskDescription>Purchase travel insurance to cover medical expenses, cancellations, and emergency situations</TaskDescription>
+    <MileStone>false</MileStone>
+    <Alias>Book Travel Insurance</Alias>
+    <CreateTask>2024-02-22T00:00:00</CreateTask>
+    <BeginWork>2024-03-21T00:00:00</BeginWork>
+    <BeginTask xsi:nil="true" />
+    <TimeTask>PT8H43M6.15325S</TimeTask>
+    <DeadLine>2024-03-21T08:43:06.15325</DeadLine>
+    <EndWorkTime xsi:nil="true" />
+    <Product>Travel insurance policy</Product>
   </Task>
 </ArrayOfTask>
