@@ -120,9 +120,4 @@
     <IdDependentTask>3</IdDependentTask>
     <IdPreviousTask>17</IdPreviousTask>
   </Dependency>
-  <Dependency>
-    <Id>25</Id>
-    <IdDependentTask>19</IdDependentTask>
-    <IdPreviousTask>8</IdPreviousTask>
-  </Dependency>
 </ArrayOfDependency>

@@ -258,11 +258,25 @@ internal class TaskImplementation : BlApi.ITask
             throw new BO.BlDoesNotExistException(ex.Message);
         }
     }
-
+    public static DateTime GetDateTimeFromNullable(DateTime? dtNullable)
+    {
+        if (dtNullable.HasValue)
+        {
+            return dtNullable.Value;
+        }
+        else
+        {
+            throw new ArgumentNullException("dtNullable");
+        }
+    }
+    public static DateTime GetDateOnly(DateTime dt)
+    {
+        return new DateTime(dt.Year, dt.Month, dt.Day);
+    }
     private BO.Status CalculateStatus(DO.Task task)
     {
         var dateTimeNow = _bl.Clock;
-        if (task.BeginTask is not null && task.BeginWork < dateTimeNow)
+        if (task.BeginTask is not null && GetDateOnly(GetDateTimeFromNullable(task.BeginWork)) < GetDateOnly(dateTimeNow))
             return Status.Delayed;
         return task switch
         {

@@ -173,6 +173,19 @@ namespace PL.Task
 
         private void btnFinishTask(object sender, RoutedEventArgs e)
         {
+            if (MessageBox.Show("Are you sure you want to finish the task?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    s_bl.Task.FinishTask(Task);
+                    MessageBox.Show("Task finished successfully!");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }
