@@ -35,14 +35,10 @@
                 <DataGridTextColumn FontSize="15" Binding="{Binding Description}" Header="Description" Width="Auto"/>
                 <DataGridTextColumn FontSize="15" Binding="{Binding Alias}" Header="Alias" Width="Auto"/>
                 <DataGridTextColumn FontSize="15" Binding="{Binding StatusTask}" Header="StatusTask" Width="Auto"/>
-                <DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button  Margin="5"  CommandParameter="{Binding}"  Foreground="#FFFA0A0A" Click="btnDeleteTask">
-                                <Button.Content>
-                                <Binding Path="isMennager" Mode="TwoWay" Converter="{StaticResource ConvertBoolToContentKey}"/>
-                                </Button.Content>
-                            </Button>
+                            <Button  Margin="5"  Tag="{Binding}" Width="100"  Foreground="#FFFA0A0A" Click="btnDeleteTask" Content="{Binding isMennager, RelativeSource={RelativeSource AncestorType={x:Type Window}}, Converter={StaticResource ConvertBoolToContentKey}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

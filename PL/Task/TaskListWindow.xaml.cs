@@ -124,7 +124,7 @@ namespace PL.Task
             try
             {
                 var button = (Button)sender;
-                var task = (BO.TaskInList)button.CommandParameter;
+                var task = (BO.TaskInList)button.Tag;
                 if (isMennager)
                 {
                     if (MessageBox.Show("Are you sure you want to delete the task?", "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)

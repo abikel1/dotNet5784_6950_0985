@@ -17,22 +17,6 @@
     <Product>Detailed itinerary with activity descriptions</Product>
   </Task>
   <Task>
-    <Id>2</Id>
-    <Difficulty>Beginner</Difficulty>
-    <WorkerId>0</WorkerId>
-    <TaskDescription>Determine the total amount available for travel expenses</TaskDescription>
-    <MileStone>false</MileStone>
-    <Alias>Set a Budget</Alias>
-    <CreateTask>2024-02-13T00:00:00</CreateTask>
-    <BeginWork>2024-03-22T11:27:57.7574165</BeginWork>
-    <BeginTask xsi:nil="true" />
-    <TimeTask>PT15H17M9.0192455S</TimeTask>
-    <DeadLine>2024-03-23T02:45:06.776662</DeadLine>
-    <EndWorkTime xsi:nil="true" />
-    <Remarks>Account for flights, accommodation, activities, food, transportation, and emergencies</Remarks>
-    <Product>Detailed budget breakdown</Product>
-  </Task>
-  <Task>
     <Id>1</Id>
     <Difficulty>Beginner</Difficulty>
     <WorkerId>0</WorkerId>
@@ -80,22 +64,6 @@
     <Product>Local currency</Product>
   </Task>
   <Task>
-    <Id>7</Id>
-    <Difficulty>AdvancedBeginner</Difficulty>
-    <WorkerId>0</WorkerId>
-    <TaskDescription>Familiarize yourself with essential phrases in the destination language</TaskDescription>
-    <MileStone>false</MileStone>
-    <Alias>Learn Basic Phrases in Local Language</Alias>
-    <CreateTask>2024-03-12T00:00:00</CreateTask>
-    <BeginWork>2024-03-23T15:52:49.5773364</BeginWork>
-    <BeginTask xsi:nil="true" />
-    <TimeTask>PT11H16M17.1253228S</TimeTask>
-    <DeadLine>2024-03-24T03:09:06.7026592</DeadLine>
-    <EndWorkTime xsi:nil="true" />
-    <Remarks>Use language learning apps, books, or online resources</Remarks>
-    <Product>Basic understanding of common phrases</Product>
-  </Task>
-  <Task>
     <Id>8</Id>
     <Difficulty>AdvancedBeginner</Difficulty>
     <WorkerId>0</WorkerId>
@@ -125,21 +93,6 @@
     <EndWorkTime xsi:nil="true" />
     <Remarks>Compare prices across different platforms and consider travel insurance</Remarks>
     <Product>Confirmed flight and accommodation bookings</Product>
-  </Task>
-  <Task>
-    <Id>17</Id>
-    <Difficulty>Intermediate</Difficulty>
-    <WorkerId>0</WorkerId>
-    <TaskDescription>Learn about cultural norms, dress codes, and expectations to avoid misunderstandings</TaskDescription>
-    <MileStone>false</MileStone>
-    <Alias>Research Local Customs and Etiquette</Alias>
-    <CreateTask>2024-02-11T00:00:00</CreateTask>
-    <BeginWork>2024-03-23T15:52:49.5773364</BeginWork>
-    <BeginTask xsi:nil="true" />
-    <TimeTask>PT17H5M2.5281473S</TimeTask>
-    <DeadLine>2024-03-24T08:57:52.1054837</DeadLine>
-    <EndWorkTime xsi:nil="true" />
-    <Product>Knowledge of local customs and etiquette</Product>
   </Task>
   <Task>
     <Id>18</Id>
@@ -249,36 +202,6 @@
     <Product>Confirmed airport transfer bookings</Product>
   </Task>
   <Task>
-    <Id>11</Id>
-    <Difficulty>AdvancedBeginner</Difficulty>
-    <WorkerId>0</WorkerId>
-    <TaskDescription>Inform financial institutions of travel plans to avoid card blocks</TaskDescription>
-    <MileStone>false</MileStone>
-    <Alias>Notify Banks and Credit Cards of Travel</Alias>
-    <CreateTask>2024-02-20T00:00:00</CreateTask>
-    <BeginWork>2024-03-24T02:46:52.1813192</BeginWork>
-    <BeginTask xsi:nil="true" />
-    <TimeTask>PT10H26M3.1510117S</TimeTask>
-    <DeadLine>2024-03-24T13:12:55.3323309</DeadLine>
-    <EndWorkTime xsi:nil="true" />
-    <Product>Updated travel notifications for banks and credit cards</Product>
-  </Task>
-  <Task>
-    <Id>12</Id>
-    <Difficulty>AdvancedBeginner</Difficulty>
-    <WorkerId>0</WorkerId>
-    <TaskDescription>Complete online check-in for flights to save time at the airport</TaskDescription>
-    <MileStone>false</MileStone>
-    <Alias>Check-in for Flights</Alias>
-    <CreateTask>2024-03-09T00:00:00</CreateTask>
-    <BeginWork>2024-03-24T02:46:52.1813192</BeginWork>
-    <BeginTask xsi:nil="true" />
-    <TimeTask>PT15H32M15.2894913S</TimeTask>
-    <DeadLine>2024-03-24T18:19:07.4708105</DeadLine>
-    <EndWorkTime xsi:nil="true" />
-    <Product>Checked-in flight confirmations</Product>
-  </Task>
-  <Task>
     <Id>13</Id>
     <Difficulty>Intermediate</Difficulty>
     <WorkerId>326060985</WorkerId>
@@ -309,5 +232,82 @@
     <EndWorkTime>2024-03-21T13:41:09.9879823+02:00</EndWorkTime>
     <Remarks>Consider cost, convenience, and safety when making decisions</Remarks>
     <Product>Transportation plan for each destination</Product>
+  </Task>
+  <Task>
+    <Id>2</Id>
+    <Difficulty>Beginner</Difficulty>
+    <WorkerId>0</WorkerId>
+    <TaskDescription>Determine the total amount available for travel expenses</TaskDescription>
+    <MileStone>false</MileStone>
+    <Alias>Set a Budget</Alias>
+    <CreateTask>2024-02-13T00:00:00</CreateTask>
+    <BeginWork>2024-03-22T00:00:00</BeginWork>
+    <BeginTask xsi:nil="true" />
+    <TimeTask>PT15H17M9.0192455S</TimeTask>
+    <DeadLine>2024-03-22T15:17:09.0192455</DeadLine>
+    <EndWorkTime xsi:nil="true" />
+    <Remarks>Account for flights, accommodation, activities, food, transportation, and emergencies</Remarks>
+    <Product>Detailed budget breakdown</Product>
+  </Task>
+  <Task>
+    <Id>7</Id>
+    <Difficulty>AdvancedBeginner</Difficulty>
+    <WorkerId>0</WorkerId>
+    <TaskDescription>Familiarize yourself with essential phrases in the destination language</TaskDescription>
+    <MileStone>false</MileStone>
+    <Alias>Learn Basic Phrases in Local Language</Alias>
+    <CreateTask>2024-03-12T00:00:00</CreateTask>
+    <BeginWork>2024-03-23T00:00:00</BeginWork>
+    <BeginTask xsi:nil="true" />
+    <TimeTask>PT11H16M17.1253228S</TimeTask>
+    <DeadLine>2024-03-23T11:16:17.1253228</DeadLine>
+    <EndWorkTime xsi:nil="true" />
+    <Remarks>Use language learning apps, books, or online resources</Remarks>
+    <Product>Basic understanding of common phrases</Product>
+  </Task>
+  <Task>
+    <Id>11</Id>
+    <Difficulty>AdvancedBeginner</Difficulty>
+    <WorkerId>326060985</WorkerId>
+    <TaskDescription>Inform financial institutions of travel plans to avoid card blocks</TaskDescription>
+    <MileStone>false</MileStone>
+    <Alias>Notify Banks and Credit Cards of Travel</Alias>
+    <CreateTask>2024-02-20T00:00:00</CreateTask>
+    <BeginWork>2024-03-24T00:00:00</BeginWork>
+    <BeginTask xsi:nil="true" />
+    <TimeTask>PT10H26M3.1510117S</TimeTask>
+    <DeadLine>2024-03-24T10:26:03.1510117</DeadLine>
+    <EndWorkTime xsi:nil="true" />
+    <Product>Updated travel notifications for banks and credit cards</Product>
+  </Task>
+  <Task>
+    <Id>12</Id>
+    <Difficulty>AdvancedBeginner</Difficulty>
+    <WorkerId>326060985</WorkerId>
+    <TaskDescription>Complete online check-in for flights to save time at the airport</TaskDescription>
+    <MileStone>false</MileStone>
+    <Alias>Check-in for Flights</Alias>
+    <CreateTask>2024-03-09T00:00:00</CreateTask>
+    <BeginWork>2024-03-24T00:00:00</BeginWork>
+    <BeginTask xsi:nil="true" />
+    <TimeTask>PT15H32M15.2894913S</TimeTask>
+    <DeadLine>2024-03-24T15:32:15.2894913</DeadLine>
+    <EndWorkTime xsi:nil="true" />
+    <Product>Checked-in flight confirmations</Product>
+  </Task>
+  <Task>
+    <Id>17</Id>
+    <Difficulty>Intermediate</Difficulty>
+    <WorkerId>326060985</WorkerId>
+    <TaskDescription>Learn about cultural norms, dress codes, and expectations to avoid misunderstandings</TaskDescription>
+    <MileStone>false</MileStone>
+    <Alias>Research Local Customs and Etiquette</Alias>
+    <CreateTask>2024-02-11T00:00:00</CreateTask>
+    <BeginWork>2024-03-23T00:00:00</BeginWork>
+    <BeginTask xsi:nil="true" />
+    <TimeTask>PT17H5M2.5281473S</TimeTask>
+    <DeadLine>2024-03-23T17:05:02.5281473</DeadLine>
+    <EndWorkTime xsi:nil="true" />
+    <Product>Knowledge of local customs and etiquette</Product>
   </Task>
 </ArrayOfTask>

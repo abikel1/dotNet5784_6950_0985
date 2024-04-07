@@ -69,6 +69,7 @@ namespace PL.Task
             {
                 Task = new BO.Task();
                 Task.DependencyTasks = new List<TaskInList>();
+                Task.Worker = new();
                 _isUpdate = false;
             }
             else
@@ -81,6 +82,11 @@ namespace PL.Task
                 {
                     StatusTask = Task.StatusTask == Status.Started ? true : false;
                 }
+                if (Task.DependencyTasks is null)
+                    Task.DependencyTasks = new List<TaskInList>();
+                if (Task.Worker is null)
+                    Task.Worker = new();
+
             }
             isMennager = _isMennager;
             _onAddOrUpdate = onAddOrUpdate;
