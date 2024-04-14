@@ -7,8 +7,20 @@
     <isMennager>true</isMennager>
   </User>
   <User>
+    <userName>Avital</userName>
+    <Id>312095867</Id>
+    <Password>12345678</Password>
+    <isMennager>false</isMennager>
+  </User>
+  <User>
     <userName>Ayala</userName>
-    <Id>326060985</Id>
+    <Id>259543978</Id>
+    <Password>12345678</Password>
+    <isMennager>false</isMennager>
+  </User>
+  <User>
+    <userName>chagai</userName>
+    <Id>372392767</Id>
     <Password>12345678</Password>
     <isMennager>false</isMennager>
   </User>

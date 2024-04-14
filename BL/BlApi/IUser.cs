@@ -1,6 +1,4 @@
-﻿
-
-namespace BlApi;
+﻿namespace BlApi;
 
 public interface IUser
 {
@@ -13,7 +11,4 @@ public interface IUser
     //BO.User? Read(Func<BO.User, bool> filter); 
     void clear();
     void checkInvalid(BO.User user);
-    //void checkMennager(BO.User user);
-    //bool checkWorkers(BO.User user);//check if the user is part of the workers
-
 }

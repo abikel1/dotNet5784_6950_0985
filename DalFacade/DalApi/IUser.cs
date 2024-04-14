@@ -1,14 +1,8 @@
 ﻿using DO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DalApi
+namespace DalApi;
+
+public interface IUser:ICrud<User>
 {
-    public interface IUser:ICrud<User>
-    {
-        public User? Read(string name);
-    }
+    public User? Read(string name);
 }
